@@ -1,0 +1,53 @@
+## Collaboration Using Git
+
+### git push
+
+To utilize Git's collaborative potential use git push and a Git hosting service, most commonly Github. First, create a remote repository on Github to which you want to push your changes.
+
+Setup a repository on GitHub called \`git\\\_train\`
+
+then let git know that you have a repository
+
+``` {<default>}
+$ git remote add origin https://github.com/your_name/git_train.git
+```
+
+Push your master branch to the repository.
+
+``` {<default>}
+$ git push -u origin master
+
+Counting objects: 22, done.
+
+Delta compression using up to 4 threads.
+
+Compressing objects: 100% (16/16), done.
+
+Writing objects: 100% (22/22), 2.07 KiB | 424.00 KiB/s, done.
+
+Total 22 (delta 1), reused 0 (delta 0)
+
+remote: Resolving deltas: 100% (1/1), done.
+
+To https://github.com/ben-williams/git_train.git
+
+* [new branch] master -> master
+
+Branch 'master' set up to track remote branch 'master' from 'origin'.
+```
+
+### git clone
+
+### git pull
+
+## Advanced Git Workflow
+
+Advanced Git workflows introduce some new concepts like reverting to a previous version, branching, merging, merge conflicts and model development. These concepts are likely overkill for simple analysis but can because very helpful for large projects.
+
+### git checkout
+
+To recall a previous commit use git checkout and provide the SHA for the commit you wish to recall. You will receive and error message telling your GIT is in a detached HEAD state which simply means GIT is confused on which commit it should be considering the most recent; the commit you just checked out or the last commit you made. Git tells you how to navigate this condition. If you only want to see the old code but not use it you can do that and simple checkout the most recent commit when you are done. I rarely do that... if all I wanted to do was see the changes I would use the GUI. I you want to revert to the old code the correct technique is to crate a new branch and merge it back with the old branch accepting the code form each branch .
+
+## When to Tag?
+
+Tags are designed to highlight particularity important commits. Commits which include snapshots of he analysis at the point it was published should definitely be tagged. The analyst can choose what other commits are worthy of a tag. Any time the results are presented to others would be a reasonable suggestion (in-house presentations/updates, conference presentations, exc.), although it is possible to record those milestones in the first part of the commit message.

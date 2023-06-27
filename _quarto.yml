@@ -1,0 +1,26 @@
+project:
+  type: book
+
+book:
+  title: "ADF&G Division of Sport Fisheries Introduction to Git"
+  author: "Adam Reimer"
+  date: "6/26/2023"
+  chapters:
+    - index.qmd
+    - intro.qmd
+    - basics.qmd
+    - collaboration.qmd
+    - advanced.qmd
+  appendices: 
+    - RStudio.qmd
+
+bibliography: references.bib
+
+format:
+  html:
+    theme: cosmo
+  pdf:
+    documentclass: scrreprt
+
+editor: visual
+

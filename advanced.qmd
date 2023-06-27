@@ -1,0 +1,7 @@
+## Advanced Git Workflow
+
+Advanced Git workflows introduce some new concepts like reverting to a previous version, branching, merging, merge conflicts and model development. These concepts are likely overkill for simple analysis but can because very helpful for large projects.
+
+### git checkout
+
+To recall a previous commit use git checkout and provide the SHA for the commit you wish to recall. You will receive and error message telling your GIT is in a detached HEAD state which simply means GIT is confused on which commit it should be considering the most recent; the commit you just checked out or the last commit you made. Git tells you how to navigate this condition. If you only want to see the old code but not use it you can do that and simple checkout the most recent commit when you are done. I rarely do that... if all I wanted to do was see the changes I would use the GUI. I you want to revert to the old code the correct technique is to crate a new branch and merge it back with the old branch accepting the code form each branch .
