@@ -1,0 +1,95 @@
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(ggplot2)
+library(tidyverse)
+library(RColorBrewer)
+#Function to generate random commit ids
+commit_num <- function(){
+  paste(sample(c(1:9, letters), 6), collapse = "")
+}
+#static string of 10 commit numbers (for consistency between graphs)
+static_ids <- character()
+for(i in 1:10) static_ids[i] <- commit_num()
+#plot the git work space
+#map git is a vector indicating which work space items to plot. working directory = 1,
+#   staging area = 2, Local repository = 3 and remote repository = 4. The function assumes there
+#   will be only one working directory and staging area, there can be many repositories. The function
+#   assumes repositories are updated for every snapshot.
+#dat_arrow is a data frame with the x, y, xend, and yend locations needed by geom arrow. The intent
+#   was to show the action of various git commands
+#changes allows the working directory and staging area to be one snapshot ahead of the repositories,
+#   representing the point where changes have been made which are not associated with a commit.
+#checkout is hard wired to change the coloring so that the working directory/staging area are
+#   colored to match the commit 2 snapshots prior representing git checkout.
+plot_git <-
+  function(map_git, dat_arrow = NULL, changes = FALSE, checkout = FALSE){
+    
+    #identify # of commits
+    map_git_factor <- factor(map_git, 1:4)
+    n_commits <- table(map_git_factor)
+    
+    #identify snapshots
+    n_snapshots <- if(changes) max(n_commits) + 1 else(max(n_commits))
+    
+    #label commits/snapshots for plotting
+    commit_labels <- NA
+    for(i in 1:n_snapshots) commit_labels[i] <- static_ids[i]
+    
+    #number commits/snapshots for plotting
+    commit_numbers <- NA
+    for(i in 1:n_snapshots) commit_numbers[i] <- seq(1, 15, 1)[i]
+    
+    #is the working directory staged
+    staged_id <- if(n_commits[2] == 1) c("Working Directory", "Staged") else("Working Directory")
+    
+    #color/fill scale
+    my_colors <- c("#ffffff", brewer.pal(max(n_snapshots), "Set1"))
+    names(my_colors) <- c("      ", commit_labels)
+    
+    out <-
+      data.frame(location = factor(map_git,
+        levels = 1:4,
+        labels = c("Working Directory",
+        "Staged",
+        "Local Repository",
+        "Remote Repository")),
+        snapshot = c(rep(n_snapshots, length(staged_id)),
+        commit_numbers[min(n_commits[3], 1):n_commits[3]],
+        commit_numbers[min(n_commits[4], 1):n_commits[4]]),
+        id = c(rep("      ", length(staged_id)),
+        commit_labels[min(n_commits[3], 1):n_commits[3]],
+        commit_labels[min(n_commits[4], 1):n_commits[4]])) %>%
+      mutate(checkout_id = ifelse(checkout == TRUE & location %in% staged_id, snapshot - 2, snapshot),
+             fill = ifelse(location %in% staged_id, commit_labels[checkout_id], "      ")) %>%
+      ggplot(aes(x = location, y = snapshot, label = id, fill = fill, color = id)) +
+        geom_label() +
+        geom_vline(xintercept = 1:4,
+        linetype = 2,
+        alpha = 0.5) +
+        scale_x_discrete(limits = c("Working Directory",
+        "Staged",
+        "Local Repository",
+        "Remote Repository")) +
+        scale_y_continuous(breaks = function(x) unique(floor(pretty(seq(0, max(x) + 1) * 1.1))),
+        trans = "reverse") +
+        scale_color_manual(name = "commit", values = my_colors) +
+        scale_fill_manual(name = "commit", values = my_colors) +
+        guides(color = "none", fill = "none") +
+        labs(title = "The Git Workflow", x = NULL, y = "Snapshot") +
+        theme_bw()
+    
+    if(!is.null(dat_arrow))
+    
+      out <- out +
+        geom_segment(data = dat_arrow,
+        mapping = aes(x = x, y = y, xend = xend, yend = yend),
+        inherit.aes = FALSE,
+        arrow = arrow(length = unit(0.5, "cm")),
+        color = "gray",
+        size = 1)
+    
+    out
+}
+```

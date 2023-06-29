@@ -20,6 +20,69 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -142,14 +205,8 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#git-push" id="toc-git-push" class="nav-link active" data-scroll-target="#git-push"><span class="toc-section-number">3.0.1</span>  git push</a></li>
-  <li><a href="#git-clone" id="toc-git-clone" class="nav-link" data-scroll-target="#git-clone"><span class="toc-section-number">3.0.2</span>  git clone</a></li>
-  <li><a href="#git-pull" id="toc-git-pull" class="nav-link" data-scroll-target="#git-pull"><span class="toc-section-number">3.0.3</span>  git pull</a></li>
-  <li><a href="#advanced-git-workflow" id="toc-advanced-git-workflow" class="nav-link" data-scroll-target="#advanced-git-workflow"><span class="toc-section-number">3.1</span>  Advanced Git Workflow</a>
-  <ul class="collapse">
-  <li><a href="#git-checkout" id="toc-git-checkout" class="nav-link" data-scroll-target="#git-checkout"><span class="toc-section-number">3.1.1</span>  git checkout</a></li>
-  </ul></li>
-  <li><a href="#when-to-tag" id="toc-when-to-tag" class="nav-link" data-scroll-target="#when-to-tag"><span class="toc-section-number">3.2</span>  When to Tag?</a></li>
+  <li><a href="#interacting-with-your-remote-repository" id="toc-interacting-with-your-remote-repository" class="nav-link active" data-scroll-target="#interacting-with-your-remote-repository"><span class="toc-section-number">3.0.1</span>  Interacting with your Remote Repository</a></li>
+  <li><a href="#interacting-with-a-peers-remote-repository" id="toc-interacting-with-a-peers-remote-repository" class="nav-link" data-scroll-target="#interacting-with-a-peers-remote-repository"><span class="toc-section-number">3.0.2</span>  Interacting with a Peer’s Remote Repository</a></li>
   </ul>
 </nav>
     </div>
@@ -173,52 +230,139 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<section id="git-push" class="level3" data-number="3.0.1">
-<h3 data-number="3.0.1" class="anchored" data-anchor-id="git-push"><span class="header-section-number">3.0.1</span> git push</h3>
-<p>To utilize Git’s collaborative potential use git push and a Git hosting service, most commonly Github. First, create a remote repository on Github to which you want to push your changes.</p>
-<p>Setup a repository on GitHub called `git\_train`</p>
-<p>then let git know that you have a repository</p>
-<pre class="{<default>}"><code>$ git remote add origin https://github.com/your_name/git_train.git</code></pre>
-<p>Push your master branch to the repository.</p>
-<pre class="{<default>}"><code>$ git push -u origin master
+<div class="cell">
 
-Counting objects: 22, done.
-
-Delta compression using up to 4 threads.
-
-Compressing objects: 100% (16/16), done.
-
-Writing objects: 100% (22/22), 2.07 KiB | 424.00 KiB/s, done.
-
-Total 22 (delta 1), reused 0 (delta 0)
-
-remote: Resolving deltas: 100% (1/1), done.
-
-To https://github.com/ben-williams/git_train.git
-
-* [new branch] master -&gt; master
-
-Branch 'master' set up to track remote branch 'master' from 'origin'.</code></pre>
+</div>
+<p>Git has some amazing reproducible research capabilities that can become really powerful in large complicated analyses. That said, utilizing Git comes with an overhead that may not be justified for small projects unless you consider collaboration with future analysts including yourself. To utilize Git’s collaborative potential create a remote repository on github. I created one called git_practice.</p>
+<section id="interacting-with-your-remote-repository" class="level3" data-number="3.0.1">
+<h3 data-number="3.0.1" class="anchored" data-anchor-id="interacting-with-your-remote-repository"><span class="header-section-number">3.0.1</span> Interacting with your Remote Repository</h3>
+<section id="git-push" class="level4" data-number="3.0.1.1">
+<h4 data-number="3.0.1.1" class="anchored" data-anchor-id="git-push"><span class="header-section-number">3.0.1.1</span> git push</h4>
+<p>To link your local repository to a remote repository use git remote. In the terminal output below I added a remote repository named “origin” and provided a url where the repository is located. The second command “pushed” my local repository to my remote repository. Files associated with this repository are now stored in a location where they can be accessed by others for collaborative work.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice_A (master)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>$ git remote add origin https://github.com/adamreimer/git_practice.git</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice_A (master)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>$ git push -u origin master</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>Enumerating objects: 14, done.</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>Counting objects: 100% (14/14), done.</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>Delta compression using up to 16 threads</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>Compressing objects: 100% (13/13), done.</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>Writing objects: 100% (14/14), 1.55 KiB | 52.00 KiB/s, done.</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>Total 14 (delta 3), reused 0 (delta 0), pack-reused 0</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>remote: Resolving deltas: 100% (3/3), done.</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>To https://github.com/adamreimer/git_practice.git</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a> * [new branch]      master -&gt; master</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>branch 'master' set up to track 'origin/master'.</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice_A (master)</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>$</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>After pushing to github your repository now looks like <a href="#fig-push">Figure&nbsp;<span>3.1</span></a>.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-push" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="collaboration_files/figure-html/fig-push-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;3.1: The Git workspace after your local repository has been pushed to a remote repository.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
 </section>
-<section id="git-clone" class="level3" data-number="3.0.2">
-<h3 data-number="3.0.2" class="anchored" data-anchor-id="git-clone"><span class="header-section-number">3.0.2</span> git clone</h3>
+<section id="git-clone" class="level4" data-number="3.0.1.2">
+<h4 data-number="3.0.1.2" class="anchored" data-anchor-id="git-clone"><span class="header-section-number">3.0.1.2</span> git clone</h4>
+<p>Imagine a situation where you would like to work on your analysis from a home computer<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. If your analysis is stored as a git repository it is easy to obtian a copy from a differetn machine. In the terminal sequence below we: navigate to a new (empty) folder where I would like to copy the git repository and clone the remote repository to my local machine.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>amreimer@DFGSXQDSF206801 MINGW64 ~/OneDrive - State of Alaska/Documents</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>$ cd S:/RTS/Reimer/Research_Best_Practices</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>$ ls</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a> Biometric_Best_Practices/  'Data super group'/   Git_book/   git_practice_A/   git_practice_B/   git_practice_C/   SSDL_test/</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>$ cd S:/RTS/Reimer/Research_Best_Practices/git_practice_C</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice_C</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>$ ls</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice_C</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>$ git clone https://github.com/adamreimer/git_practice.git .</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>Cloning into '.'...</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>remote: Enumerating objects: 14, done.</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>remote: Counting objects: 100% (14/14), done.</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>remote: Compressing objects: 100% (10/10), done.</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>remote: Total 14 (delta 3), reused 14 (delta 3), pack-reused 0</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>Receiving objects: 100% (14/14), done.</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>Resolving deltas: 100% (3/3), done.</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice_C (master)</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>$</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>After git clone the my git work space on my home machine looks the same as <a href="#fig-push">Figure&nbsp;<span>3.1</span></a>. If I make changes, add the changes files and commit those changes the local repository on your home machine will be one commit ahead of both your remote repository and the local repository on your work machine <a href="#fig-home">Figure&nbsp;<span>3.2</span></a>. <code>git status</code> would verify the discrepancy between your local repository (at home) and your remote repositories and <code>git push -u origin master</code> would sync the two repositories.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-home" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="collaboration_files/figure-html/fig-home-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;3.2: The Git workspace on your home computer after git clone and one commit.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
 </section>
-<section id="git-pull" class="level3" data-number="3.0.3">
-<h3 data-number="3.0.3" class="anchored" data-anchor-id="git-pull"><span class="header-section-number">3.0.3</span> git pull</h3>
+<section id="git-pull" class="level4" data-number="3.0.1.3">
+<h4 data-number="3.0.1.3" class="anchored" data-anchor-id="git-pull"><span class="header-section-number">3.0.1.3</span> git pull</h4>
+<p>Now your local repository at work will be one commit behind your local repsotiry at home and your remote repository. In the terminal sequence below we use <code>git status</code> to verify the remote repository is one commit ahead of the remote and <code>git pull</code> to fetch the new commit and merge it to your local working directory.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice_A</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>(master)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>$ git status</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>On branch master</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>Your branch is behind 'origin/master' by 1 commit, and can be fast-forwarded.</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  (use "git pull" to update your local branch)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>nothing to commit, working tree clean</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice_A</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>(master)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>$ git pull</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>Updating 247d383..b3b6ae3</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>Fast-forward</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a> fib_seq.R | 5 +++--</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a> 1 file changed, 3 insertions(+), 2 deletions(-)</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice_A</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>(master)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section>
-<section id="advanced-git-workflow" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="advanced-git-workflow"><span class="header-section-number">3.1</span> Advanced Git Workflow</h2>
-<p>Advanced Git workflows introduce some new concepts like reverting to a previous version, branching, merging, merge conflicts and model development. These concepts are likely overkill for simple analysis but can because very helpful for large projects.</p>
-<section id="git-checkout" class="level3" data-number="3.1.1">
-<h3 data-number="3.1.1" class="anchored" data-anchor-id="git-checkout"><span class="header-section-number">3.1.1</span> git checkout</h3>
-<p>To recall a previous commit use git checkout and provide the SHA for the commit you wish to recall. You will receive and error message telling your GIT is in a detached HEAD state which simply means GIT is confused on which commit it should be considering the most recent; the commit you just checked out or the last commit you made. Git tells you how to navigate this condition. If you only want to see the old code but not use it you can do that and simple checkout the most recent commit when you are done. I rarely do that… if all I wanted to do was see the changes I would use the GUI. I you want to revert to the old code the correct technique is to crate a new branch and merge it back with the old branch accepting the code form each branch .</p>
 </section>
+<section id="interacting-with-a-peers-remote-repository" class="level3" data-number="3.0.2">
+<h3 data-number="3.0.2" class="anchored" data-anchor-id="interacting-with-a-peers-remote-repository"><span class="header-section-number">3.0.2</span> Interacting with a Peer’s Remote Repository</h3>
+<p>How you interact with a peers remote repository depends on your goals. We will discuss three typical use cases below.</p>
+<section id="git-clone---to-copymodify-code" class="level4" data-number="3.0.2.1">
+<h4 data-number="3.0.2.1" class="anchored" data-anchor-id="git-clone---to-copymodify-code"><span class="header-section-number">3.0.2.1</span> git clone - To Copy/Modify Code</h4>
+<p>Imagine a situation where a peer has some code written which you would like to modify for a similar project<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. Use <code>git clone</code> as described above. You will be able to create a copy of their repository and work on your local machine as usual, but you will not be able to push changes back to the remote.</p>
 </section>
-<section id="when-to-tag" class="level2" data-number="3.2">
-<h2 data-number="3.2" class="anchored" data-anchor-id="when-to-tag"><span class="header-section-number">3.2</span> When to Tag?</h2>
-<p>Tags are designed to highlight particularity important commits. Commits which include snapshots of he analysis at the point it was published should definitely be tagged. The analyst can choose what other commits are worthy of a tag. Any time the results are presented to others would be a reasonable suggestion (in-house presentations/updates, conference presentations, exc.), although it is possible to record those milestones in the first part of the commit message.</p>
+<section id="git-clone-git-push-git-pull---to-collaborate-closely" class="level4" data-number="3.0.2.2">
+<h4 data-number="3.0.2.2" class="anchored" data-anchor-id="git-clone-git-push-git-pull---to-collaborate-closely"><span class="header-section-number">3.0.2.2</span> git clone, git push, git pull - To Collaborate (closely)</h4>
+<p>If you and a peer are working closely on a analysis it may be appropriate for the owner to add their peer as a collaborator to the project. This is a point-and-click task from your github repository page (<em>Settings&gt;Collaborators&gt;Add people&gt;keypunch the username</em>). The collaboator you can push and pull changes to their remote as if you were the owner. This arraignment is only appropriate for peers who you trust to commit changes of which you both approve. In practice this likely means there will be personal communication to coordinate each persons efforts.</p>
+</section>
+<section id="fork---to-collaborate-with-autonomy" class="level4" data-number="3.0.2.3">
+<h4 data-number="3.0.2.3" class="anchored" data-anchor-id="fork---to-collaborate-with-autonomy"><span class="header-section-number">3.0.2.3</span> fork - To Collaborate (with autonomy)</h4>
+<p><a href="https://docs.github.com/en/get-started/quickstart/fork-a-repo#forking-a-repository">Fork</a> is a GiHub operation which creates a copy of a remote repository under your Github ID. After the fork is created you can clone it to you local repository as described above. Your local repository can be <a href="https://docs.github.com/en/get-started/quickstart/fork-a-repo#configuring-git-to-sync-your-fork-with-the-upstream-repository">configured</a> to <a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/syncing-a-fork">sync</a> with the original (upstream) repository so that you local repository contains changes the original author made after fork. If you make significant changes to the repository that the original author may be interested in you can submit a <a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request-from-a-fork">pull request</a> which notifies the original author about the changes you have made and gives them the opportunity to include your code in their repository.</p>
 
 
+</section>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>I hope your analysis is on the network and you could use vpn to solve this problem.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Common courtesy requires you to ask permission and credit the person who originally wrote the code.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
 </section>
 
 </main> <!-- /main -->

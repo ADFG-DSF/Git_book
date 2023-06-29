@@ -6,7 +6,7 @@ That said, Rstudio has a very rudimentary Git GUI that can save a lot of keystro
 
 ### git init
 
-if you are starting a brand new analysis creating a git repository at the same time you create your R studio project is easy: *New Project\>New Directory\>New Project\>(provide name, location and check 'create git repository'*. This sequence runs git init in the background. I've executed those commands to create a new Rstudio project on my c drive names "git_practice_R". Let's check if it is a git repository.
+if you are starting a brand new analysis creating a git repository at the same time you create your R studio project is easy: *New Project\>New Directory\>New Project\>(provide name, location and check 'create git repository'*. This sequence runs git init in the background while the RStudio project is created
 
 ### git add
 
@@ -16,7 +16,7 @@ The Rstudio GUI makes this easier. You simply open the git pane and click the ra
 
 ### git commit
 
-Again, this process can be quite efficiently accomplished in the Rstudio GUI.
+Again, this process can be quite efficiently accomplished in the Rstudio GUI. In the Rstudio GUI you separate you commit message title and description buy leaving a blank line between the two messages in the commit window.
 
 ![Committing files with the RStudio GUI](R_commit.PNG)
 

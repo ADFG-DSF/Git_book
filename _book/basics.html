@@ -209,6 +209,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#git-add" id="toc-git-add" class="nav-link" data-scroll-target="#git-add"><span class="toc-section-number">2.0.2</span>  git add</a></li>
   <li><a href="#git-commit" id="toc-git-commit" class="nav-link" data-scroll-target="#git-commit"><span class="toc-section-number">2.0.3</span>  git commit</a></li>
   <li><a href="#git-log" id="toc-git-log" class="nav-link" data-scroll-target="#git-log"><span class="toc-section-number">2.0.4</span>  git log</a></li>
+  <li><a href="#git-diff" id="toc-git-diff" class="nav-link" data-scroll-target="#git-diff"><span class="toc-section-number">2.0.5</span>  git diff</a></li>
   </ul>
 </nav>
     </div>
@@ -235,53 +236,51 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell">
 
 </div>
-<p>One problem with widespread adoption of Git at ADF&amp;G is that there is no accepted standard for how to interact with Git. The options are GUI or shell/terminal. Shell/terminal is probably the best, if most intimidating. Everything you need to do can be done in the terminal and I’ll demonstrate that for the most important commands in the text that follows. In order to use the terminal effectively it helps to make one change to the Rstudio defaults by executing the following point and click commands: <em>Tools&gt;Terminal&gt;Terminal Options…&gt;(change initial directory to ‘project directory’)</em>. This change will ensure your terminal opens in the correct directory and save some unnecessary terminal prompts.</p>
-<p>That said, Rstudio has a very rudimentary Git GUI that can save a lot of keystrokes for some simple commands. For this reason it’s my opinion that a combination of the terminal and the Rstudio GUi is the easiest approach. I will point out appropriate Rstudio GUI options when appropriate.</p>
+<p>Herein we will focus on learning Git using the Terminal. The terminal is the easiest to demonstrate in a text document and everything you need to do can be done in the terminal. I’ll demonstrate the most important commands in the text that follows. In order to use the terminal effectively it helps to make one change to the Rstudio defaults by executing the following point and click commands: <em>Tools&gt;Terminal&gt;Terminal Options…&gt;(change initial directory to ‘project directory’)</em>. This change will ensure your terminal opens in the correct directory and save some unnecessary terminal prompts.</p>
+<p>That said, many users find it easier to interact with Git through a graphical user interface (GUI). The most accesible is found in RStudio itself. A Git tab will show up in the Environment/History/Connections/Tutorial window provided your directory is a Git repository. Using a GUI that can save a lot of keystrokes for simple commands and often displays revisions more clearly that they are displayed in the shell. The drawbacks are that some commands can only be completed in the terminal, each GUI different, and point and click commands are difficult to demonstrate in a text document. For this reason, we will focus on the terminal but show how to complete each command in the Rstudio GUI in the appendix. In practice, I tend to work with a combination of the terminal and the Rstudio GUI.</p>
 <section id="git-init" class="level3" data-number="2.0.1">
 <h3 data-number="2.0.1" class="anchored" data-anchor-id="git-init"><span class="header-section-number">2.0.1</span> git init</h3>
-<p>If you have an existing Rstudio project<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> that needs to become a git repository git init is the appropriate command. In the example below I have a Rstudio project in a folder names “git_practice” on my c drive. In the terminal sequence below I: 1)verify my directory is not a git repository with git status, 2) make is a git repository with git init, 3) verify the directory is now a git repository with git status.</p>
+<p>If you have an existing Rstudio project<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> that needs to become a git repository git init is the appropriate command. In the example below I have a Rstudio project in a folder named “git_practice_A” on S drive under S:/RTS/Reimer/Research_best_practices. In the terminal, each command line prompt ($) is proceeded by the username, shell type, and directory location.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>amreimer@DFGSXQDSF223076 MINGW64 /c/git_practice</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>$ git status</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>fatal: not a git repository (or any of the parent directories): .git</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>amreimer@DFGSXQDSF223076 MINGW64 /c/git_practice</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>$ git init</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>Initialized empty Git repository in C:/git_practice/.git/</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>amreimer@DFGSXQDSF223076 MINGW64 /c/git_practice (master)</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>$ git status</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>On branch master</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>No commits yet</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>Untracked files:</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  (use "git add &lt;file&gt;..." to include in what will be committed)</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>        .Rproj.user/</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>        git_practice.Rproj</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>nothing added to commit but untracked files present (use "git add" to track)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice_A</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>$</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Conversely, if you are starting a brand new analysis creating a git repository at the same time you create your R studio project is easy: <em>New Project&gt;New Directory&gt;New Project&gt;(provide name, location and check ‘create git repository’</em>. This sequence runs git init in the background. I’ve executed those commands to create a new Rstudio project on my c drive names “git_practice_R”. Let’s check if it is a git repository.</p>
-<pre class="{<default>}"><code>amreimer@DFGSXQDSF223076 MINGW64 /c/git_practice_R (master)
-$ git status
-On branch master
-
-No commits yet
-
-Untracked files:
-  (use "git add &lt;file&gt;..." to include in what will be committed)
-        .gitignore
-        git_practice_R.Rproj
-
-nothing added to commit but untracked files present (use "git add" to track)</code></pre>
-<p>The git init command creates a git repository in your project directory. At this point the repository is empty, but the git workflow has been enabled which will allow us to commit to the repository in the future. The arrow indicates your analysis has moved into the git workspace and now sits in your working directory.</p>
+<p>The terminal sequence below shows 3 commands and the output recieved after each command: 1) verify the directory is not a git repository with git status, 2) make is a git repository with git init, 3) verify the directory is now a git repository with git status.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice_A</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>$ git status</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>fatal: not a git repository (or any of the parent directories): .git</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice_A</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>$ git init</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>Initialized empty Git repository in //dfg.alaska.local/DSF/Anchorage/RTS/Reimer/Resear</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>ch_Best_Practices/git_practice_A/.git/</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice_A</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>(master)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>$ git status</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>On branch master</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>No commits yet</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>Untracked files:</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  (use "git add &lt;file&gt;..." to include in what will be committed)</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>        .gitignore</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>        git_practice_A.Rproj</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>nothing added to commit but untracked files present (use "git add" to track)</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice_A</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>(master)</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>$</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The git init command creates a git repository in your project directory. At this point, the repository is empty, but the git workflow has been enabled which will allow us to commit to the repository in the future. The arrow in <a href="#fig-init">Figure&nbsp;<span>2.1</span></a> indicates your analysis has moved into the git workspace and now sits in your working directory.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
+<div id="fig-init" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="basics_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
-<p></p><figcaption class="figure-caption">The git init command</figcaption><p></p>
+<p><img src="basics_files/figure-html/fig-init-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;2.1: The Git workspace after you have initilized an repository.</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -289,138 +288,229 @@ nothing added to commit but untracked files present (use "git add" to track)</co
 </section>
 <section id="git-add" class="level3" data-number="2.0.2">
 <h3 data-number="2.0.2" class="anchored" data-anchor-id="git-add"><span class="header-section-number">2.0.2</span> git add</h3>
-<p>In the git status response above 2 files were noted that could be added to the repository. Before we do that let’s create third file names fib_seq.R which contains nothing but the vector <code>c(1, 1)</code>. In the terminal sequence below I: 1) view which files need to be added with git status, 2) add each file one at a time with git add, 3) verify all files have been added with git status.</p>
-<pre class="{<default>}"><code>amreimer@DFGSXQDSF223076 MINGW64 /c/git_practice (master)
-$ git status
-On branch master
-
-No commits yet
-
-Untracked files:
-  (use "git add &lt;file&gt;..." to include in what will be committed)
-        .gitignore
-        fib_seq.R
-        git_practice.Rproj
-
-nothing added to commit but untracked files present (use "git add" to track)
-
-amreimer@DFGSXQDSF223076 MINGW64 /c/git_practice (master)
-$ git add .gitignore
-
-amreimer@DFGSXQDSF223076 MINGW64 /c/git_practice (master)
-$ git add fib_seq.R
-
-amreimer@DFGSXQDSF223076 MINGW64 /c/git_practice (master)
-$ git add git_practice.Rproj
-
-amreimer@DFGSXQDSF223076 MINGW64 /c/git_practice (master)
-$ git status
-On branch master
-
-No commits yet
-
-Changes to be committed:
-  (use "git rm --cached &lt;file&gt;..." to unstage)
-        new file:   .gitignore
-        new file:   fib_seq.R
-        new file:   git_practice.Rproj</code></pre>
-<p>The Rstudio GUI makes this easier. You simply open the git pane and click the radio button next to each file you would like to add (under the staged column). You can verify Rstudio stage and git add do the same thing but running the it status command in the terminal.</p>
-<p>Input screenshot.</p>
-<p>Use of git add stages files you would like to track for inclusion in your git repository. The arrow indicates that files withing your working directory were moved into the staging area.</p>
+<p>In the git status response above 2 files (<code>.gitignore</code> and <code>git_practice_A.Rproj)</code> were noted that could be added to the repository. Before we do that let’s create third file named fib_seq.R which contains nothing but the vector <code>c(0, 1)</code>. The Fibonacci seqence is the sequence created when each value in the sequence is the sum of the 2 previous values in the sequence. We will add to this sequence to practice the use of git. The terminal sequence below shows 5 commands: 1) view which files need to be added with git status, 2) add each file one at a time with git add, 3) verify all files have been added with git status.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice_A (master)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>$ git status</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>On branch master</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>No commits yet</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>Untracked files:</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  (use "git add &lt;file&gt;..." to include in what will be committed)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>        .gitignore</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>        fib_seq.R</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>        git_practice_A.Rproj</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>nothing added to commit but untracked files present (use "git add" to track)</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice_A (master)</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>$ git add .gitignore</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice_A (master)</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>$ git add fib_seq.R</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice_A (master)</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>$ git add git_practice_A.Rproj</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice_A (master)</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>$ git status</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>On branch master</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>No commits yet</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>Changes to be committed:</span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>  (use "git rm --cached &lt;file&gt;..." to unstage)</span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>        new file:   .gitignore</span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>        new file:   fib_seq.R</span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>        new file:   git_practice_A.Rproj</span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice_A (master)</span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>$</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Use of git add stages files you would like to track for inclusion in your git repository. The arrow in <a href="#fig-add">Figure&nbsp;<span>2.2</span></a> indicates that files within your working directory were moved into the staging area.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
+<div id="fig-add" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="basics_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
-<p></p><figcaption class="figure-caption">The git add command</figcaption><p></p>
+<p><img src="basics_files/figure-html/fig-add-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;2.2: The Git workspace after you have staged files in your working directory which you intend to add to your local repository.</figcaption><p></p>
 </figure>
 </div>
 </div>
 </div>
-<p>On occasion there are files in your working directory which you do not want Git to track. If you don’t add them they will not get tracked but it can also be cumbersome to have a long list of files which Git recognizes as present in your working directory but you are not actively tracking. The solution is to pen the file .gitignore and add the files you don’t want to track line by line. You can use wildcards if you prefer not to track all files of a certain type and or specify folders i f you don’t want to track anything inn certain sub-directories.</p>
+<p>On occasion there are files in your working directory which you do not want Git to track. If you don’t add them they will not get tracked but it can also be cumbersome to have a long list of files which Git recognizes as present in your working directory but you are not actively tracking. The solution is to open the file .gitignore and add the files you don’t want to track line by line. You can use wildcards if you prefer not to track all files of a certain type and or specify folders if you don’t want to track anything inn certain sub-directories. For example, <code>*.xlsx</code> would ignore all .xlsx files in your working directory while <code>posts/</code> would ignore all of the files in the folders posts within your working directory.</p>
 </section>
 <section id="git-commit" class="level3" data-number="2.0.3">
 <h3 data-number="2.0.3" class="anchored" data-anchor-id="git-commit"><span class="header-section-number">2.0.3</span> git commit</h3>
 <p>In the git status response above 3 files were staged. Let’s commit those files in the terminal.</p>
-<pre class="{<default>}"><code>$ git commit -m "inital commit" -m "started a fibinochi sequence for latter change/commit example"
-[master (root-commit) 046e2e8] inital commit
- 3 files changed, 18 insertions(+)
- create mode 100644 .gitignore
- create mode 100644 fib_seq.R
- create mode 100644 git_practice.Rproj
-
-amreimer@DFGSXQDSF223076 MINGW64 /c/git_practice (master)
-$ git log
-commit 046e2e85b1bfa1d7c4196cf763c4228519b5181b (HEAD -&gt; master)
-Author: Adam Reimer &lt;adam.reimer@alaska.gov&gt;
-Date:   Sat Jun 24 10:17:10 2023 -0800
-
-    inital commit
-
-    started a fibinochi sequence for latter change/commit example</code></pre>
-<p>In the terminal sequence above I commit all three staged files with a single line of code. Notice the commit message is broken into 2 parts. the first part is called the title. This title should be brief (limited to xx characters) as it will be included on most commit summaries and it’s nice if the whole message shows up in the limit space provided for it. The second message is called the detail and can be longer. The detail is still limited to yy characters so be terse but this is the place to provide some explanation beyond what you can capture in the title. Both messages can be seen in the git log.</p>
-<p>Again, this process can be quite efficiently accomplished in the Rstudio GUI.</p>
-<p>Input screenshot.</p>
-<p>Use of git commit places records the snapshot of your stages files into your local repository. The arrow indicates that staged files withing your working directory are not recorded in their present state within your local repository.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice_A (master)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>$ git status</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>On branch master</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>No commits yet</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>Changes to be committed:</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  (use "git rm --cached &lt;file&gt;..." to unstage)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>        new file:   .gitignore</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>        new file:   fib_seq.R</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>        new file:   git_practice_A.Rproj</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice_A (master)</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>$ git commit -m "Inital commit" -m "Started a Fibonaccci sequence to practice git"</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>[master (root-commit) 45bb4b2] Inital commit</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a> 3 files changed, 20 insertions(+)</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a> create mode 100644 .gitignore</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a> create mode 100644 fib_seq.R</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a> create mode 100644 git_practice_A.Rproj</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice_A (master)</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>$ git status</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>On branch master</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>nothing to commit, working tree clean</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice_A (master)</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>$ git log</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>commit 45bb4b2a18f07c33bfbe89b7b762008426059409 (HEAD -&gt; master)</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>Author: Adam Reimer &lt;adam.reimer@alaska.gov&gt;</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>Date:   Tue Jun 27 13:29:16 2023 -0800</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>    Inital commit</span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>    Started a Fibonaccci sequence to practice git</span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice_A (master)</span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>$</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>In the terminal sequence above all three staged files were added to the repository (committed) with a single line of code. Notice the commit message is broken into 2 parts. The first part is called the title or summary while the second part is called the description. A good practice is for the title to be brief (less that 50 characters) so that it displays well in most formats. There is no length limit for the description and this is the place to provide some explanation beyond what you can capture in the title.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
+<div id="fig-push" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="basics_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
-<p></p><figcaption class="figure-caption">The git commit command</figcaption><p></p>
+<p><img src="basics_files/figure-html/fig-push-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;2.3: The Git workspace after you have committed your staged files to your local repository.</figcaption><p></p>
 </figure>
 </div>
 </div>
 </div>
-<p>The git workflow described so far forms the bases on reproducible research using Git. If additional changes are made and saved the the working directory your Git workspace will look something like:</p>
-<div class="cell">
-<div class="cell-output-display">
-<p><img src="basics_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<p>Those changes are then added:</p>
-<div class="cell">
-<div class="cell-output-display">
-<p><img src="basics_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<p>And then committed:</p>
-<div class="cell">
-<div class="cell-output-display">
-<p><img src="basics_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<p>And this cycle will repeat many times:</p>
+<p>The git workflow described so far forms the basis on reproducible research using Git. In our example we will add single numbers to the Fibonacci sequence to practice this workflow. After a change is made and saved to the working directory your Git workspace will look something like:</p>
 <div class="cell">
 <div class="cell-output-display">
 <p><img src="basics_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<p>Those changes are then added:</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="basics_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>And then committed:</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="basics_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>And this cycle is repeated untill the first 5 numbers of the Fibonacci sequence are calculated:</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="basics_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
 <section id="when-to-commit" class="level4" data-number="2.0.3.1">
 <h4 data-number="2.0.3.1" class="anchored" data-anchor-id="when-to-commit"><span class="header-section-number">2.0.3.1</span> When to Commit?</h4>
 <p>Saves and a commits serve different purposes. As we all know, save can and should be used frequently… many times an hour and/or any time you are stepping away from your work. This use is agnostic to whether the analysis is using a traditional or git workflow.</p>
-<p>In contrast, commits are made for two reasons. First, a commit should be made whenever the analysis is at a point which you may want to revisit. Examples include; adding new data, adding a new component to the analysis, or any time the code was run and the results were distributed. Any one of these tasks may have resulted in a new ‘version’ in the traditional workflow but they don’t have to be major updates. The commit may also snapshot the code halfway through a new feature, at significant steps in a new features development, or prior to experimenting with a new feature. These commits allow you to revert back to the previous code in the event the new feature is not an improvement. An example commit message in these situations could look something like:</p>
-<pre class="{<default>}"><code>age-at-maturity trend
-
-allow for temporal trend in age at maturity using logistic regression w a year covariate.</code></pre>
+<p>In contrast, commits are made for two reasons. First, a commit should be made whenever the analysis is at a point which you may want to revisit. Examples include; adding new data, adding a new component to the analysis, or any time the code was run and the results were distributed. Any one of these tasks may have resulted in a new ‘version’ in the traditional workflow but they don’t have to be major updates. The commit may also snapshot significant steps in a new features development or prior to experimenting with a new feature. These commits allow you to revert back to the previous code in the event the new feature is not an improvement. An example commit message in these situations could look something like:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>age-at-maturity trend</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>allow for temporal trend in age at maturity using logistic regression w a year covariate.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <p>A second reason to commit is when the changes are substantive enough that the line-by-line change may be difficult to track if you did not commit until the new data/feature are complete. An example would be a run reconstruction project where you have multiple data sources and associated data entry formatting codes associated with each. A mid-process commit message in that scenario could be something like:</p>
-<pre class="{<default>}"><code>partial add 2024 data
-
-inriver harvest and netting added and changed to rectangular format. Need to add marine harvest and all index of abundacne data</code></pre>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>partial add 2024 data</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>inriver harvest and netting added and changed to rectangular format. Need to add marine harvest and all index of abundacne data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <p>The most important thing to note regarding commit messages is that, unlike save, there is no temporal component. While saves are designed to minimize the risk of lost work and should be frequent <em>in time</em>, commits are designed to record importance stages of the analysis and commits should be frequent <em>with respect to progress</em>. A difficult feature may take days to code but represent a single commit, provided the actual changes to the code are modest. Efficiency in commit frequency pay off when the repository is being revisited at a later date.</p>
-</section>
-<section id="how-to-view-differences-between-commits" class="level4" data-number="2.0.3.2">
-<h4 data-number="2.0.3.2" class="anchored" data-anchor-id="how-to-view-differences-between-commits"><span class="header-section-number">2.0.3.2</span> How to View Differences Between Commits</h4>
-<p>To view differences between commits the GUIs really outperform the terminal, so much so I wont show git diff in this document. In Rstudio, we view the commit differnces through the git tab (Diff&gt;Changes). Color coding is used to emphasizes line by line changes, with green representing new code and red representing the code it replaced.</p>
-<p>Screenshot</p>
 </section>
 </section>
 <section id="git-log" class="level3" data-number="2.0.4">
 <h3 data-number="2.0.4" class="anchored" data-anchor-id="git-log"><span class="header-section-number">2.0.4</span> git log</h3>
-<p>The veiw our commit history in the terminal use git log. The advantage to using git log is that both the title and detail message for each commit are shown. To my knowledge the Rstudio GUI only shows the title. There are more powerful GUI’s which show both.</p>
-<pre class="{<default>}"><code></code></pre>
-<p>In Rstudio, we view the commit history through the git tab (Diff&gt;History)</p>
-<p>Screenshot</p>
+<p>The view our commit history in the terminal use git log. For this example I have not been including descriptions with my commit messages becaseu the changes were simple enought to describe in the title. That said, not that for the first commit both the commit title and commit descritpption are shown in the log. The advantage to using git log is that both the title and detail message for each commit are shown.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice_A (master)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>$ git log</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>commit 247d383ead7899fcd3eff2eb5c902ffc314c1d8a (HEAD -&gt; master)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>Author: Adam Reimer &lt;adam.reimer@alaska.gov&gt;</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>Date:   Tue Jun 27 13:51:09 2023 -0800</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    fifth number added to Fibonnacci sequence</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>commit 5c23113e233d4957f72439e0cf5729104817287f</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>Author: Adam Reimer &lt;adam.reimer@alaska.gov&gt;</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>Date:   Tue Jun 27 13:50:08 2023 -0800</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    forth number added to Fibonnacci sequence</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>commit 2730310ae971ed325c517fa5e180ebcef7065f5e</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>Author: Adam Reimer &lt;adam.reimer@alaska.gov&gt;</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>Date:   Tue Jun 27 13:48:58 2023 -0800</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>    third number added to Fibonnacci sequence</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>commit 45bb4b2a18f07c33bfbe89b7b762008426059409</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>Author: Adam Reimer &lt;adam.reimer@alaska.gov&gt;</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>Date:   Tue Jun 27 13:29:16 2023 -0800</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>    Inital commit</span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>    Started a Fibonaccci sequence to practice git</span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice_A (master)</span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>$</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="git-diff" class="level3" data-number="2.0.5">
+<h3 data-number="2.0.5" class="anchored" data-anchor-id="git-diff"><span class="header-section-number">2.0.5</span> git diff</h3>
+<p>Ill add one more line to <code>fib_seq.R</code> to illustrate how Git shows us line by line changes in a file. In the terminal sequence below there are unstaged changes and git diff was used to see what change was made. The last command reverts back to the previous version of the file.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice_A (master)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>$ git status</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>On branch master</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>Changes not staged for commit:</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  (use "git add &lt;file&gt;..." to update what will be committed)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  (use "git restore &lt;file&gt;..." to discard changes in working directory)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>        modified:   fib_seq.R</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>no changes added to commit (use "git add" and/or "git commit -a")</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice_A (master)</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>$ git diff</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>diff --git a/fib_seq.R b/fib_seq.R</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>index 0ba340f..7b29418 100644</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>--- a/fib_seq.R</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>+++ b/fib_seq.R</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>@@ -3,4 +3,5 @@</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a> fib_seq &lt;- c(0, 1)</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a> fib_seq[3] &lt;- fib_seq[1] + fib_seq[2]</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a> fib_seq[4] &lt;- fib_seq[2] + fib_seq[3]</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>-fib_seq[5] &lt;- fib_seq[3] + fib_seq[4]</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>\ No newline at end of file</span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>+fib_seq[5] &lt;- fib_seq[3] + fib_seq[4]</span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>+fib_seq[6] &lt;- fib_seq[4] + fib_seq[5]</span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>\ No newline at end of file</span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice_A (master)</span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>$ git restore fib_seq.R</span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice_A (master)</span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>$</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Git GUI’s are superior to the terminal when looking at line-by line differences but for completeness we will discuss how to read the output. The section <code>--- a/fib_seq.R`</code> to <code>+++ b/fib_seq.R</code> identifies the files that were modified where <code>--- a/</code> and <code>+++ b</code> refer to the previous and the current versions of the file respectively. The line <code>@@ -3,4 +3,5 @@</code> tells us that the output is showing the original file starting on the third line and displaying the the next 4 lines (the three unmarked lines and the line with a negative symbol) while the new version of the file is also shown starting from the third line but displaying the next 5 lines (the three unmarked lines and the two line with a addition symbol). This makes sense because a single line was added to the new version.</p>
 
 
 </section>
