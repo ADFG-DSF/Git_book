@@ -142,7 +142,8 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#git-checkout" id="toc-git-checkout" class="nav-link active" data-scroll-target="#git-checkout"><span class="toc-section-number">4.0.1</span>  git checkout</a></li>
+  <li><a href="#git-checkout---previous-commit" id="toc-git-checkout---previous-commit" class="nav-link active" data-scroll-target="#git-checkout---previous-commit"><span class="toc-section-number">4.0.1</span>  git checkout - previous commit</a></li>
+  <li><a href="#git-checkout---new-branch" id="toc-git-checkout---new-branch" class="nav-link" data-scroll-target="#git-checkout---new-branch"><span class="toc-section-number">4.0.2</span>  git checkout - new branch</a></li>
   </ul>
 </nav>
     </div>
@@ -166,10 +167,26 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
+<div class="cell">
+
+</div>
 <p>Advanced Git workflows introduce some new concepts like reverting to a previous version, branching, merging, merge conflicts and model development. These concepts are likely overkill for simple analysis but can because very helpful for large projects.</p>
-<section id="git-checkout" class="level3" data-number="4.0.1">
-<h3 data-number="4.0.1" class="anchored" data-anchor-id="git-checkout"><span class="header-section-number">4.0.1</span> git checkout</h3>
-<p>To recall a previous commit use git checkout and provide the SHA for the commit you wish to recall. You will receive and error message telling your GIT is in a detached HEAD state which simply means GIT is confused on which commit it should be considering the most recent; the commit you just checked out or the last commit you made. Git tells you how to navigate this condition. If you only want to see the old code but not use it you can do that and simple checkout the most recent commit when you are done. I rarely do that… if all I wanted to do was see the changes I would use the GUI. I you want to revert to the old code the correct technique is to crate a new branch and merge it back with the old branch accepting the code form each branch .</p>
+<section id="git-checkout---previous-commit" class="level3" data-number="4.0.1">
+<h3 data-number="4.0.1" class="anchored" data-anchor-id="git-checkout---previous-commit"><span class="header-section-number">4.0.1</span> git checkout - previous commit</h3>
+<p>To recall a previous commit use git checkout and provide the SHA for the commit you wish to recall. You will receive and error message telling your GIT is in a detached HEAD state which simply means GIT is confused on which commit it should be considering the most recent; the commit you just checked out or the last commit you made. Git tells you how to navigate this condition. If you only want to see the old code but not use it you can do that and simple checkout the most recent commit when you are done. I rarely do that… if all I wanted to do was see the changes I would use the GUI. I you want to revert to the old code the correct technique is to create a new branch and merge it back with the old branch accepting the code form each branch.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-push" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="advanced_files/figure-html/fig-push-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;4.1: The Git workspace after checkout a previous commit.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="git-checkout---new-branch" class="level3" data-number="4.0.2">
+<h3 data-number="4.0.2" class="anchored" data-anchor-id="git-checkout---new-branch"><span class="header-section-number">4.0.2</span> git checkout - new branch</h3>
 
 
 </section>

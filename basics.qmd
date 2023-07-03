@@ -1,73 +1,95 @@
 ## The Basic Git Workflow
 
-{{< include _functions.qmd >}}
-
 Herein we will focus on learning Git using the Terminal. The terminal is the easiest to demonstrate in a text document and everything you need to do can be done in the terminal. I'll demonstrate the most important commands in the text that follows. In order to use the terminal effectively it helps to make one change to the Rstudio defaults by executing the following point and click commands: *Tools\>Terminal\>Terminal Options...\>(change initial directory to 'project directory')*. This change will ensure your terminal opens in the correct directory and save some unnecessary terminal prompts.
 
 That said, many users find it easier to interact with Git through a graphical user interface (GUI). The most accesible is found in RStudio itself. A Git tab will show up in the Environment/History/Connections/Tutorial window provided your directory is a Git repository. Using a GUI that can save a lot of keystrokes for simple commands and often displays revisions more clearly that they are displayed in the shell. The drawbacks are that some commands can only be completed in the terminal, each GUI different, and point and click commands are difficult to demonstrate in a text document. For this reason, we will focus on the terminal but show how to complete each command in the Rstudio GUI in the appendix. In practice, I tend to work with a combination of the terminal and the Rstudio GUI.
 
 ### git init
 
-If you have an existing Rstudio project[^basics-1] that needs to become a git repository git init is the appropriate command. In the example below I have a Rstudio project in a folder named "git_practice_A" on S drive under S:/RTS/Reimer/Research_best_practices. In the terminal, each command line prompt (\$) is proceeded by the username, shell type, and directory location.
+If you have an existing Rstudio project[^basics-1] that needs to become a git repository git init is the appropriate command. In the example below I have a Rstudio project in a folder named "git_practice" on S drive under S:/RTS/Reimer/Research_best_practices. In the terminal, each command line prompt (\$) is proceeded by the username, shell type, and directory location.
 
 [^basics-1]: side note: if you have an existing project directory that needs to become an Rstudio project the appropriate point and click sequence is *New Project\>Existing Directory\>(provide location)*
 
 ```{default}
-amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice_A
+amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice
 $
 ```
 
-The terminal sequence below shows 3 commands and the output recieved after each command: 1) verify the directory is not a git repository with git status, 2) make is a git repository with git init, 3) verify the directory is now a git repository with git status.
+The terminal session below shows 3 commands and the output received after each command: 1) verify the directory is not a git repository with git status, 2) make is a git repository with git init, 3) verify the directory is now a git repository with git status.
 
 ```{default}
-amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice_A
+amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice
 $ git status
 fatal: not a git repository (or any of the parent directories): .git
 
-amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice_A
+amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice
 $ git init
-Initialized empty Git repository in //dfg.alaska.local/DSF/Anchorage/RTS/Reimer/Resear
-ch_Best_Practices/git_practice_A/.git/
+Initialized empty Git repository in //dfg.alaska.local/DSF/Anchorage/RTS/Reimer/Research_Best_Practices/git_practice/.git/
 
-amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice_A
-(master)
+amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice ({main})
 $ git status
-On branch master
+On branch {main}
 
 No commits yet
 
 Untracked files:
   (use "git add <file>..." to include in what will be committed)
         .gitignore
-        git_practice_A.Rproj
+        git_practice.Rproj
 
 nothing added to commit but untracked files present (use "git add" to track)
 
-amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice_A
-(master)
+amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice ({main})
 $
 ```
 
-The git init command creates a git repository in your project directory. At this point, the repository is empty, but the git workflow has been enabled which will allow us to commit to the repository in the future. The arrow in @fig-init indicates your analysis has moved into the git workspace and now sits in your working directory.
+The git init command creates a git repository in your project directory. At this point, the repository is empty, but the git workflow has been enabled which will allow us to commit to the repository in the future. The rounded rectangle in @fig-init indicates all of the files included in your analysis at this point in time. At the moment they are represented by an empty rectangle which indicates that the files in your working directory are in a git work space. We will build this figure as we complete tasks within the Git work space.
 
 ```{r}
 #| echo: false
 #| message: false
 #| warning: false
 #| label: fig-init
-#| fig-cap: The Git workspace after you have initilized an repository.
+#| fig-cap: The Git workspace after you have initilized a repository.
 #| fig-height: 2
-plot_git(1, data.frame(x = 0, y =  1, xend = 0.83, yend = 1))
+library(ggplot2)
+library(tidyverse)
+library(RColorBrewer)
+dat <- 
+  data.frame(location = c(1),
+             snapshot = c(1),
+             sha = c("none")) %>%
+  mutate(fill = "",
+         label = "          ")
+  
+#color/fill scale
+my_colors <- c("#FFFFFF", brewer.pal(length(unique(dat$snapshot)), "Set1"))
+names(my_colors) <- c("", unique(dat$sha))
+
+ggplot(dat, aes(x = location, y = snapshot, label = label, color = sha)) + #
+  geom_label() +
+  geom_vline(xintercept = 1:3,
+             linetype = 2,
+             alpha = 0.5) +
+  scale_x_discrete(limits = c("Working \n Directory",
+                              "Local \n Repository",
+                              "Remote \n Repository")) +
+  scale_y_continuous(breaks = function(x) unique(floor(pretty(seq(0, max(x) + 1) * 1.1))),
+                     trans = "reverse") +
+  scale_color_manual(values = my_colors) +
+  scale_fill_manual(values = my_colors) +
+  guides(color = "none", fill = "none") +
+  labs(x = NULL, y = "Snapshot") +
+  theme_bw()
 ```
 
 ### git add
 
-In the git status response above 2 files (`.gitignore` and `git_practice_A.Rproj)` were noted that could be added to the repository. Before we do that let's create third file named fib_seq.R which contains nothing but the vector `c(0, 1)`. The Fibonacci seqence is the sequence created when each value in the sequence is the sum of the 2 previous values in the sequence. We will add to this sequence to practice the use of git. The terminal sequence below shows 5 commands: 1) view which files need to be added with git status, 2) add each file one at a time with git add, 3) verify all files have been added with git status.
+In the last git status report shown above 2 files (`.gitignore` and `git_practice_A.Rproj)` were noted that could be added to the repository. Before we do that let's create third file named fib_seq.R which contains a single line of code `fib_seq <- c(0, 1)`. The Fibonacci sequence is the sequence created when each value in the sequence is the sum of the 2 previous values in the sequence and the vector `c(0, 1)` initializes the sequence. We will add to this sequence to practice the use of git. The terminal session below shows 5 commands: 1) view which files need to be added with git status, 2) add each file one at a time with git add, 3) verify all files have been added with git status. Notice that I made a typo while attempting to add the `.Rproj` file. I survived this catastrophe with a warning, which is typical of mistakes in the terminal.
 
 ```{default}
-amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice_A (master)
 $ git status
-On branch master
+On branch {main}
 
 No commits yet
 
@@ -75,22 +97,26 @@ Untracked files:
   (use "git add <file>..." to include in what will be committed)
         .gitignore
         fib_seq.R
-        git_practice_A.Rproj
+        git_practice.Rproj
 
 nothing added to commit but untracked files present (use "git add" to track)
 
-amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice_A (master)
+amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice ({main})
 $ git add .gitignore
 
-amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice_A (master)
+amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice ({main})
 $ git add fib_seq.R
 
-amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice_A (master)
-$ git add git_practice_A.Rproj
+amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice ({main})
+$ git_add git_practice.Rproj
+bash: git_add: command not found
 
-amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice_A (master)
+amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice ({main})
+$ git add git_practice.Rproj
+
+amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice ({main})
 $ git status
-On branch master
+On branch {main}
 
 No commits yet
 
@@ -98,14 +124,14 @@ Changes to be committed:
   (use "git rm --cached <file>..." to unstage)
         new file:   .gitignore
         new file:   fib_seq.R
-        new file:   git_practice_A.Rproj
+        new file:   git_practice.Rproj
 
 
-amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice_A (master)
+amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice ({main})
 $
 ```
 
-Use of git add stages files you would like to track for inclusion in your git repository. The arrow in @fig-add indicates that files within your working directory were moved into the staging area.
+Use of git add stages files you would like to track for inclusion in your git repository. The rectangle in @fig-add is now filled which indicates that files within your working directory are staged and ready to be committed.
 
 ```{r}
 #| echo: false 
@@ -114,19 +140,46 @@ Use of git add stages files you would like to track for inclusion in your git re
 #| label: fig-add
 #| fig-cap: The Git workspace after you have staged files in your working directory which you intend to add to your local repository.
 #| fig-height: 2 
-plot_git(c(1, 2), data.frame(x = 1.15, y =  1, xend = 1.85, yend = 1))
+dat <- 
+  data.frame(location = c(1),
+             snapshot = c(1),
+             sha = c("none")) %>%
+  mutate(fill = sha,
+         label = "          ")
+  
+#color/fill scale
+my_colors <- c("#FFFFFF", brewer.pal(length(unique(dat$snapshot)), "Set1"))
+names(my_colors) <- c("", unique(dat$sha))
+
+ggplot(dat, aes(x = location, y = snapshot, label = label, fill = fill, color = sha)) + #
+  geom_label() +
+  geom_vline(xintercept = 1:3,
+             linetype = 2,
+             alpha = 0.5) +
+  scale_x_discrete(limits = c("Working \n Directory",
+                              "Local \n Repository",
+                              "Remote \n Repository")) +
+  scale_y_continuous(breaks = function(x) unique(floor(pretty(seq(0, max(x) + 1) * 1.1))),
+                     trans = "reverse") +
+  scale_color_manual(values = my_colors) +
+  scale_fill_manual(values = my_colors) +
+  guides(color = "none", fill = "none") +
+  labs(x = NULL, y = "Snapshot") +
+  theme_bw()
 ```
 
-On occasion there are files in your working directory which you do not want Git to track. If you don't add them they will not get tracked but it can also be cumbersome to have a long list of files which Git recognizes as present in your working directory but you are not actively tracking. The solution is to open the file .gitignore and add the files you don't want to track line by line. You can use wildcards if you prefer not to track all files of a certain type and or specify folders if you don't want to track anything inn certain sub-directories. For example, `*.xlsx` would ignore all .xlsx files in your working directory while `posts/` would ignore all of the files in the folders posts within your working directory.
+Notice Git tells you how to unstage a file if you added one inadvertently. On occasion there are files in your working directory which you do not want Git to track. Examples might be .pdf files for literature you referencesd while conducting the analysis, word documents you produced for operational planning and reporting, or extreamly large outputs. It's fine to exclude these sort of files but before you do so consider... "Would a future researcher need access to this file to recreate my work?". If they would you should add them to the repository.
+
+Tt can be cumbersome to have a long list of files which Git recognizes as present in your working directory but you are not actively tracking. The solution is to open the file .gitignore and identify the files you do not want to track. You can use wildcards if you prefer not to track all files of a certain type and or specify folders if you don't want to track anything in certain sub-directories. For example, `*.xlsx` would ignore all .xlsx files in your working directory while `posts/` would ignore all of the files in the folder posts within your working directory.
 
 ### git commit
 
-In the git status response above 3 files were staged. Let's commit those files in the terminal.
+In the git status response above 3 files were staged. Let's commit those files in the terminal. In the terminal session above we verified all of the files we wanted to commit were staged using `git status`, recorded (committed) all of the staged files into the repository using `git commit`, verified the commit worked using `git status` and examined the repository log using `git log`.
 
 ```{default}
-amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice_A (master)
+amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice ({main})
 $ git status
-On branch master
+On branch {main}
 
 No commits yet
 
@@ -134,37 +187,41 @@ Changes to be committed:
   (use "git rm --cached <file>..." to unstage)
         new file:   .gitignore
         new file:   fib_seq.R
-        new file:   git_practice_A.Rproj
+        new file:   git_practice.Rproj
 
 
-amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice_A (master)
-$ git commit -m "Inital commit" -m "Started a Fibonaccci sequence to practice git"
-[master (root-commit) 45bb4b2] Inital commit
- 3 files changed, 20 insertions(+)
+amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice ({main})
+$ git commit -m "Initialize Fibonacci sequence" -m "Sequential additions to the Fibonacci sequence will provide a simple way to demonstrate several cycles of the git workflow including add/commit, push/pull, collaborate, fork, branch, merge, merge conflicts, exc. I even got my wife a GitHub account for this. Wish us luck!"
+[{main} e17181f] Initialize Fibonacci sequence
+ Date: Sun Jul 2 12:59:06 2023 -0800
+ 3 files changed, 21 insertions(+)
  create mode 100644 .gitignore
  create mode 100644 fib_seq.R
- create mode 100644 git_practice_A.Rproj
+ create mode 100644 git_practice.Rproj
 
-amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice_A (master)
+amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice ({main})
 $ git status
-On branch master
+On branch {main}
 nothing to commit, working tree clean
 
-amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice_A (master)
+amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice ({main})
 $ git log
-commit 45bb4b2a18f07c33bfbe89b7b762008426059409 (HEAD -> master)
+commit e17181fa781b2e30096e1c7d31443aac18d527e5 (HEAD -> {main})
 Author: Adam Reimer <adam.reimer@alaska.gov>
-Date:   Tue Jun 27 13:29:16 2023 -0800
+Date:   Sun Jul 2 12:59:06 2023 -0800
 
-    Inital commit
+    Initialize Fibonacci sequence
 
-    Started a Fibonaccci sequence to practice git
+    Sequential additions to the Fibonacci sequence will provide a simple way to demonstrate several cycles of the git workflow including add/commit, push/pull, collaborate, fork, branch, merge, merge conflicts, exc. I even got my wife a GitHub account
+for this. Wish us luck!
 
-amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice_A (master)
+amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice ({main})
 $
 ```
 
-In the terminal sequence above all three staged files were added to the repository (committed) with a single line of code. Notice the commit message is broken into 2 parts. The first part is called the title or summary while the second part is called the description. A good practice is for the title to be brief (less that 50 characters) so that it displays well in most formats. There is no length limit for the description and this is the place to provide some explanation beyond what you can capture in the title.
+Git log provides a summary of the commit. Two important parts are the commit ID and the commit message. The commit ID is a code which can be used to reference the commit in the future. Git assigned a long ID to each commit `e17181fa781b2e30096e1c7d31443aac18d527e5` for this commit, but its common to using only the first 7 characters of the commit ID `e17181f` to refer to a commit.
+
+Commit messages are required. Notice the commit message is broken into 2 parts. The first part is called the title or summary while the second part is called the description. A good practice is for the title to be brief (less that 50 characters) so that it displays well in most formats. There is no length limit for the description and this is the place to provide some explanation beyond what you can capture in the title. I've purposely been more verbose that typical with this commit to demonstrate a long description.
 
 ```{r}
 #| echo: false 
@@ -173,17 +230,69 @@ In the terminal sequence above all three staged files were added to the reposito
 #| label: fig-push
 #| fig-cap: The Git workspace after you have committed your staged files to your local repository.
 #| fig-height: 2 
-plot_git(c(1, 2, 3), data.frame(x = 2.14, y =  1, xend = 2.76, yend = 1))
+dat <- 
+  data.frame(location = c(1, 2),
+             snapshot = c(1, 1),
+             sha = c("e17181f", "e17181f")) %>%
+  mutate(fill = ifelse(location %in% c(1, 5), sha, ""),
+         label = ifelse(location %in% c(1, 5), "          ", sha))
+  
+#color/fill scale
+my_colors <- c("#FFFFFF", brewer.pal(length(unique(dat$snapshot)), "Set1"))
+names(my_colors) <- c("", unique(dat$sha))
+
+ggplot(dat, aes(x = location, y = snapshot, label = label, fill = fill, color = sha)) + #
+  geom_label() +
+  geom_vline(xintercept = 1:3,
+             linetype = 2,
+             alpha = 0.5) +
+  scale_x_discrete(limits = c("Working \n Directory",
+                              "Local \n Repository",
+                              "Remote \n Repository")) +
+  scale_y_continuous(breaks = function(x) unique(floor(pretty(seq(0, max(x) + 1) * 1.1))),
+                     trans = "reverse") +
+  scale_color_manual(values = my_colors) +
+  scale_fill_manual(values = my_colors) +
+  guides(color = "none", fill = "none") +
+  labs(x = NULL, y = "Snapshot") +
+  theme_bw()
 ```
 
-The git workflow described so far forms the basis on reproducible research using Git. In our example we will add single numbers to the Fibonacci sequence to practice this workflow. After a change is made and saved to the working directory your Git workspace will look something like:
+The git workflow described so far forms the basis on reproducible research using Git. In our example we will calculate the next several values in the Fibonacci sequence to practice this workflow. After a change is made and saved to the working directory your Git workspace will look something like:
+
+::: {layout-ncol=2}
 
 ```{r}
 #| echo: false 
 #| message: false 
 #| warning: false
 
-plot_git(c(1, 3), changes = TRUE)
+dat <- 
+  data.frame(location = c(1, 2),
+             snapshot = c(2, 1),
+             sha = c("none", "e17181f")) %>%
+  mutate(fill = "", #ifelse(location %in% c(1, 5), sha, ""),
+         label = ifelse(location %in% c(1, 5), "          ", sha))
+  
+#color/fill scale
+my_colors <- c("#FFFFFF", brewer.pal(9, "Set1"))
+names(my_colors) <- c("", unique(dat$sha)[rev(sort(unique(dat$snapshot)))])
+
+ggplot(dat, aes(x = location, y = snapshot, label = label, fill = fill, color = sha)) + 
+  geom_label() +
+  geom_vline(xintercept = 1:3,
+             linetype = 2,
+             alpha = 0.5) +
+  scale_x_discrete(limits = c("Working \n Directory",
+                              "Local \n Repository",
+                              "Remote \n Repository")) +
+  scale_y_continuous(breaks = function(x) unique(floor(pretty(seq(0, max(x) + 1) * 1.1))),
+                     trans = "reverse") +
+  scale_color_manual(values = my_colors) +
+  scale_fill_manual(values = my_colors) +
+  guides(color = "none", fill = "none") +
+  labs(x = NULL, y = "Snapshot") +
+  theme_bw()
 ```
 
 Those changes are then added:
@@ -193,7 +302,32 @@ Those changes are then added:
 #| message: false 
 #| warning: false
 
-plot_git(c(1, 2, 3), changes = TRUE)
+dat <- 
+  data.frame(location = c(1, 2),
+             snapshot = c(2, 1),
+             sha = c("none", "e17181f")) %>%
+  mutate(fill = ifelse(location %in% c(1, 5), sha, ""),
+         label = ifelse(location %in% c(1, 5), "          ", sha))
+  
+#color/fill scale
+my_colors <- c("#FFFFFF", brewer.pal(9, "Set1"))
+names(my_colors) <- c("", unique(dat$sha)[rev(sort(unique(dat$snapshot)))])
+
+ggplot(dat, aes(x = location, y = snapshot, label = label, fill = fill, color = sha)) + 
+  geom_label() +
+  geom_vline(xintercept = 1:3,
+             linetype = 2,
+             alpha = 0.5) +
+  scale_x_discrete(limits = c("Working \n Directory",
+                              "Local \n Repository",
+                              "Remote \n Repository")) +
+  scale_y_continuous(breaks = function(x) unique(floor(pretty(seq(0, max(x) + 1) * 1.1))),
+                     trans = "reverse") +
+  scale_color_manual(values = my_colors) +
+  scale_fill_manual(values = my_colors) +
+  guides(color = "none", fill = "none") +
+  labs(x = NULL, y = "Snapshot") +
+  theme_bw()
 ```
 
 And then committed:
@@ -202,114 +336,147 @@ And then committed:
 #| echo: false 
 #| message: false 
 #| warning: false 
-plot_git(c(1, 2, 3, 3))
+sha = c("e17181f", "3bb6c98")
+
+dat <- 
+  data.frame(location = c(1, 2, 2),
+             snapshot = c(2, 1, 2)) %>%
+  mutate(sha = sha[snapshot],
+         fill = ifelse(location %in% c(1, 5), sha, ""),
+         label = ifelse(location %in% c(1, 5), "          ", sha))
+  
+#color/fill scale
+my_colors <- c("#FFFFFF", brewer.pal(9, "Set1"))
+names(my_colors) <- c("", sha)
+
+ggplot(dat, aes(x = location, y = snapshot, label = label, fill = fill, color = sha)) + 
+  geom_label() +
+  geom_vline(xintercept = 1:3,
+             linetype = 2,
+             alpha = 0.5) +
+  scale_x_discrete(limits = c("Working \n Directory",
+                              "Local \n Repository",
+                              "Remote \n Repository")) +
+  scale_y_continuous(breaks = function(x) unique(floor(pretty(seq(0, max(x) + 1) * 1.1))),
+                     trans = "reverse") +
+  scale_color_manual(values = my_colors) +
+  scale_fill_manual(values = my_colors) +
+  guides(color = "none", fill = "none") +
+  labs(x = NULL, y = "Snapshot") +
+  theme_bw()
 ```
 
-And this cycle is repeated untill the first 5 numbers of the Fibonacci sequence are calculated:
+And this cycle is repeated until the first 4 numbers of the Fibonacci sequence are calculated:
 
 ```{r}
 #| echo: false 
 #| message: false 
 #| warning: false 
 #| fig-height: 5 
-plot_git(c(1, 2, 3, 3, 3, 3))
+sha = c("e17181f", "3bb6c98", "11cf98f")
+
+dat <- 
+  data.frame(location = c(1, 2, 2, 2),
+             snapshot = c(3, 1, 2, 3)) %>%
+  mutate(sha = sha[snapshot],
+         fill = ifelse(location %in% c(1, 5), sha, ""),
+         label = ifelse(location %in% c(1, 5), "          ", sha))
+  
+#color/fill scale
+my_colors <- c("#FFFFFF", brewer.pal(9, "Set1"))
+names(my_colors) <- c("", sha)
+
+ggplot(dat, aes(x = location, y = snapshot, label = label, fill = fill, color = sha)) + 
+  geom_label() +
+  geom_vline(xintercept = 1:3,
+             linetype = 2,
+             alpha = 0.5) +
+  scale_x_discrete(limits = c("Working \n Directory",
+                              "Local \n Repository",
+                              "Remote \n Repository")) +
+  scale_y_continuous(breaks = function(x) unique(floor(pretty(seq(0, max(x) + 1) * 1.1))),
+                     trans = "reverse") +
+  scale_color_manual(values = my_colors) +
+  scale_fill_manual(values = my_colors) +
+  guides(color = "none", fill = "none") +
+  labs(x = NULL, y = "Snapshot") +
+  theme_bw()
 ```
+
+:::
 
 #### When to Commit?
 
 Saves and a commits serve different purposes. As we all know, save can and should be used frequently... many times an hour and/or any time you are stepping away from your work. This use is agnostic to whether the analysis is using a traditional or git workflow.
 
-In contrast, commits are made for two reasons. First, a commit should be made whenever the analysis is at a point which you may want to revisit. Examples include; adding new data, adding a new component to the analysis, or any time the code was run and the results were distributed. Any one of these tasks may have resulted in a new 'version' in the traditional workflow but they don't have to be major updates. The commit may also snapshot significant steps in a new features development or prior to experimenting with a new feature. These commits allow you to revert back to the previous code in the event the new feature is not an improvement. An example commit message in these situations could look something like:
+In contrast, commits are made for two reasons. First, a commit should be made whenever the analysis is at a point which you may want to revisit. Examples include; adding new data, adding a new component to the analysis, or any time the code was run and the results were distributed. Any one of these tasks may have resulted in a new 'version' in the traditional workflow but they don't have to be major updates. The commit may also snapshot significant steps in a new features development or prior to experimenting with a new feature. These commits allow you to revert back to the previous code in the event the new feature is not an improvement. A second reason to commit is when the changes are substantive enough that the line-by-line change may be difficult to track if you did not commit until the new data/feature are complete.
 
-```{default}
-age-at-maturity trend
-
-allow for temporal trend in age at maturity using logistic regression w a year covariate.
-```
-
-A second reason to commit is when the changes are substantive enough that the line-by-line change may be difficult to track if you did not commit until the new data/feature are complete. An example would be a run reconstruction project where you have multiple data sources and associated data entry formatting codes associated with each. A mid-process commit message in that scenario could be something like:
-
-```{default}
-partial add 2024 data
-
-inriver harvest and netting added and changed to rectangular format. Need to add marine harvest and all index of abundacne data
-```
-
-The most important thing to note regarding commit messages is that, unlike save, there is no temporal component. While saves are designed to minimize the risk of lost work and should be frequent *in time*, commits are designed to record importance stages of the analysis and commits should be frequent *with respect to progress*. A difficult feature may take days to code but represent a single commit, provided the actual changes to the code are modest. Efficiency in commit frequency pay off when the repository is being revisited at a later date.
+The most important thing to note regarding commit messages is that, unlike save, there is no temporal component. While saves are designed to minimize the risk of lost work and should be frequent *in time*, commits are designed to record importance stages of the analysis and commits should be frequent *with respect to progress*. A difficult feature may take days to code but represent a single commit, provided the actual changes to the code are modest. Efficiency in commit frequency pay off when a large repository is being revisited at a later date.
 
 ### git log
 
-The view our commit history in the terminal use git log. For this example I have not been including descriptions with my commit messages becaseu the changes were simple enought to describe in the title. That said, not that for the first commit both the commit title and commit descritpption are shown in the log. The advantage to using git log is that both the title and detail message for each commit are shown.
+The view our commit history in the terminal use git log. For this example, I have not been including descriptions with my commit messages became the changes were simple enough to describe in the title. Note that the commit ID, author, dat, commit title and commit description are all shown in the log.
 
 ```{default}
-amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice_A (master)
+amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice ({main})
 $ git log
-commit 247d383ead7899fcd3eff2eb5c902ffc314c1d8a (HEAD -> master)
+commit 11cf98ff67b8ec4f8cd7f2c1650a176d5875fdcf (HEAD -> {main})
 Author: Adam Reimer <adam.reimer@alaska.gov>
-Date:   Tue Jun 27 13:51:09 2023 -0800
+Date:   Sun Jul 2 14:53:05 2023 -0800
 
-    fifth number added to Fibonnacci sequence
+    Fourth entry in the Fibonacci sequence
 
-commit 5c23113e233d4957f72439e0cf5729104817287f
+    Long and informative message goes here.
+
+commit 3bb6c98bb0048bad7bda489bd8d40be24fb66acf
 Author: Adam Reimer <adam.reimer@alaska.gov>
-Date:   Tue Jun 27 13:50:08 2023 -0800
+Date:   Sun Jul 2 14:31:04 2023 -0800
 
-    forth number added to Fibonnacci sequence
+    Third entry in fib_seq
 
-commit 2730310ae971ed325c517fa5e180ebcef7065f5e
+    This message is not necessary for such a simple commit, but descriptions are an important part of reproducible research I’m writing a long message to set a good example.  Have better content in yours.
+
+commit e17181fa781b2e30096e1c7d31443aac18d527e5
 Author: Adam Reimer <adam.reimer@alaska.gov>
-Date:   Tue Jun 27 13:48:58 2023 -0800
+Date:   Sun Jul 2 12:59:06 2023 -0800
 
-    third number added to Fibonnacci sequence
+    Initialize Fibonacci sequence
 
-commit 45bb4b2a18f07c33bfbe89b7b762008426059409
-Author: Adam Reimer <adam.reimer@alaska.gov>
-Date:   Tue Jun 27 13:29:16 2023 -0800
+    Sequential additions to the Fibonacci sequence will provide a simple way to demonstrate several cycles of the git workflow including add/commit, push/pull, collaborate, fork, branch, merge, merge conflicts, exc. I even got my wife a GitHub account
+for this. Wish us luck!
 
-    Inital commit
-
-    Started a Fibonaccci sequence to practice git
-
-amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice_A (master)
+amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice ({main})
 $
 ```
 
 ### git diff
 
-Ill add one more line to `fib_seq.R` to illustrate how Git shows us line by line changes in a file. In the terminal sequence below there are unstaged changes and git diff was used to see what change was made. The last command reverts back to the previous version of the file.
+To seee the difference between two commits use `git diff`. With no additional arguments `git diff` will show the changes in the working directory relative to the last commit. Our working directory has no changes as illustrated by `git status`. Instead we can add a short commit ID to the command to see changed between the current working directoy and the commit `3bb6c9`.
 
 ```{default}
-amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice_A (master)
+amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice ({main})
 $ git status
-On branch master
-Changes not staged for commit:
-  (use "git add <file>..." to update what will be committed)
-  (use "git restore <file>..." to discard changes in working directory)
-        modified:   fib_seq.R
+On branch {main}
+nothing to commit, working tree clean
 
-no changes added to commit (use "git add" and/or "git commit -a")
-
-amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice_A (master)
-$ git diff
+amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice ({main})
+$ git diff 3bb6c9
 diff --git a/fib_seq.R b/fib_seq.R
-index 0ba340f..7b29418 100644
+index 9c118d5..4ce1d70 100644
 --- a/fib_seq.R
 +++ b/fib_seq.R
-@@ -3,4 +3,5 @@
+@@ -2,4 +2,5 @@
+ #Adam Reimer
+
  fib_seq <- c(0, 1)
- fib_seq[3] <- fib_seq[1] + fib_seq[2]
- fib_seq[4] <- fib_seq[2] + fib_seq[3]
--fib_seq[5] <- fib_seq[3] + fib_seq[4]
+-fib_seq[3] <- fib_seq[1] + fib_seq[2]
 \ No newline at end of file
-+fib_seq[5] <- fib_seq[3] + fib_seq[4]
-+fib_seq[6] <- fib_seq[4] + fib_seq[5]
++fib_seq[3] <- fib_seq[1] + fib_seq[2]
++fib_seq[4] <- fib_seq[2] + fib_seq[3]
 \ No newline at end of file
 
-amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice_A (master)
-$ git restore fib_seq.R
-
-amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice_A (master)
+amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice ({main})
 $
 ```
 
-Git GUI's are superior to the terminal when looking at line-by line differences but for completeness we will discuss how to read the output. The section `` --- a/fib_seq.R` `` to `+++ b/fib_seq.R` identifies the files that were modified where `--- a/` and `+++ b` refer to the previous and the current versions of the file respectively. The line `@@ -3,4 +3,5 @@` tells us that the output is showing the original file starting on the third line and displaying the the next 4 lines (the three unmarked lines and the line with a negative symbol) while the new version of the file is also shown starting from the third line but displaying the next 5 lines (the three unmarked lines and the two line with a addition symbol). This makes sense because a single line was added to the new version.
+Git GUI's are superior to the terminal when looking at line-by line differences but for completeness we will discuss how to read the output. The section `--- a/fib_seq.R` to `+++ b/fib_seq.R` identifies the files that were modified where `--- a/` and `+++ b` refer to the previous and the current versions of the file respectively. The line `@@ -2,4 +2,5 @@` tells us that the output is showing the original file starting on the second line and displaying the the next 4 lines (three unmarked lines and the line with a negative symbol) while the new version of the file is also shown starting from the second line but displaying the next 5 lines (the three unmarked lines and the two lines with a addition symbol). This makes sense because a single line was added to the new version.

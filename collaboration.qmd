@@ -1,33 +1,34 @@
 ## Collaboration Using Git
 
-{{< include _functions.qmd >}}
-
 Git has some amazing reproducible research capabilities that can become really powerful in large complicated analyses. That said, utilizing Git comes with an overhead that may not be justified for small projects unless you consider collaboration with future analysts including yourself. To utilize Git's collaborative potential create a remote repository on github. I created one called git_practice.
 
 ### Interacting with your Remote Repository
 
 #### git push
 
-To link your local repository to a remote repository use git remote. In the terminal output below I added a remote repository named "origin" and provided a url where the repository is located. The second command "pushed" my local repository to my remote repository. Files associated with this repository are now stored in a location where they can be accessed by others for collaborative work.
+To link your local repository to a remote repository use `git remote`. In the terminal session below I added a remote repository named "origin" and provided a url where the repository is located. The second command created a new branch in the remote names "main". The third command "pushed" my local repository to my remote repository. Files associated with this repository are now stored in a location where they can be accessed by others for viewing, download, or collaborative work.
 
 ```{default}
-amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice_A (master)
+amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice ({main})
 $ git remote add origin https://github.com/adamreimer/git_practice.git
 
-amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice_A (master)
-$ git push -u origin master
-Enumerating objects: 14, done.
-Counting objects: 100% (14/14), done.
-Delta compression using up to 16 threads
-Compressing objects: 100% (13/13), done.
-Writing objects: 100% (14/14), 1.55 KiB | 52.00 KiB/s, done.
-Total 14 (delta 3), reused 0 (delta 0), pack-reused 0
-remote: Resolving deltas: 100% (3/3), done.
-To https://github.com/adamreimer/git_practice.git
- * [new branch]      master -> master
-branch 'master' set up to track 'origin/master'.
+amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice ({main})
+$ git branch -M main
 
-amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice_A (master)
+amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (main)
+$ git push -u origin main
+Enumerating objects: 11, done.
+Counting objects: 100% (11/11), done.
+Delta compression using up to 16 threads
+Compressing objects: 100% (10/10), done.
+Writing objects: 100% (11/11), 1.53 KiB | 8.00 KiB/s, done.
+Total 11 (delta 2), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (2/2), done.
+To https://github.com/adamreimer/git_practice.git
+ * [new branch]      main -> main
+branch 'main' set up to track 'origin/main'.
+
+amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (main)
 $
 ```
 
@@ -41,32 +42,226 @@ After pushing to github your repository now looks like @fig-push.
 #| fig-cap: The Git workspace after your local repository has been pushed to a remote repository. 
 #| fig-height: 5 
 
-plot_git(c(1, 3, 3, 3, 3, 4, 4, 4, 4))
+sha = c("e17181f", "3bb6c98", "11cf98f")
+
+dat <- 
+  data.frame(location = c(1, 2, 2, 2, 3, 3, 3),
+             snapshot = c(3, 1, 2, 3, 1, 2, 3)) %>%
+  mutate(sha = sha[snapshot],
+         fill = ifelse(location %in% c(1, 5), sha, ""),
+         label = ifelse(location %in% c(1, 5), "          ", sha))
+  
+#color/fill scale
+my_colors <- c("#FFFFFF", brewer.pal(9, "Set1"))
+names(my_colors) <- c("", sha)
+
+ggplot(dat, aes(x = location, y = snapshot, label = label, fill = fill, color = sha)) + 
+  geom_label() +
+  geom_vline(xintercept = 1:3,
+             linetype = 2,
+             alpha = 0.5) +
+  scale_x_discrete(limits = c("Working \n Directory",
+                              "Local \n Repository",
+                              "Remote \n Repository")) +
+  scale_y_continuous(breaks = function(x) unique(floor(pretty(seq(0, max(x) + 1) * 1.1))),
+                     trans = "reverse") +
+  scale_color_manual(values = my_colors) +
+  scale_fill_manual(values = my_colors) +
+  guides(color = "none", fill = "none") +
+  labs(x = NULL, y = "Snapshot") +
+  theme_bw()
+```
+
+Now that we have a remote repository updated we have to worry about keeping them both synced. To illustrate this workflow I'll change the `fib_seq.r` file by adding the fifth value to the Fibonacci sequence. After this change the git work space will contain unstaged changes which are not reflected in either repository.
+
+```{r}
+#| echo: false 
+#| message: false 
+#| warning: false
+#| label: fig-changewremote
+#| fig-cap: The Git workspace after the working directory has been changed leaving the local and remote repositories out-of-date. 
+#| fig-height: 5 
+
+sha = c("none", "e17181f", "3bb6c98", "11cf98f")
+
+dat <- 
+  data.frame(location = c(1, 2, 2, 2, 3, 3, 3),
+             snapshot = c(4, 1, 2, 3, 1, 2, 3)) %>%
+  mutate(sha = sha[snapshot],
+         fill = ifelse(location %in% c(1, 5), sha, ""),
+         label = ifelse(location %in% c(1, 5), "          ", sha))
+  
+#color/fill scale
+my_colors <- c("#FFFFFF", brewer.pal(9, "Set1"))
+names(my_colors) <- c("", sha)
+
+ggplot(dat, aes(x = location, y = snapshot, label = label, fill = fill, color = sha)) + 
+  geom_label() +
+  geom_vline(xintercept = 1:3,
+             linetype = 2,
+             alpha = 0.5) +
+  scale_x_discrete(limits = c("Working \n Directory",
+                              "Local \n Repository",
+                              "Remote \n Repository")) +
+  scale_y_continuous(breaks = function(x) unique(floor(pretty(seq(0, max(x) + 1) * 1.1))),
+                     trans = "reverse") +
+  scale_color_manual(values = my_colors) +
+  scale_fill_manual(values = my_colors) +
+  guides(color = "none", fill = "none") +
+  labs(x = NULL, y = "Snapshot") +
+  theme_bw()
+```
+
+In the terminal session below I stage the file `fib_seq.R` and commit the file. Notice the first time we submitted a `git status` command we were told the local and remote repositories were synced but that there were unstaged changes. After the modified file was added and committed the second call to `git status` tells us our remote repository is one commit behind our local repository. The git work space at this moment is illustrated by @fig-commitwremote.
+
+```{default}
+amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (main)
+$ git status
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   fib_seq.R
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (main)
+$ git add fib_seq.R
+
+amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (main)
+$ git commit -m "Fifth entry in the Fibonacci sequence" -m "A long and descriptive description"
+[main 5139049] Fifth entry in the Fibonacci sequence
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (main)
+$ git status
+On branch main
+Your branch is ahead of 'origin/main' by 1 commit.
+  (use "git push" to publish your local commits)
+
+nothing to commit, working tree clean
+
+amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (main)
+$
+```
+
+```{r}
+#| echo: false 
+#| message: false 
+#| warning: false
+#| label: fig-commitwremote
+#| fig-cap: The Git workspace after a local change has been staged & committed leaving the remote repositories one commit behind. 
+#| fig-height: 5 
+
+sha = c("e17181f", "3bb6c98", "11cf98f", "5139049")
+
+dat <- 
+  data.frame(location = c(1, 2, 2, 2, 2, 3, 3, 3),
+             snapshot = c(4, 1, 2, 3, 4, 1, 2, 3)) %>%
+  mutate(sha = sha[snapshot],
+         fill = ifelse(location %in% c(1, 5), sha, ""),
+         label = ifelse(location %in% c(1, 5), "          ", sha))
+  
+#color/fill scale
+my_colors <- c("#FFFFFF", brewer.pal(9, "Set1"))
+names(my_colors) <- c("", sha)
+
+ggplot(dat, aes(x = location, y = snapshot, label = label, fill = fill, color = sha)) + 
+  geom_label() +
+  geom_vline(xintercept = 1:3,
+             linetype = 2,
+             alpha = 0.5) +
+  scale_x_discrete(limits = c("Working \n Directory",
+                              "Local \n Repository",
+                              "Remote \n Repository")) +
+  scale_y_continuous(breaks = function(x) unique(floor(pretty(seq(0, max(x) + 1) * 1.1))),
+                     trans = "reverse") +
+  scale_color_manual(values = my_colors) +
+  scale_fill_manual(values = my_colors) +
+  guides(color = "none", fill = "none") +
+  labs(x = NULL, y = "Snapshot") +
+  theme_bw()
+```
+
+In the terminal session below I use `git push` to update the remote repository. Notice `git status` verifies the repositories are now synced. The git work space at this moment is illustrated by @fig-pushwremote.
+
+```{default}
+amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (main)
+$ git push
+Enumerating objects: 5, done.
+Counting objects: 100% (5/5), done.
+Delta compression using up to 16 threads
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (3/3), 414 bytes | 8.00 KiB/s, done.
+Total 3 (delta 1), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (1/1), completed with 1 local object.
+To https://github.com/adamreimer/git_practice.git
+   0c92881..5139049  main -> main
+
+amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (main)
+$ git status
+On branch main
+Your branch is up to date with 'origin/main'.
+
+nothing to commit, working tree clean
+
+amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (main)
+$
+```
+
+```{r}
+#| echo: false 
+#| message: false 
+#| warning: false
+#| label: fig-pushwremote
+#| fig-cap: The Git workspace after a local change has been staged, committed, and pushed. 
+#| fig-height: 5 
+
+sha = c("e17181f", "3bb6c98", "11cf98f", "5139049")
+
+dat <- 
+  data.frame(location = c(1, 2, 2, 2, 2, 3, 3, 3, 3),
+             snapshot = c(4, 1, 2, 3, 4, 1, 2, 3, 4)) %>%
+  mutate(sha = sha[snapshot],
+         fill = ifelse(location %in% c(1, 5), sha, ""),
+         label = ifelse(location %in% c(1, 5), "          ", sha))
+  
+#color/fill scale
+my_colors <- c("#FFFFFF", brewer.pal(9, "Set1"))
+names(my_colors) <- c("", sha)
+
+ggplot(dat, aes(x = location, y = snapshot, label = label, fill = fill, color = sha)) + 
+  geom_label() +
+  geom_vline(xintercept = 1:3,
+             linetype = 2,
+             alpha = 0.5) +
+  scale_x_discrete(limits = c("Working \n Directory",
+                              "Local \n Repository",
+                              "Remote \n Repository")) +
+  scale_y_continuous(breaks = function(x) unique(floor(pretty(seq(0, max(x) + 1) * 1.1))),
+                     trans = "reverse") +
+  scale_color_manual(values = my_colors) +
+  scale_fill_manual(values = my_colors) +
+  guides(color = "none", fill = "none") +
+  labs(x = NULL, y = "Snapshot") +
+  theme_bw()
 ```
 
 #### git clone
 
-Imagine a situation where you would like to work on your analysis from a home computer[^collaboration-1]. If your analysis is stored as a git repository it is easy to obtian a copy from a differetn machine. In the terminal sequence below we: navigate to a new (empty) folder where I would like to copy the git repository and clone the remote repository to my local machine.
+Imagine a situation where you would like to work on your analysis from a home computer[^collaboration-1]. If your analysis is stored as a git repository it is easy to obtain a copy from a different computer. In the terminal sequence below we navigate to my home computer's C drive, clone the remote repository to the C drive, navigate to the new local repository, and check the repository status. Notice that I made a typo on the `git status` command the first time and nothing terrible happened.
 
 [^collaboration-1]: I hope your analysis is on the network and you could use vpn to solve this problem.
 
 ```{default}
-amreimer@DFGSXQDSF206801 MINGW64 ~/OneDrive - State of Alaska/Documents
-$ cd S:/RTS/Reimer/Research_Best_Practices
+amreimer@DFGSXQDSF223076 MINGW64 ~/Documents
+$ cd C:/
 
-amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices
-$ ls
- Biometric_Best_Practices/  'Data super group'/   Git_book/   git_practice_A/   git_practice_B/   git_practice_C/   SSDL_test/
-
-amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices
-$ cd S:/RTS/Reimer/Research_Best_Practices/git_practice_C
-
-amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice_C
-$ ls
-
-amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice_C
-$ git clone https://github.com/adamreimer/git_practice.git .
-Cloning into '.'...
+amreimer@DFGSXQDSF223076 MINGW64 /c
+$ git clone https://github.com/adamreimer/git_practice.git
+Cloning into 'git_practice'...
 remote: Enumerating objects: 14, done.
 remote: Counting objects: 100% (14/14), done.
 remote: Compressing objects: 100% (10/10), done.
@@ -74,47 +269,199 @@ remote: Total 14 (delta 3), reused 14 (delta 3), pack-reused 0
 Receiving objects: 100% (14/14), done.
 Resolving deltas: 100% (3/3), done.
 
-amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice_C (master)
+amreimer@DFGSXQDSF223076 MINGW64 /c
+$ cd C:/git_practice
+
+amreimer@DFGSXQDSF223076 MINGW64 /c/git_practice (main)
+$ git_status
+bash: git_status: command not found
+
+amreimer@DFGSXQDSF223076 MINGW64 /c/git_practice (main)
+$ git status
+On branch main
+Your branch is up to date with 'origin/main'.
+
+nothing to commit, working tree clean
+
+amreimer@DFGSXQDSF223076 MINGW64 /c/git_practice (main)
 $
 ```
 
-After git clone the my git work space on my home machine looks the same as @fig-push. If I make changes, add the changed files and commit those changes the local (home) repository will be one commit ahead of both your remote repository and the local repository on your work machine @fig-home. `git status` would verify the discrepancy between your local repository (at home) and your remote repository and `git push -u origin master` would sync the two repositories.
+After git clone the my remote repository to my home machine I have two local repositories associated with the same remote(see @fig-home).
 
 ```{r}
 #| echo: false 
 #| message: false 
 #| warning: false
 #| label: fig-home
-#| fig-cap: The Git workspace on your home computer after git clone and one commit.
+#| fig-cap: The Git workspace when you have two local repositories associated with the same remote.
 #| fig-height: 5 
 
-plot_git(c(1, 3, 3, 3, 3, 3, 4, 4, 4, 4), changes = TRUE)
+sha = c("e17181f", "3bb6c98", "11cf98f", "5139049")
+
+dat <- 
+  data.frame(location = c(1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5),
+             snapshot = c(4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 4)) %>%
+  mutate(sha = sha[snapshot],
+         fill = ifelse(location %in% c(1, 5), sha, ""),
+         label = ifelse(location %in% c(1, 5), "          ", sha))
+  
+#color/fill scale
+my_colors <- c("#FFFFFF", brewer.pal(9, "Set1"))
+names(my_colors) <- c("", sha)
+
+ggplot(dat, aes(x = location, y = snapshot, label = label, fill = fill, color = sha)) + 
+  geom_label() +
+  geom_vline(xintercept = 1:3,
+             linetype = 2,
+             alpha = 0.5) +
+  scale_x_discrete(limits = c("Working \n Directory \n S-drive",
+                              "Local \n Repository \n S-drive",
+                              "Remote \n Repository",
+                              "Local \n Repository \n C-drive",
+                              "Working \n Directory \n C-drive")) +
+  scale_y_continuous(breaks = function(x) unique(floor(pretty(seq(0, max(x) + 1) * 1.1))),
+                     trans = "reverse") +
+  scale_color_manual(values = my_colors) +
+  scale_fill_manual(values = my_colors) +
+  guides(color = "none", fill = "none") +
+  labs(x = NULL, y = "Snapshot") +
+  theme_bw()
+```
+
+Changes made to the local repository on my C drive, which are staged, committed and pushed to the remote will cause the local repository on my S drive to be behind one commit. The terminal session below demonstrated these commands (all of which we have seen before) and the current state of the Git work space is shown in @fig-homeahead.
+
+```{default}
+amreimer@DFGSXQDSF223076 MINGW64 /c/git_practice (main)
+$ git status
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   fib_seq.R
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+amreimer@DFGSXQDSF223076 MINGW64 /c/git_practice (main)
+$ git add fib_seq.R
+
+amreimer@DFGSXQDSF223076 MINGW64 /c/git_practice (main)
+$ git commit -m "Sixth number in the Fibonacci seqence" -m "This commit is slightly different as it was made from a different computer in my house. It still represents a single author working on their own repository but demonstrated the flexibility accorded by storing your analysis on the cloud. Working on this analysis from a new machine was seamless provided the new machine had the appropriate software."
+[main 9db5478] Sixth number in the Fibonacci seqence
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+amreimer@DFGSXQDSF223076 MINGW64 /c/git_practice (main)
+$ git status
+On branch main
+Your branch is ahead of 'origin/main' by 1 commit.
+  (use "git push" to publish your local commits)
+
+nothing to commit, working tree clean
+
+amreimer@DFGSXQDSF223076 MINGW64 /c/git_practice (main)
+$ git push
+Enumerating objects: 5, done.
+Counting objects: 100% (5/5), done.
+Delta compression using up to 16 threads
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (3/3), 586 bytes | 586.00 KiB/s, done.
+Total 3 (delta 1), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (1/1), completed with 1 local object.
+To https://github.com/adamreimer/git_practice.git
+   5139049..9db5478  main -> main
+
+amreimer@DFGSXQDSF223076 MINGW64 /c/git_practice (main)
+$
+```
+
+```{r}
+#| echo: false 
+#| message: false 
+#| warning: false
+#| label: fig-homeahead
+#| fig-cap: The Git workspace when you have one local repository has pushed a new commit to the remote repository.
+#| fig-height: 5 
+
+sha = c("e17181f", "3bb6c98", "11cf98f", "5139049", "9db5478")
+
+dat <- 
+  data.frame(location = c(1, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 5),
+             snapshot = c(4, 1, 2, 3, 4, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 5)) %>%
+  mutate(sha = sha[snapshot],
+         fill = ifelse(location %in% c(1, 5), sha, ""),
+         label = ifelse(location %in% c(1, 5), "          ", sha))
+  
+#color/fill scale
+my_colors <- c("#FFFFFF", brewer.pal(9, "Set1"))
+names(my_colors) <- c("", sha)
+
+ggplot(dat, aes(x = location, y = snapshot, label = label, fill = fill, color = sha)) + 
+  geom_label() +
+  geom_vline(xintercept = 1:3,
+             linetype = 2,
+             alpha = 0.5) +
+  scale_x_discrete(limits = c("Working \n Directory \n S-drive",
+                              "Local \n Repository \n S-drive",
+                              "Remote \n Repository",
+                              "Local \n Repository \n C-drive",
+                              "Working \n Directory \n C-drive")) +
+  scale_y_continuous(breaks = function(x) unique(floor(pretty(seq(0, max(x) + 1) * 1.1))),
+                     trans = "reverse") +
+  scale_color_manual(values = my_colors) +
+  scale_fill_manual(values = my_colors) +
+  guides(color = "none", fill = "none") +
+  labs(x = NULL, y = "Snapshot") +
+  theme_bw()
 ```
 
 #### git pull
 
-Now your local repository at work will be one commit behind your local repository at home and your remote repository. In the terminal sequence below we use `git status` to verify the remote repository is one commit ahead of the local (work) repository and `git pull` to fetch the new commit and merge it to your local working directory.
+As @fig-homeahead demonstrate the local repository on my S drive is now one commit behind the remote (and the local repository on my C drive). In the terminal session below we try `git status` but are told the local and remote repositories are synced, which we know to be false. Git has lost track of the remote since the repository on the S drive was blind to the last commit. Instead we use `git update` to update the remote connection, after which git status works as before. Finally, `git pull` brings the local repository on the S drive into sync with the remote. At this point the local and remote repositories have the structure of @fig-home but will include an additional commit (`9db5478`) not shown in @fig-home.
 
 ```{default}
-amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice_A
-(master)
+amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (main)
 $ git status
-On branch master
-Your branch is behind 'origin/master' by 1 commit, and can be fast-forwarded.
+On branch main
+Your branch is up to date with 'origin/main'.
+
+nothing to commit, working tree clean
+
+amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (main)
+$ git remote update
+remote: Enumerating objects: 5, done.
+remote: Counting objects: 100% (5/5), done.
+remote: Compressing objects: 100% (2/2), done.
+remote: Total 3 (delta 1), reused 3 (delta 1), pack-reused 0
+Unpacking objects: 100% (3/3), 566 bytes | 0 bytes/s, done.
+From https://github.com/adamreimer/git_practice
+   5139049..9db5478  main       -> origin/main
+
+amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (main)
+$ git status
+On branch main
+Your branch is behind 'origin/main' by 1 commit, and can be fast-forwarded.
   (use "git pull" to update your local branch)
 
 nothing to commit, working tree clean
 
-amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice_A
-(master)
+amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (main)
 $ git pull
-Updating 247d383..b3b6ae3
+Updating 5139049..9db5478
 Fast-forward
- fib_seq.R | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ fib_seq.R | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice_A
-(master)
+amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (main)
+$ git status
+On branch main
+Your branch is up to date with 'origin/main'.
+
+nothing to commit, working tree clean
+
+amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (main)
+$
 ```
 
 ### Interacting with a Peer's Remote Repository
@@ -129,8 +476,21 @@ Imagine a situation where a peer has some code written which you would like to m
 
 #### git clone, git push, git pull - To Collaborate (closely)
 
-If you and a peer are working closely on a analysis it may be appropriate for the owner to add their peer as a collaborator to the project. This is a point-and-click task from your github repository page (*Settings\>Collaborators\>Add people\>keypunch the username*). The collaboator you can push and pull changes to their remote as if you were the owner. This arraignment is only appropriate for peers who you trust to commit changes of which you both approve. In practice this likely means there will be personal communication to coordinate each persons efforts.
+If you and a peer are working closely on a analysis it may be appropriate for the owner to add their peer as a collaborator to the project. This is a point-and-click task from your github repository page (*Settings\>Collaborators\>Add people\>keypunch the username*). The collaborator you can push and pull changes to their remote as if they were the owner. This arraignment is only appropriate for peers who you trust to commit changes of which you both approve. In practice this likely means there will be personal communication to coordinate each person's efforts. THe terminal session/figures associated with this project would closely mirror those shown for `git clone`, `git push`, and `git pull` above but it is worth consideering this specially formatted call[^collaboration-3] to `git log` which shows that the latest commit to this repository did come form a new author.
+
+[^collaboration-3]: Thanks [Jesper Rønn-Jensen](https://stackoverflow.com/questions/1441010/the-shortest-possible-output-from-git-log-containing-author-and-date)! Note: %h specifies the short commit ID, %x09 specifies a tab, %an specifies the author, %ad specifies the commit date, and %s specifies the commit title.
+
+```{default}
+amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (main)
+$ git log --pretty=format:"%h%x09%an%x09%ad%x09%s"
+f732cdb Carly Reimer    Sun Jul 2 22:01:17 2023 -0800   Seventh Fibonacci number
+9db5478 Adam Reimer     Sun Jul 2 20:39:19 2023 -0800   Sixth number in the Fibonacci seqence
+5139049 Adam Reimer     Sun Jul 2 16:15:52 2023 -0800   Fifth entry in the Fibonacci sequence
+0c92881 Adam Reimer     Sun Jul 2 14:53:05 2023 -0800   Fourth entry in the Fibonacci sequence
+3bb6c98 Adam Reimer     Sun Jul 2 14:31:04 2023 -0800   Third entry in fib_seq
+e17181f Adam Reimer     Sun Jul 2 12:59:06 2023 -0800   Initialize Fibonacci sequence
+```
 
 #### fork - To Collaborate (with autonomy)
 
-[Fork](https://docs.github.com/en/get-started/quickstart/fork-a-repo#forking-a-repository) is a GiHub operation which creates a copy of a remote repository under your Github ID. After the fork is created you can clone it to you local repository as described above. Your local repository can be [configured](https://docs.github.com/en/get-started/quickstart/fork-a-repo#configuring-git-to-sync-your-fork-with-the-upstream-repository) to [sync](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/syncing-a-fork) with the original (upstream) repository so that you local repository contains changes the original author made after fork. If you make significant changes to the repository that the original author may be interested in you can submit a [pull request](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request-from-a-fork) which notifies the original author about the changes you have made and gives them the opportunity to include your code in their repository.
+[Fork](https://docs.github.com/en/get-started/quickstart/fork-a-repo#forking-a-repository) is a GitHub operation which creates a copy of a remote repository under your Github ID. After the fork is created you can clone it to you local repository as described above. Your local repository can be [configured](https://docs.github.com/en/get-started/quickstart/fork-a-repo#configuring-git-to-sync-your-fork-with-the-upstream-repository) to [sync](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/syncing-a-fork) with the original (upstream) repository so that you local repository contains changes the original author made after fork. If you make significant changes to the repository that the original author may be interested in you can submit a [pull request](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request-from-a-fork) which notifies the original author about the changes you have made and gives them the opportunity to include your code in their repository.

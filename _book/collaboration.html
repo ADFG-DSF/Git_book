@@ -259,7 +259,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice_A (master)</span>
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>$</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>After pushing to github your repository now looks like <a href="#fig-push">Figure&nbsp;<span>3.1</span></a>.</p>
+<p>After pushing to github your repository now looks like <a href="advanced.html#fig-push">Figure&nbsp;<span>4.1</span></a>.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-push" class="quarto-figure quarto-figure-center anchored">
@@ -301,7 +301,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice_C (master)</span>
 <span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>$</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>After git clone the my git work space on my home machine looks the same as <a href="#fig-push">Figure&nbsp;<span>3.1</span></a>. If I make changes, add the changes files and commit those changes the local repository on your home machine will be one commit ahead of both your remote repository and the local repository on your work machine <a href="#fig-home">Figure&nbsp;<span>3.2</span></a>. <code>git status</code> would verify the discrepancy between your local repository (at home) and your remote repositories and <code>git push -u origin master</code> would sync the two repositories.</p>
+<p>After git clone the my git work space on my home machine looks the same as <a href="advanced.html#fig-push">Figure&nbsp;<span>4.1</span></a>. If I make changes, add the changed files and commit those changes the local (home) repository will be one commit ahead of both your remote repository and the local repository on your work machine <a href="#fig-home">Figure&nbsp;<span>3.2</span></a>. <code>git status</code> would verify the discrepancy between your local repository (at home) and your remote repository and <code>git push -u origin master</code> would sync the two repositories.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-home" class="quarto-figure quarto-figure-center anchored">
@@ -315,7 +315,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="git-pull" class="level4" data-number="3.0.1.3">
 <h4 data-number="3.0.1.3" class="anchored" data-anchor-id="git-pull"><span class="header-section-number">3.0.1.3</span> git pull</h4>
-<p>Now your local repository at work will be one commit behind your local repsotiry at home and your remote repository. In the terminal sequence below we use <code>git status</code> to verify the remote repository is one commit ahead of the remote and <code>git pull</code> to fetch the new commit and merge it to your local working directory.</p>
+<p>Now your local repository at work will be one commit behind your local repository at home and your remote repository. In the terminal sequence below we use <code>git status</code> to verify the remote repository is one commit ahead of the local (work) repository and <code>git pull</code> to fetch the new commit and merge it to your local working directory.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice_A</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>(master)</span>
