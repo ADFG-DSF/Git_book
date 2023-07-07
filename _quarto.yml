@@ -10,7 +10,7 @@ book:
     - intro.qmd
     - basics.qmd
     - collaboration.qmd
-    - advanced.qmd
+    - intermediate.qmd
   appendices: 
     - RStudio.qmd
 
@@ -20,6 +20,7 @@ format:
   html:
     theme: cosmo
     code-block-border-left: true
+    embed-resources: true
   pdf:
     documentclass: scrreprt
 

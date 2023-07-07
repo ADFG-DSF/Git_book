@@ -1,0 +1,102 @@
+## Intermediate Git Workflow
+
+Intermediate Git workflows introduce some new concepts like reverting to a previous version and several skills which can help a researcher develop models/analysis including branching, merging and branch strategies. These concepts are likely overkill for simple analysis but can be very helpful for large projects.
+
+### Branches
+
+In Git a branch is a pointer to a specific commit or set of commits which allow you to separate model development tasks into individual work units. Everything I know about branching I learned from [this guy](https://nvie.com/posts/a-successful-git-branching-model/) and in what follows I will simplify his workflow into something that works well for complicated fisheries analyses. Let's start by creating a new branch in our git_practice directory. In the Git session below we create a new branch named develop, switch to that branch, make changes, add/stage those changes, commit those changes.
+
+```{default}
+
+```
+
+The development branch is now one commit ahead of the main branch. Additional commits can be made, to either branch. In the Git session below we create switch to the main branch, make different changes, add/stage those changes, commit those changes.
+
+```{default}
+
+```
+
+Now let's take a look at snapshot of the file `fib_seq.R` in each of the two branches. They differ, and this is entirely appropriate, as it allows us to separate model development. Having a branching strategy is the key to how to use branches to coordinate and combine model development tasks.
+
+#### Branching strategy
+
+The core concept in the GitFlow branching strategy is to have two main bracnhs; `main` and `develop`. The main branch is associated with collaboration in that you make limited commits to the main branch with those snapshots associated with internal or external reporting; including FDS reports, BOF memos or work sessions, or conference presentations. Becasue the `main` branch will largely be static interested collaborators can quickly identify the analysis at the time periods where the analysis was reported.
+
+The `develop` branch is the `main` working branch and will have frequent commits relative to analysis progress and merge into the master branch when the analysis is reported.
+
+Feature branches are created frequently as new features are envisioned and developed. A best practice is to create a new feature branch, with a descriptive name, every time your create a new feature. When the feature is completed it is merged back into develop, left as a record without a merge, or deleted. In my work, feature branches are mostly merged back into develop, and this occurs whenever I created a feature which I beleive improves the analysis. Feature branches are left unmerged when I want to retain a record of having tried something (and the result) but do not think it improves the overall analysis. Feature branches are deleted without merging when something just did not work out and also not worth retaining as a record.
+
+### git merge
+
+### git checkout (HEAD\~# or SHA key)
+
+To recall a previous commit use git checkout and provide the SHA for the commit you wish to recall. You will receive and error message telling you GIT is in a detached HEAD state which simply means GIT is confused on which commit it should be considering the most recent; the commit you checked out or the last commit you made. Git tells you how to navigate this condition. If you only want to see the old code but not use it you can do that and simple checkout the most recent commit when you are done. I you want to revert to the old code the correct technique is to create a new branch and merge it back with the old branch accepting the code form each branch.
+
+While making this book I realized I may have inadvertently deleted a file I need. In the terminal sequence below shows how I repaired that problem. First I used `git checkout` to revert to my work space during the last commit (HEAD\~1 is shorthand for 1 commit prior). I cut and pasted the files I needed, they magically appeared in my working directory because I had add/committed them earlier, and attempted `git switch` to reverted back to the most recent commit. This didn't work so I tried `git checkout 57ba5a3d` which allowed me to explicitly state the commit I wanted to go to using the SHA key `57ba5a3d`, which also failed to work. At that point I shut down all files/windows that referenced anything to do with this project (this is a common problem with Git... something to do with Windows only allowing one application to access each file at a time. After that I was able to checkout the most current commit and reattach the head.
+
+```{default}
+amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/Git_book (master)
+$ git checkout HEAD~1
+Updating files: 100% (30/30), done.
+Note: switching to 'Head~1'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by switching back to a branch.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -c with the switch command. Example:
+
+  git switch -c <new-branch-name>
+
+Or undo this operation with:
+
+  git switch -
+
+Turn off this advice by setting config variable advice.detachedHead to false
+
+HEAD is now at 27bd7c8 Initial commit
+
+amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/Git_book ((27bd7c8...))
+$ git switch -
+error: cannot stat '_book/collaboration_files': Permission denied
+error: cannot stat '_book/collaboration_files': Permission denied
+
+amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/Git_book ((27bd7c8...))
+$ git checkout 57ba5a3d
+error: cannot stat '_book/collaboration_files': Permission denied
+error: cannot stat '_book/collaboration_files': Permission denied
+
+amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/Git_book ((27bd7c8...))
+$ git status
+HEAD detached at 27bd7c8
+nothing to commit, working tree clean
+
+amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/Git_book ((27bd7c8...))
+$ git checkout 57ba5a3d
+Updating files: 100% (30/30), done.
+Previous HEAD position was 27bd7c8 Initial commit
+HEAD is now at 57ba5a3 draft collab chapter/general updates
+
+amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/Git_book ((57ba5a3...))
+$ git status
+HEAD detached at 57ba5a3
+nothing to commit, working tree clean
+
+amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/Git_book ((57ba5a3...))
+$ git checkout master
+Switched to branch 'master'
+```
+
+```{r}
+#| echo: false 
+#| message: false 
+#| warning: false
+#| label: fig-push
+#| fig-cap: The Git workspace after checkout of a prior commit. 
+#| fig-height: 5 
+
+
+```
+
+### 

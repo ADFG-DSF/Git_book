@@ -40,7 +40,10 @@ After pushing to github your repository now looks like @fig-push.
 #| warning: false
 #| label: fig-push
 #| fig-cap: The Git workspace after your local repository has been pushed to a remote repository. 
-#| fig-height: 5 
+#| fig-height: 4 
+library(ggplot2)
+library(tidyverse)
+library(RColorBrewer)
 
 sha = c("e17181f", "3bb6c98", "11cf98f")
 
@@ -80,15 +83,15 @@ Now that we have a remote repository updated we have to worry about keeping them
 #| warning: false
 #| label: fig-changewremote
 #| fig-cap: The Git workspace after the working directory has been changed leaving the local and remote repositories out-of-date. 
-#| fig-height: 5 
+#| fig-height: 4 
 
-sha = c("none", "e17181f", "3bb6c98", "11cf98f")
+sha = c("e17181f", "3bb6c98", "11cf98f")
 
 dat <- 
   data.frame(location = c(1, 2, 2, 2, 3, 3, 3),
              snapshot = c(4, 1, 2, 3, 1, 2, 3)) %>%
   mutate(sha = sha[snapshot],
-         fill = ifelse(location %in% c(1, 5), sha, ""),
+         fill = "", #ifelse(location %in% c(1, 5), sha, ""),
          label = ifelse(location %in% c(1, 5), "          ", sha))
   
 #color/fill scale
@@ -153,7 +156,7 @@ $
 #| warning: false
 #| label: fig-commitwremote
 #| fig-cap: The Git workspace after a local change has been staged & committed leaving the remote repositories one commit behind. 
-#| fig-height: 5 
+#| fig-height: 4 
 
 sha = c("e17181f", "3bb6c98", "11cf98f", "5139049")
 
@@ -217,7 +220,7 @@ $
 #| warning: false
 #| label: fig-pushwremote
 #| fig-cap: The Git workspace after a local change has been staged, committed, and pushed. 
-#| fig-height: 5 
+#| fig-height: 4 
 
 sha = c("e17181f", "3bb6c98", "11cf98f", "5139049")
 
@@ -295,7 +298,7 @@ After git clone the my remote repository to my home machine I have two local rep
 #| warning: false
 #| label: fig-home
 #| fig-cap: The Git workspace when you have two local repositories associated with the same remote.
-#| fig-height: 5 
+#| fig-height: 4 
 
 sha = c("e17181f", "3bb6c98", "11cf98f", "5139049")
 
@@ -312,7 +315,7 @@ names(my_colors) <- c("", sha)
 
 ggplot(dat, aes(x = location, y = snapshot, label = label, fill = fill, color = sha)) + 
   geom_label() +
-  geom_vline(xintercept = 1:3,
+  geom_vline(xintercept = 1:5,
              linetype = 2,
              alpha = 0.5) +
   scale_x_discrete(limits = c("Working \n Directory \n S-drive",
@@ -382,7 +385,7 @@ $
 #| warning: false
 #| label: fig-homeahead
 #| fig-cap: The Git workspace when you have one local repository has pushed a new commit to the remote repository.
-#| fig-height: 5 
+#| fig-height: 4 
 
 sha = c("e17181f", "3bb6c98", "11cf98f", "5139049", "9db5478")
 
@@ -399,7 +402,7 @@ names(my_colors) <- c("", sha)
 
 ggplot(dat, aes(x = location, y = snapshot, label = label, fill = fill, color = sha)) + 
   geom_label() +
-  geom_vline(xintercept = 1:3,
+  geom_vline(xintercept = 1:5,
              linetype = 2,
              alpha = 0.5) +
   scale_x_discrete(limits = c("Working \n Directory \n S-drive",
@@ -476,7 +479,7 @@ Imagine a situation where a peer has some code written which you would like to m
 
 #### git clone, git push, git pull - To Collaborate (closely)
 
-If you and a peer are working closely on a analysis it may be appropriate for the owner to add their peer as a collaborator to the project. This is a point-and-click task from your github repository page (*Settings\>Collaborators\>Add people\>keypunch the username*). The collaborator you can push and pull changes to their remote as if they were the owner. This arraignment is only appropriate for peers who you trust to commit changes of which you both approve. In practice this likely means there will be personal communication to coordinate each person's efforts. THe terminal session/figures associated with this project would closely mirror those shown for `git clone`, `git push`, and `git pull` above but it is worth consideering this specially formatted call[^collaboration-3] to `git log` which shows that the latest commit to this repository did come form a new author.
+If you and a peer are working closely on a analysis it may be appropriate for the owner to add their peer as a collaborator to the project. This is a point-and-click task from your github repository page (*Settings\>Collaborators\>Add people\>keypunch the username*). The collaborator can push and pull changes to the remote as if they were the owner. This arraignment is only appropriate for peers who you trust to commit changes of which you both approve. In practice, this likely means there will be personal communication to coordinate each person's efforts. To demonstrate this process I added my wife (Carly) as a collaborator to the git_practice repository. Carly then modified the `fib_seq.R` file, added the file, committed the changes, and pushed her version of the local repository back to the git_practice remote. Afterwards I pulled those changes back to my version of the local repositry. The terminal sessions and figures associated with these actions would closely mirror those shown for `git clone`, `git push`, and `git pull` above although the local repositories have different owners in this case. To demonstrate commits were made byt both collaborators I ran a specially formatted call[^collaboration-3] to `git log` which shows that the latest commit to this repository did come form a new author.
 
 [^collaboration-3]: Thanks [Jesper Rønn-Jensen](https://stackoverflow.com/questions/1441010/the-shortest-possible-output-from-git-log-containing-author-and-date)! Note: %h specifies the short commit ID, %x09 specifies a tab, %an specifies the author, %ad specifies the commit date, and %s specifies the commit title.
 
@@ -491,6 +494,24 @@ f732cdb Carly Reimer    Sun Jul 2 22:01:17 2023 -0800   Seventh Fibonacci number
 e17181f Adam Reimer     Sun Jul 2 12:59:06 2023 -0800   Initialize Fibonacci sequence
 ```
 
-#### fork - To Collaborate (with autonomy)
+#### fork - To Collaborate (formally)
 
-[Fork](https://docs.github.com/en/get-started/quickstart/fork-a-repo#forking-a-repository) is a GitHub operation which creates a copy of a remote repository under your Github ID. After the fork is created you can clone it to you local repository as described above. Your local repository can be [configured](https://docs.github.com/en/get-started/quickstart/fork-a-repo#configuring-git-to-sync-your-fork-with-the-upstream-repository) to [sync](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/syncing-a-fork) with the original (upstream) repository so that you local repository contains changes the original author made after fork. If you make significant changes to the repository that the original author may be interested in you can submit a [pull request](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request-from-a-fork) which notifies the original author about the changes you have made and gives them the opportunity to include your code in their repository.
+[Fork](https://docs.github.com/en/get-started/quickstart/fork-a-repo#forking-a-repository) is a GitHub operation which creates a copy of another users remote repository under your Github ID. After the fork is created you can clone it to a local repository as described above. Your local repository can be [configured](https://docs.github.com/en/get-started/quickstart/fork-a-repo#configuring-git-to-sync-your-fork-with-the-upstream-repository) to [sync](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/syncing-a-fork) with the original (upstream) repository so that you local repository contains changes the original author made after fork. If you make significant changes to the repository that the original author may be interested in you can submit a [pull request](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request-from-a-fork) which notifies the original author about the changes you have made and gives them the opportunity to include your code in their repository. Github has great documentation of this process.
+
+As an example I revoked my wife's (Carly) collaborator status on the git_practice repository associated with my GitHub account. Carly then forked the git_practice repository in my account. Afterwards, the forked version of the git_practice repository on her account looked something like this:
+
+![The forked git_practice repository in Carly Reimer's GitHub account](forked_repository.png)
+
+Using the same commands describe above Carly cloned the forked repository, made changes, added the changed file, committed the changes, and pushed the result back to her forked repository on Github. Pull requests are so named because Carly is asking me to pull her forked repository back into my version. Pull requests are initiated by the person making the request from the original repository. The pull request looked like this from my account:
+
+![The pull request summary screen.](pull_request_AR.PNG)
+
+Navigating the the *Files changed* allows the repository owner to review line by line changes associated with the request. In this case I deemed the suggestions reasonable and accepted them without comment but there are capabilities to submit comments and request changes before the changes are accepted.
+
+![The pull request review/approval screen](pull_request_AR_approve.PNG)
+
+After the request is approved the original owner can merge the pull request from within GitHub.
+
+![Merging a pull request](pull_request_AR_merge.PNG)
+
+After merging the pull request the Carly's local repository, the forked repository, the original remote repository are synced while Adam's local repository is behind. This situation could be fixed with `git pull`.

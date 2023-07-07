@@ -115,7 +115,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./advanced.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Advanced Git Workflow</span></a>
+  <a href="./intermediate.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Intermediate Git Workflow</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -143,6 +143,7 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#what-does-git-do" id="toc-what-does-git-do" class="nav-link active" data-scroll-target="#what-does-git-do"><span class="toc-section-number">1.1</span>  What does Git do?</a></li>
+  <li><a href="#how-do-i-interact-with-git" id="toc-how-do-i-interact-with-git" class="nav-link" data-scroll-target="#how-do-i-interact-with-git"><span class="toc-section-number">1.2</span>  How do I interact with Git?</a></li>
   </ul>
 </nav>
     </div>
@@ -166,13 +167,24 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<p>There is a a lot of git stuff out there and most of it is not intended for scientists (One of the best science focused git tutorials for R is <a href="https://happygitwithr.com/">HappygitwithR</a>). Our goal to amalgamate the most common techniques in scientific analysis into one workflow that is specific for fisheries analysis.</p>
+<p>There is a a lot of git stuff out there and most of it is not intended for scientists (One of the best science focused git tutorials for R is <a href="https://happygitwithr.com/">HappygitwithR</a>). Our goal to amalgamate the most common techniques in scientific analysis into one workflow that is specific for ADF&amp;G fisheries analysis.</p>
 <section id="what-does-git-do" class="level2" data-number="1.1">
 <h2 data-number="1.1" class="anchored" data-anchor-id="what-does-git-do"><span class="header-section-number">1.1</span> What does Git do?</h2>
 <p>Git offers a way to track changes is your analysis without requiring the analyst to create different versions of the same file. To use git an analyst <strong>init</strong>ializes their working directory (hopefully an R project). Files involved in the analysis (data, scripts, functions, model code) are <strong>add</strong>ed to the ask git to track changes associated with each file. When the analyst makes a <strong>commit</strong>, a snapshot of all tracked files at a specific point in time are recorded along with a message describing the commit and a automatically assigned a unique identifier. The analysis can also <strong>tag</strong> important commits. Because you can <strong>checkout</strong> prior commits this system duplicates file versioning with a structured system while ensuring the all commits are documented and the most important commits are easily identifiable.</p>
 <p>The collection of all the commits, messages, tags and identifiers associated with a projects is called a <strong>repository</strong>. When a repository is created on your computer or private/company network it is <strong>local</strong>. An analyst can <strong>push</strong> a local repository to a <strong>remote</strong> repository (stored on the cloud). Alternatively, the analyst can <strong>pull</strong> a remote repository to their computer or private/company network to either create or update a local repository. Because multiple local repositories can push and pull to the same remote git allows collaboration between analysts which maintains the documentation and unique identifier features. Github is the most popular hosting service facilitating these collaborative features of git.</p>
+</section>
+<section id="how-do-i-interact-with-git" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="how-do-i-interact-with-git"><span class="header-section-number">1.2</span> How do I interact with Git?</h2>
+<p>One problem with widespread adoption of Git at ADF&amp;G is that there is no accepted standard for how to interact with Git. The options are a (graphical user interface) GUI or terminal. Herein, we will focus on how to use Git while interacting through the terminal. We make this choice for 3 reasons. First, because the terminal is a command line interface it is easy to demonstrate the exact steps that were taken to achieve each outcome. Throughout this document you will find code blocks (identifiable by a grey bar along the left hand margin) which show the command line prompt, the command given and the result received for each action demonstrated. This presentation is more concrete that hundreds of screenshots with certain buttons highlighted. A second point is that there are a lot of GUI’s out there. I will include an appendix which shows how to do the most common git functions in Rstudio which is not a very powerful Git GUI but sufficient for most tasks and readily available for most readers of this book. Perhaps someone else has a GUI they highly recommend and would like to included a second appendix with a tutorial about how to intact with it. Fork the repository associated with this book, add an appendix with instructions for your GUI and submit a pull request… instructions on how to do so are included! A final reason to use command line in the context of this book is that the command line prompts for the basis for all the GUI’s that are available. In general, if your Google how to complete a odd Git task you will be told how to do so in command line, so it is good to have some familiarity with that interface. Rest assured, I don’t use the terminal to interact with Git the majority of the time<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> and I don’t recommend you do either. But I do think you will end up there eventually, that the terminal has pedagogical advantages and that if you can use the terminal GUI’s are easier to understand.</p>
+<p>In order to use the terminal effectively it helps to make one change to the Rstudio defaults by executing the following point and click commands: <em>Tools&gt;Terminal&gt;Terminal Options…&gt;(change initial directory to ‘project directory’)</em>. This change will ensure your terminal opens in the correct directory and save some unnecessary terminal prompts.</p>
 
 
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>I generally use the RStudio GUI first, the terminal when the RStudio GUI is not sufficient and Git Kraken when I have a lot of branches to visualize/review.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
 </section>
 
 </main> <!-- /main -->

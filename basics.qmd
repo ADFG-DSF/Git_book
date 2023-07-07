@@ -260,12 +260,12 @@ ggplot(dat, aes(x = location, y = snapshot, label = label, fill = fill, color = 
 
 The git workflow described so far forms the basis on reproducible research using Git. In our example we will calculate the next several values in the Fibonacci sequence to practice this workflow. After a change is made and saved to the working directory your Git workspace will look something like:
 
-::: {layout-ncol=2}
-
+::: {layout-ncol="2"}
 ```{r}
 #| echo: false 
 #| message: false 
 #| warning: false
+#| fig.height: 4
 
 dat <- 
   data.frame(location = c(1, 2),
@@ -287,20 +287,20 @@ ggplot(dat, aes(x = location, y = snapshot, label = label, fill = fill, color = 
                               "Local \n Repository",
                               "Remote \n Repository")) +
   scale_y_continuous(breaks = function(x) unique(floor(pretty(seq(0, max(x) + 1) * 1.1))),
+                     limits = c(max(dat$snapshot) + 0.25, min(dat$snapshot) - 0.25),
                      trans = "reverse") +
   scale_color_manual(values = my_colors) +
   scale_fill_manual(values = my_colors) +
   guides(color = "none", fill = "none") +
-  labs(x = NULL, y = "Snapshot") +
-  theme_bw()
+  labs(title = "Make Changes", x = NULL, y = "Snapshot") +
+  theme_bw(base_size = 16)
 ```
-
-Those changes are then added:
 
 ```{r}
 #| echo: false 
 #| message: false 
 #| warning: false
+#| fig.height: 4
 
 dat <- 
   data.frame(location = c(1, 2),
@@ -322,20 +322,21 @@ ggplot(dat, aes(x = location, y = snapshot, label = label, fill = fill, color = 
                               "Local \n Repository",
                               "Remote \n Repository")) +
   scale_y_continuous(breaks = function(x) unique(floor(pretty(seq(0, max(x) + 1) * 1.1))),
+                     limits = c(max(dat$snapshot) + 0.25, min(dat$snapshot) - 0.25),
                      trans = "reverse") +
   scale_color_manual(values = my_colors) +
   scale_fill_manual(values = my_colors) +
   guides(color = "none", fill = "none") +
-  labs(x = NULL, y = "Snapshot") +
-  theme_bw()
+  labs(title = "Stage/Add File", x = NULL, y = "Snapshot") +
+  theme_bw(base_size = 16)
 ```
-
-And then committed:
 
 ```{r}
 #| echo: false 
 #| message: false 
-#| warning: false 
+#| warning: false
+#| fig.height: 4 
+
 sha = c("e17181f", "3bb6c98")
 
 dat <- 
@@ -358,15 +359,14 @@ ggplot(dat, aes(x = location, y = snapshot, label = label, fill = fill, color = 
                               "Local \n Repository",
                               "Remote \n Repository")) +
   scale_y_continuous(breaks = function(x) unique(floor(pretty(seq(0, max(x) + 1) * 1.1))),
+                     limits = c(max(dat$snapshot) + 0.25, min(dat$snapshot) - 0.25),
                      trans = "reverse") +
   scale_color_manual(values = my_colors) +
   scale_fill_manual(values = my_colors) +
   guides(color = "none", fill = "none") +
-  labs(x = NULL, y = "Snapshot") +
-  theme_bw()
+  labs(title = "Commit File", x = NULL, y = "Snapshot") +
+  theme_bw(base_size = 16)
 ```
-
-And this cycle is repeated until the first 4 numbers of the Fibonacci sequence are calculated:
 
 ```{r}
 #| echo: false 
@@ -395,14 +395,14 @@ ggplot(dat, aes(x = location, y = snapshot, label = label, fill = fill, color = 
                               "Local \n Repository",
                               "Remote \n Repository")) +
   scale_y_continuous(breaks = function(x) unique(floor(pretty(seq(0, max(x) + 1) * 1.1))),
+                     limits = c(max(dat$snapshot) + 0.25, min(dat$snapshot) - 0.25),
                      trans = "reverse") +
   scale_color_manual(values = my_colors) +
   scale_fill_manual(values = my_colors) +
   guides(color = "none", fill = "none") +
-  labs(x = NULL, y = "Snapshot") +
-  theme_bw()
+  labs(title = "Repeat Process", x = NULL, y = "Snapshot") +
+  theme_bw(base_size = 16)
 ```
-
 :::
 
 #### When to Commit?
