@@ -10,32 +10,58 @@ If you are starting a brand new analysis creating a git repository at the same t
 
 ### Commands accessible through the Git tab
 
--   git add - add/Stage files by clicking the radio button next to each file in the RStudio git pane.
+-   `git add` - add/Stage files by clicking the radio button next to each file in the RStudio Git pane.
 
--   git commit - the *Commit* button will lead to another screen where the GUI allows users to `commit`, `diff` and `log` the repository.
+-   `git diff`- the *Diff* button will lead to another screen where the GUI allows users to `commit`, `diff` and `log` the repository.
 
--   git diff - the *Diff* button will lead to another screen where the GUI allows users to `commit`, `diff` and `log` the repository.
+-   `git commit` - the *Commit* button will lead to another screen where the GUI allows users to `commit`, `diff` and `log` the repository.
 
--   git push - the *Push* button allows the user to push commits from the local repository to the remote repository.
+-   `git pull` - the *Pull* button allows the user to pull commits from the remote repository to the local repository.
 
--   git pull - the *Pull* button allows the user to pull commits from the remote repository to the local repository.
+-   `git push` - the *Push* button allows the user to push commits from the local repository to the remote repository.
 
--   git log - the *History* button will lead to another screen where the GUI allows users to `commit`, `diff` and `log` the repository.
+-   `git log` - the *History* button will lead to another screen where the GUI allows users to `commit`, `diff` and `log` the repository.
 
--   git checkout -b and git remote - the flowchart shaped button will allow you to create a new branch and add a remote to the repository.
+-   `git revert` - the *More* button will allow the user to `revert` a commit. IT also allows the user to add files to the `.gitignore` file by clicking the radio button next to the files you wish to ignore.
 
--   git checkout \<new_branch\> - the drop down list next to the word "main" will allow you to switch between branches.
+-   `git checkout -b` and `git remote` - the flowchart shaped button will allow you to create a new branch and add a remote to the repository.
 
--   Note the RStudio GUI is frequently slow to react to changes. The circular arrow refreshed the GUI. Often it will look like nothing is happening when you are clicking the radio buttons to add/stage files but clicking the refresh button will reveal the buttons were switched.
+-   `git checkout <new_branch>` - the drop down list next to the word "main" will allow you to switch between branches.
+
+-   Note the RStudio GUI is frequently slow to react to changes. The circular arrow refreshes the GUI. Often it will look like nothing is happening when you are clicking the radio buttons to add/stage files but clicking the refresh button will reveal the buttons were checked.
 
 ![The RStudio Git tab](Rstudio_Git.PNG)
 
 ### Commands accessible through the Diff/Commit/History window
 
--   git diff - the *Changes* tab will shoe line by line changes associated with the files in the working directory relative to the most recent commit. Old lines are shown in red while new line are shown in green.
+-   `git diff` - the *Changes* tab will show line by line changes associated with the files in the working directory relative to the most recent commit. Old lines are shown in red while new line are shown in green.
 
--   git commit - the *Changes* tab includes a window and associated buttons allowing the use to commit all of the staged changes. The commit title goes on the first line of the message window, followed by a blank line. The third line and onwards contain the commit description.
+-   `git commit` - the *Changes* tab includes a commit message window and a *Commit* button allowing the user to commit all of the staged changes. The commit title goes on the first line of the message window, followed by a blank line. The third line and onward contain the commit description.
 
--   git log - the *History* tab will show the list of prior commits and the line by line changes associated with each file included in each commit.
+-   `git log` - the *History* tab will show the list of prior commits and the line by line changes associated with each file included in each commit.
 
 ![The Diff/Commit/History window](Rstudio_commit.PNG)
+
+### Commands not accessible using the RStudio GUI
+
+To my knowledge you cannot use RStudio to:
+
+-   `git merge` two branches.
+
+    -   comment - This feels like a big deal if you intend to use Git optimally.
+
+-   `git checkout` to recall a single file from a previous commit.
+
+    -   comment - I've done this allot. It is sometimes possible to cut/paste a peice for revised code from the GUI history but it is usually formatted poorly which can be a pain if the section you need is large.
+
+-   `git checkout` to recall a prior commit to your working directory.
+
+    -   comment - Not needed often. I've generally been more interested in a single file.
+
+-   `git reset` to delete a local commit.
+
+    -   comment - I have done this rarely.
+
+-   Impress your friends by making your computer do things without using your mouse.
+
+    -   comment - My friends think I'm a dork and this only exacerbates things in that regard.

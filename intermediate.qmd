@@ -1,10 +1,17 @@
 ## Intermediate Git Workflow
 
-Intermediate Git workflows introduce some a new concept: branches. Efficient use of branches and a well thought out branching strategy will aid the analyst in Git use and is also a powerful tool for model development.
+```{r}
+#| echo: false
+# only hear to trick quarto into using the knitr engine.
+# I cant figure out how to specify that in settings for a book.
+# Cound rename this file to .Rmd (*and rename the refernec in _quarto.yml but then footnots are disable for some strange reason.)
+```
+
+The intermediate Git workflow introduces a new concept: branches. Efficient use of branches and a well thought out branching strategy will aid the analyst in Git use and is also a powerful tool for model development.
 
 ### Branches and Branch strategy
 
-In Git a branch is a pointer to a specific commit or set of commits which allow you to separate model development tasks into individual work units. Everything I know about branching I learned from [this guy](https://nvie.com/posts/a-successful-git-branching-model/) and in what follows I will simplify his workflow into something that works well for complicated fisheries analyses. Let's start by creating a new branch named develop using the command `git checkout`. The argument `-b` tells Git to checkout a new branch while the arguments `develop` and `main` tell Git the name of the new branch and that the new branch should branch from the `main` branch.
+In Git a branch is a pointer to a specific commit or set of commits which allow you to separate model development tasks into smaller subunits. I learned branching from [this guy](https://nvie.com/posts/a-successful-git-branching-model/) and in what follows I simplify his workflow into something that works well for complicated fisheries analyses. Let's start by creating a new branch named `develop` using the command `git checkout`. The argument `-b` tells Git to checkout a new branch while the arguments `develop` and `main` tell Git the name of the new branch and that the new branch should branch from the `main` branch.
 
 ```{default}
 amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (main)
@@ -12,13 +19,13 @@ $ git checkout -b develop main
 Switched to a new branch 'develop'
 ```
 
-The core concept in the Git Flow branching strategy is to always have two active branches; `main` and `develop`. The `main` branch is stable in that you make limited commits to it and those commits are associated with internal or external reporting; including FDS reports, BOF memos or work sessions, or conference presentations. Because the `main` branch will largely be static interested collaborators can quickly identify the analysis at the time periods where the analysis was reported.
+The core concept in the Git Flow branching strategy is to always have two active branches; `main` and `develop`. The `main` branch is stable in that you make limited commits to it and those commits are associated with internal or external reporting including FDS reports, BOF memos, or conference presentations. Because the `main` branch will largely be static interested collaborators can quickly identify the analysis at the time periods where the analysis was reported.
 
-The `develop` branch is the working branch and will have frequent commits relative to analysis progress. The `develop` branch merges into `main` during reporting periods and is the branched from whenever a new feature is being developed.
+The `develop` branch is the working branch and will have frequent commits relative to analysis progress. The `develop` branch merges into `main` at reporting periods and is the branched from whenever a new feature is being developed.
 
-Feature branches are created frequently as new features are envisioned and developed. A best practice is to create a new feature branch, with a descriptive name, every time your create a new feature. When the feature is completed it is merged back into develop, left as a record without a merge, or deleted. In my work, feature branches are mostly merged back into develop, and this occurs whenever I create a feature which improves the analysis. Feature branches are left unmerged when I want to retain a record of having tried something (and the result) but do not think it improves the overall analysis. Feature branches are deleted without merging when something just did not work out and is also not worth retaining as a record.
+Feature branches are created frequently as new features are envisioned and developed. A best practice is to create a new feature branch, with a descriptive name, every time your create a new feature. When the feature is completed it is merged back into develop, left as a record without a merge, or deleted. In my work, feature branches are mostly merged back into develop, and this occurs whenever I create a feature which improves the analysis. Feature branches are left unmerged when I want to retain a record of having tried something (and the result) but do not think it improves the overall analysis. Feature branches are deleted without merging when something just did not work out and is also not worth retaining as a record. Notice that liberal use of feature branches keep the `main` and `develop` branches clean and can isolate those two primary branches of a lot of the sloppiness that is a byproduct of actively engaging in the scientific process.
 
-Let's practice Git Flow. In the terminal session which follows we: create a new branch called `cleanup` with `git checkout`, modify the file `fib_seq.R` by deleting several lines, show the changes using `git diff`, add those changes, and commit those changes.
+Let's practice Git Flow. In the terminal session which follows we create a new branch called `cleanup` with `git checkout`, modify the file `fib_seq.R` by deleting several lines, show the changes using `git diff`, add those changes, and commit those changes.
 
 ```{default}
 amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (develop)
@@ -94,7 +101,7 @@ $
 
 #### Merge conflicts
 
-Merge conflicts can occur any time we are merging two branches. In what follows we will intentionally create a merge conflict and fix it. In the terminal session below I create a new branch named `label_plot`, modify the file `fib_seq.R` by adding informative figure labels, stage/commit those changes.
+Merge conflicts can occur any time we are merging two branches. In what follows we will intentionally create a merge conflict and fix it. In the terminal session below I create a new branch named `label_plot`, and while working on that branch modify the file `fib_seq.R` by adding informative figure labels and then stage/commit those changes.
 
 ```{default}
 amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (develop)
@@ -123,7 +130,7 @@ amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_pract
 $
 ```
 
-A merge into the `develop` branch at this stage would be both appropriate and successful. The new feature was added to the feature branch `label_plot`, was a improvement, and the `devolop` branch is unchanged. Instead we will intentionally change the develop branch (violating the spirit of Git Flow) to demonstrate a merge conflict. In the terminal session that follows we: checkout the `develop` branch, modify the file `fib_seq.R` by adding poor figure labels, and stage/commit those changes. We then use `git show` to look at the copy of `fib_seq.R` for both the `develop` and `label_plot` branches. Because the values given to the `xlab` and `ylab` arguments were modified in both branches we can expect a merge conflict. As expected, a merge conflict results from attempting to merge these branches.
+A merge into the `develop` branch at this stage would be both appropriate and successful. The new feature was added to the feature branch `label_plot` was a improvement, and the `develop` branch is unchanged. Instead we will intentionally change the develop branch (violating the spirit of Git Flow) to demonstrate a merge conflict. In the terminal session that follows we: checkout the `develop` branch and while working on that branch modified the file `fib_seq.R` by adding less informative figure labels, and stage/commit those changes. We then use `git show` to look at the copy of `fib_seq.R` from both the `develop` and `label_plot` branches. Notice that the axis labels from the `label_plot` branch are more informative. Because the values given to the `xlab` and `ylab` arguments were modified in both branches we can expect a merge conflict and, as expected, a merge conflict results from attempting to merge these branches.
 
 ```{default}
 amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (label_plot)
@@ -186,7 +193,7 @@ amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_pract
 $
 ```
 
-When there is a merge conflict Git modifies the file being merged to help the user decide how to proceed. Git adds `<<<<<<< HEAD` above the merge conflict. The text `======` separates the merge conflict into code derived from each branch. Code between `<<<<<< HEAD` and `======` indicates code which was present in the branch being merged into (`develop` in this case) while code between `======` and `>>>>>> label_plot` indicates code which was present in the branch being merged (`label_plot` in this case). I've shown what that files looks like in my working directory using the terminal command `cat` but that is only for demonstrative purposes. Normally, I would just open the file in RStudio (It would look the exact same. To proceed the user has to decide which code to keep, save the modified file, and stage/commit the changes. For this example I deleted everything between `<<<<<< HEAD` and `======` inclusive as well as the line `>>>>>> label_plot`. These deletions returned the file `fib_seq.R` to match the version in the `label_plot` branch.
+When there is a merge conflict Git modifies the file being merged to help the user decide how to proceed. Git adds `<<<<<<< HEAD` above the merge conflict. The text `======` separates the merge conflict into code derived from each branch. Code between `<<<<<< HEAD` and `======` indicates code which was present in the branch being merged into (`develop` in this case) while code between `======` and `>>>>>> label_plot` indicates code which was present in the branch being merged (`label_plot` in this case). I've shown what that `fib_seq.R` file in my working directory looks like using the terminal command `cat,` but that is only for demonstrative purposes. Normally, I would just open the file in RStudio, and it would look exactly the same. To proceed the user has to decide which code to keep, save the modified file, and stage/commit the changes. For this example I deleted everything between `<<<<<< HEAD` and `======` inclusive as well as the line `>>>>>> label_plot`. These deletions made the file `fib_seq.R` we merged match the version in the `label_plot` branch.
 
 ```{default}
 amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (develop|MERGING)
@@ -238,11 +245,9 @@ amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_pract
 $
 ```
 
-### Other uses for git checkout
+### Interacting with your Git history
 
-The `git checkout` command is versatile. In addition to creating new branches or switching between branches it can also be used to retrieve information from prior commits.
-
-#### Retrieve a file from a prior commit
+#### Restoring a previous version of a file
 
 You can also use `git checkout` to recall a single file from a previous commit. In the terminal sequence below I use `cat` and `git show` to show that the file in my work directory and the file in the most recent commit to the `develop` branch are the same file. Notice a call to `git status` reports the same thing without showing the files explicitly.
 
@@ -282,7 +287,7 @@ nothing to commit, working tree clean
 
 ```
 
-To retrieve a specific file from a prior commit you have to provide `git checkout` with identifying information for the commit and the file name. You can specify the appropriate commit with a absolute or relative reference. For an absolute reference provide the SHA #. For a relative reference the shorthand is HEAD\~# where \# is the number of commits prior to the latest commit. In the terminal sequence below I used checkout to retrieve a copy of `fib_seq.R` from 1 commit earlier (recall this commit had the less informative x and y axis labels). Notice the earlier version of `fib_seq.R` was present in my working directory (as shown in the output for `cat`) but was not included in the latest commit to my repository (as shown in the output to `git show`). If I wanted the earlier version of `fib_seq.R` to be associated with the most recent commit to my repository I would need to stage and commit the file. In this case I did not want to change my repository so I used `git checkout` to go back the the most recent version. I often use this sequence to recall all or part of a code from a prior commit.
+To retrieve a specific file from a prior commit you have to provide `git checkout` with identifying information for the commit and the file name. You can specify the appropriate commit with a absolute or relative reference. For an absolute reference provide the SHA #. For a relative reference the shorthand is HEAD\~# where \# is the number of commits prior to the latest commit. In the terminal sequence below I used checkout to retrieve a copy of `fib_seq.R` from 1 commit earlier (recall this commit had the less informative x and y axis labels). Notice the earlier version of `fib_seq.R` was present in my working directory (as shown in the output for `cat`) but was not included in the latest commit to my repository (as shown in the output to `git show`). If I wanted the earlier version of `fib_seq.R` to be associated with the most recent commit to my repository I would need to commit the file. In this case I did not want to change my repository so I used `git checkout` to go back the the most recent version. I often use this sequence to recall all or part of a code from a prior commit.
 
 ```{default}
 amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (develop)
@@ -346,9 +351,9 @@ amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_pract
 $
 ```
 
-#### Retrieve all of a prior commit
+#### Retrieving a prior commit
 
-Yet another use of `git checkout` is to recall a previous commit in it's entirety. Since our repository only has one file I created, staged and committed a second file named `test.R` to demonstrate his functionality. In the terminal sequence below I show the contents of `test.R` and some now familiar content where I check the status of my repository and stage/commit the new file.
+Yet another use of `git checkout` is to recall a previous commit in it's entirety. Since our repository only has one file I created, staged and committed a second file named `test.R` to demonstrate this functionality. In the terminal sequence below I show the contents of `test.R` and some now familiar content where I check the status of my repository and stage/commit the new file.
 
 ```{default}
 amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (develop)
@@ -378,7 +383,7 @@ amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_pract
 $
 ```
 
-To retrieve a prior commit you should create a new branch for the past commit to live. While not strictly necessary creating a new branch is stable and gives you flexibility. In the terminal session below I use `git checkout` to create a new branch called `old_state` and fill it with the snapshot of the `develop` branch from 2 commits earlier. I am expecting old state to be missing `test.R` and have the less descriptive axis locations in the version of `fib_seq.R`. Two calls to `cat` confirm that my working directory does not contain `test.R` and have the correct version of `fib_seq.R`
+To retrieve a prior commit you should create a new branch to house the past commit until you decide what to do with it. While not strictly necessary creating a new branch is stable and protects your `develop` branch. In the terminal session below I use `git checkout` to create a new branch called `old_state` and fill it with the snapshot of the `develop` branch from 2 commits earlier. I am expecting old state to be missing `test.R` and have the less descriptive axis locations in the version of `fib_seq.R`. Two calls to `cat` confirm that my working directory does not contain `test.R` and has the older version of `fib_seq.R`
 
 ```{default}
 amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (develop)
@@ -412,7 +417,7 @@ amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_pract
 $
 ```
 
-The next action depends on if you want the keep working on the prior commit. If you do you can modify files and stage/commit the result as appropriate prior to erg `old_state` back into `develop`. In the terminal session below I decided the prior commit was not an e on my original commit so I moved files from the `develop` branch back into mu working directory and deleted the `old_state` branch. Two calls to `cat` prove that the original files were returned.
+The next action depends on if you want the keep working on the prior commit. If you do you can modify files and stage/commit the result as appropriate prior to merging `old_state` back into `develop`. Since you purposely started the `old_state` feature branch from a prior version of `develop` the odds of a merge conflict are high. It does mean it's a terrible idea but you should be doing this with intention. In the terminal session below I decided the prior commit was not an improvement on my original commit so I moved back to the `develop` branch and deleted the `old_state` branch. Two calls to `cat` prove that the original files were returned.
 
 ```{default}
 amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (old_state)
@@ -443,5 +448,255 @@ $ git branch -d old_state
 Deleted branch old_state (was d0d260e).
 
 amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (develop)
+$
+```
+
+#### Deleating/Reversing a commit
+
+There are two ways to reverse a commit. The version you should choose depends on if you have pushed the commit to a remote repository.
+
+##### Deleting a local commit
+
+When the bad commit is local you can us `git reset` to delete the commit. The commit will disappear from your history. To demonstrate this command I modified the `fib_seq.R` by adding an inconsequential comment at the bottom of the file and used the `cat` command to show the file. After adding and committing the file a call to `git log` shows that the commit was recorded.
+
+```{default}
+amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (develop)
+$ cat fib_seq.R
+#Create a Fibonacci sequence to practice git operations
+#Adam Reimer & Carly Reimer
+
+fib_seq <- c(0, 1)
+for (i in 3:51) fib_seq[i] <- sum(fib_seq[(i-1):(i-2)])
+
+plot(1:50, fib_seq[2:51]/fib_seq[1:50],
+     type = "l",
+     xlab = "Fibonacci Number in Denominator",
+     ylab = "Ratio Between Succesive Fibonacci Numbers")
+{golden_ratio <- fib_seq[51]/fib_seq[50]}
+
+#Useless comment to demonstrate how to delete a commit
+
+amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (develop)
+$ git add fib_seq.R
+
+amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (develop)
+$ git commit -m "bad commit, plan to delete" -m "This commit has one change, a useless comment added to the fib_seq.R file. Plan to reset the HEAD to delete the commit"
+[develop ae2fe59] bad commit, plan to delete
+ 1 file changed, 2 insertions(+)
+
+amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (develop)
+$ git log --oneline
+ae2fe59 (HEAD -> develop) bad commit, plan to delete
+4ef90af Test.R file added. Used to test that git checkout recalls an entire commit
+ad2149a fixed merge conflict by accepting changes from label_plot branch
+d0d260e Added labels to the golden ratio figure
+a4c0f61 Added axis labels to golden ratio plot.
+eb216a6 Merge branch 'cleanup' into develop
+8b28369 remove maanual Fibonacci calculations
+22dcfea (origin/main, main) Merge pull request #2 from carlyreimer/main
+f811c50 Update fib_seq.R
+edbaafa Update fib_seq.R
+ac48c12 Finally added a for loop and golden ratio estimate
+f732cdb Seventh Fibonacci number
+9db5478 Sixth number in the Fibonacci seqence
+5139049 Fifth entry in the Fibonacci sequence
+0c92881 Fourth entry in the Fibonacci sequence
+3bb6c98 Third entry in fib_seq
+e17181f Initialize Fibonacci sequence
+    
+amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (develop)
+$    
+```
+
+In the terminal session below I use `git reset` to reset my local repository to 1 commit prior to the most recent commit. Notice that the comment I added to the most recent commit is no longer a part of the `fib_seq.R` file and that the commit `ae2fe59d44eec001b949c3677f94f78e0c30a216` has been removed for the repository. The important thing to note is `git reset` changes the repository history. If you are working locally this is OK but if you have already pushed the bad commit to a remote then deleting a part of your history will cause problems for collaborators who pulled the original history.
+
+```{default}
+amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (develop)
+$ git reset HEAD~1 --hard
+HEAD is now at 4ef90af Test.R file added. Used to test that git checkout recalls an entire commit
+
+amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (develop)
+$ cat fib_seq.R
+#Create a Fibonacci sequence to practice git operations
+#Adam Reimer & Carly Reimer
+
+fib_seq <- c(0, 1)
+for (i in 3:51) fib_seq[i] <- sum(fib_seq[(i-1):(i-2)])
+
+plot(1:50, fib_seq[2:51]/fib_seq[1:50],
+     type = "l",
+     xlab = "Fibonacci Number in Denominator",
+     ylab = "Ratio Between Succesive Fibonacci Numbers")
+{golden_ratio <- fib_seq[51]/fib_seq[50]}
+
+amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (develop)
+$ git log --oneline
+4ef90af (HEAD -> develop) Test.R file added. Used to test that git checkout recalls an entire commit
+ad2149a fixed merge conflict by accepting changes from label_plot branch
+d0d260e Added labels to the golden ratio figure
+a4c0f61 Added axis labels to golden ratio plot.
+eb216a6 Merge branch 'cleanup' into develop
+8b28369 remove maanual Fibonacci calculations
+22dcfea (origin/main, main) Merge pull request #2 from carlyreimer/main
+f811c50 Update fib_seq.R
+edbaafa Update fib_seq.R
+ac48c12 Finally added a for loop and golden ratio estimate
+f732cdb Seventh Fibonacci number
+9db5478 Sixth number in the Fibonacci seqence
+5139049 Fifth entry in the Fibonacci sequence
+0c92881 Fourth entry in the Fibonacci sequence
+3bb6c98 Third entry in fib_seq
+e17181f Initialize Fibonacci sequence
+
+amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (develop)
+$ git status
+On branch develop
+nothing to commit, working tree clean
+
+amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (develop)
+$
+```
+
+##### Reversing a local/remote commit
+
+Because revising your history in a public repository is bad collaboration Git has devised a solution. The `git revert` command can also be used to undo a mistaken commit but it does so in a very deliberate way... by creating a new commit that exactly undoes the prior commit. This method provides a stable Git history to your collaborators. In the git session below I modified the `fib_seq.R` again (with an inconsequential comment) and added/committed the change. `git log` shows the new commit.
+
+```{default}
+amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (develop)
+$ git status
+On branch develop
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   fib_seq.R
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (develop)
+$ git add fib_seq.R
+
+amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (develop)
+$ git commit -m "bad commit, plan to revert" -m "This commit has one change, a useless comment added to the fib_seq.R file. Plan to revert the commit""
+> "
+[develop a0c849e] bad commit, plan to revert
+ 1 file changed, 2 insertions(+)
+
+amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (develop)
+$ git log --oneline
+a0c849e (HEAD -> develop) bad commit, plan to revert
+4ef90af Test.R file added. Used to test that git checkout recalls an entire commit
+ad2149a fixed merge conflict by accepting changes from label_plot branch
+d0d260e Added labels to the golden ratio figure
+a4c0f61 Added axis labels to golden ratio plot.
+eb216a6 Merge branch 'cleanup' into develop
+8b28369 remove maanual Fibonacci calculations
+22dcfea (origin/main, main) Merge pull request #2 from carlyreimer/main
+f811c50 Update fib_seq.R
+edbaafa Update fib_seq.R
+ac48c12 Finally added a for loop and golden ratio estimate
+f732cdb Seventh Fibonacci number
+9db5478 Sixth number in the Fibonacci seqence
+5139049 Fifth entry in the Fibonacci sequence
+0c92881 Fourth entry in the Fibonacci sequence
+3bb6c98 Third entry in fib_seq
+e17181f Initialize Fibonacci sequence
+
+amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (develop)
+$
+```
+
+Using `git revert` I specify the short SHA id from the prior commit. The call to `git log` shows that a new commit was added with a message specifying the commit reverted the commit titled "bad commit, plan to revert".
+
+```{default}
+amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (develop)
+$ git revert a0c849e
+[develop 6466f85] Revert commit titled: "bad commit, plan to revert"
+ 1 file changed, 2 deletions(-)
+
+amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (develop)
+$ git log --oneline
+6466f85 (HEAD -> develop) Revert commit titled: "bad commit, plan to revert"
+a0c849e bad commit, plan to revert
+4ef90af Test.R file added. Used to test that git checkout recalls an entire commit
+ad2149a fixed merge conflict by accepting changes from label_plot branch
+d0d260e Added labels to the golden ratio figure
+a4c0f61 Added axis labels to golden ratio plot.
+eb216a6 Merge branch 'cleanup' into develop
+8b28369 remove maanual Fibonacci calculations
+22dcfea (origin/main, main) Merge pull request #2 from carlyreimer/main
+f811c50 Update fib_seq.R
+edbaafa Update fib_seq.R
+ac48c12 Finally added a for loop and golden ratio estimate
+f732cdb Seventh Fibonacci number
+9db5478 Sixth number in the Fibonacci seqence
+5139049 Fifth entry in the Fibonacci sequence
+0c92881 Fourth entry in the Fibonacci sequence
+3bb6c98 Third entry in fib_seq
+e17181f Initialize Fibonacci sequence
+
+amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (develop)
+$ git status
+On branch develop
+nothing to commit, working tree clean
+
+amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (develop)
+$
+```
+
+### Before you go!
+
+I get it, everyone is tired and i have beat this subject to death. Still, we should tidy up before we close the git-practice repository for an extended amount of time. The repository may or may not have any enduring value but it helped me get through this book. As such the the repository might be about to go public. That being the case the Git Flow workflow suggests we: merge `develop` back into `main`, tag the published version, and push the published vesrion to the remote. Lets do that to close out.
+
+```{default}
+amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (develop)
+$ git checkout main
+Switched to branch 'main'
+Your branch is up to date with 'origin/main'.
+
+amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (main)
+$ git merge --no-ff develop
+Merge made by the 'ort' strategy.
+ fib_seq.R | 14 ++++++--------
+ test.R    |  2 ++
+ 2 files changed, 8 insertions(+), 8 deletions(-)
+ create mode 100644 test.R
+
+amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (main)
+$ git tag -a "v1.1" -m "This tag is synchronized with the first draft of the git book."
+
+amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (main)
+$ git tag
+v1.1
+
+amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (main)
+$ git show v1.1
+tag v1.1
+Tagger: Adam Reimer <adam.reimer@alaska.gov>
+Date:   Tue Jul 11 15:14:24 2023 -0800
+
+This tag is synchronized with the first draft of the git book.
+
+commit ef33f10150d6248b61558f63f98bd1d5acb3d771 (HEAD -> main, tag: v1.1)
+Merge: 22dcfea 6466f85
+Author: Adam Reimer <adam.reimer@alaska.gov>
+Date:   Tue Jul 11 15:08:02 2023 -0800
+
+    Merge branch 'develop'
+
+
+amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (main)
+$ git push -u origin main
+Enumerating objects: 21, done.
+Counting objects: 100% (21/21), done.
+Delta compression using up to 16 threads
+Compressing objects: 100% (19/19), done.
+Writing objects: 100% (19/19), 2.98 KiB | 55.00 KiB/s, done.
+Total 19 (delta 6), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (6/6), done.
+To https://github.com/adamreimer/git_practice.git
+   22dcfea..ef33f10  main -> main
+branch 'main' set up to track 'origin/main'.
+
+amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (main)
 $
 ```

@@ -7,7 +7,7 @@ book:
   date: "6/26/2023"
   chapters:
     - index.qmd
-    - intro.qmd
+    - intro.Rmd
     - basics.qmd
     - collaboration.qmd
     - intermediate.qmd
@@ -25,4 +25,3 @@ format:
     documentclass: scrreprt
 
 editor: visual
-
