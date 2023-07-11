@@ -1,12 +1,12 @@
 ## Collaboration Using Git
 
-Git has some amazing reproducible research capabilities that can become really powerful in large complicated analyses. That said, utilizing Git comes with an overhead that may not be justified for small projects unless you consider collaboration with future analysts including yourself. To utilize Git's collaborative potential create a remote repository on github. I created one called git_practice.
+Git has some amazing reproducible research capabilities that can become really powerful in large complicated analyses. That said, utilizing Git comes with an overhead that may not be justified for small projects unless you consider collaboration with future analysts including yourself. To demonstrate Git's collaborative potential I created a remote repository on GitHub called git_practice.
 
 ### Interacting with your Remote Repository
 
 #### git push
 
-To link your local repository to a remote repository use `git remote`. In the terminal session below I added a remote repository named "origin" and provided a url where the repository is located. The second command created a new branch in the remote names "main". The third command "pushed" my local repository to my remote repository. Files associated with this repository are now stored in a location where they can be accessed by others for viewing, download, or collaborative work.
+To link your local repository to a remote repository use `git remote`. In the terminal session below I added a remote repository named "origin" and provided a url where the repository is located. The second command created a new branch in the remote named `main`. The third command "pushed" my local repository to my remote repository. Files associated with this repository are now stored in a location where they can be accessed by others for viewing, download, or collaborative work.
 
 ```{default}
 amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice ({main})
@@ -75,7 +75,7 @@ ggplot(dat, aes(x = location, y = snapshot, label = label, fill = fill, color = 
   theme_bw()
 ```
 
-Now that we have a remote repository updated we have to worry about keeping them both synced. To illustrate this workflow I'll change the `fib_seq.r` file by adding the fifth value to the Fibonacci sequence. After this change the git work space will contain unstaged changes which are not reflected in either repository.
+Now that we have a remote repository updated we have to worry about keeping them both synced. To illustrate this workflow I'll change the `fib_seq.r` file by adding the fifth value to the Fibonacci sequence (`fib_seq[5] <- fib_seq[3] + fib_seq[4]`) as a new line. After this change the git work space will contain an unstaged change which is not reflected in either repository.
 
 ```{r}
 #| echo: false 
@@ -290,7 +290,7 @@ amreimer@DFGSXQDSF223076 MINGW64 /c/git_practice (main)
 $
 ```
 
-After git clone the my remote repository to my home machine I have two local repositories associated with the same remote(see @fig-home).
+After `git clone` the my remote repository to my home machine I have two local repositories associated with the same remote(see @fig-home).
 
 ```{r}
 #| echo: false 
@@ -332,7 +332,7 @@ ggplot(dat, aes(x = location, y = snapshot, label = label, fill = fill, color = 
   theme_bw()
 ```
 
-Changes made to the local repository on my C drive, which are staged, committed and pushed to the remote will cause the local repository on my S drive to be behind one commit. The terminal session below demonstrated these commands (all of which we have seen before) and the current state of the Git work space is shown in @fig-homeahead.
+If I change the file `fib_seq.R` in the working directory of my home computer by adding a new line (`fib_seq[6] <- fib_seq[4] + fib_seq[5]`), stage and commit those changes in the local repository on my home computer, and push my home computer's local repository to the remote repository the local repository on my S drive to be behind one commit. The terminal session below demonstrated these commands (all of which we have seen before) and the current state of the Git work space is shown in @fig-homeahead.
 
 ```{default}
 amreimer@DFGSXQDSF223076 MINGW64 /c/git_practice (main)
@@ -473,13 +473,13 @@ How you interact with a peers remote repository depends on your goals. We will d
 
 #### git clone - To Copy/Modify Code
 
-Imagine a situation where a peer has some code written which you would like to modify for a similar project[^collaboration-2]. Use `git clone` as described above. You will be able to create a copy of their repository and work on your local machine as usual, but you will not be able to push changes back to the remote.
+Imagine a situation where a peer has written some code which you would like to modify for a similar project[^collaboration-2]. Use `git clone` as described above. You will be able to create a copy of their repository and work on your local machine as usual, but you will not be able to push changes back to the remote.
 
 [^collaboration-2]: Common courtesy requires you to ask permission and credit the person who originally wrote the code.
 
 #### git clone, git push, git pull - To Collaborate (closely)
 
-If you and a peer are working closely on a analysis it may be appropriate for the owner to add their peer as a collaborator to the project. This is a point-and-click task from your github repository page (*Settings\>Collaborators\>Add people\>keypunch the username*). The collaborator can push and pull changes to the remote as if they were the owner. This arraignment is only appropriate for peers who you trust to commit changes of which you both approve. In practice, this likely means there will be personal communication to coordinate each person's efforts. To demonstrate this process I added my wife (Carly) as a collaborator to the git_practice repository. Carly then modified the `fib_seq.R` file, added the file, committed the changes, and pushed her version of the local repository back to the git_practice remote. Afterwards I pulled those changes back to my version of the local repositry. The terminal sessions and figures associated with these actions would closely mirror those shown for `git clone`, `git push`, and `git pull` above although the local repositories have different owners in this case. To demonstrate commits were made byt both collaborators I ran a specially formatted call[^collaboration-3] to `git log` which shows that the latest commit to this repository did come form a new author.
+If you and a peer are working closely on a analysis it may be appropriate for the owner to add their peer as a collaborator to the project. This is a point-and-click task from your github repository page, *Settings\>Collaborators\>Add people\>(keypunch the username*). The collaborator can push and pull changes to the remote as if they were the owner. This arraignment is only appropriate for peers who you trust to commit changes of which you both approve. In practice, this likely means there will be personal communication to coordinate each person's efforts. To demonstrate this process I added my wife (Carly) as a collaborator to the git_practice repository. Carly then cloned the repository, modified the `fib_seq.R` file by adding a new line (`fib_seq[7] <- fib_seq[5] + fib_seq[6]`), staged the file, committed the changes, and pushed her local repository back to the git_practice remote. Afterwards I pulled those changes back to the local repository on my S drive. The terminal sessions and figures associated with these actions would closely mirror those shown for `git clone`, `git push`, and `git pull` above although the local repositories have different owners in this case. To demonstrate commits were made by both collaborators I ran a specially formatted call[^collaboration-3] to `git log` which shows that the latest commit to this repository did come form a new author.
 
 [^collaboration-3]: Thanks [Jesper Rønn-Jensen](https://stackoverflow.com/questions/1441010/the-shortest-possible-output-from-git-log-containing-author-and-date)! Note: %h specifies the short commit ID, %x09 specifies a tab, %an specifies the author, %ad specifies the commit date, and %s specifies the commit title.
 
@@ -496,17 +496,17 @@ e17181f Adam Reimer     Sun Jul 2 12:59:06 2023 -0800   Initialize Fibonacci seq
 
 #### fork - To Collaborate (formally)
 
-[Fork](https://docs.github.com/en/get-started/quickstart/fork-a-repo#forking-a-repository) is a GitHub operation which creates a copy of another users remote repository under your Github ID. After the fork is created you can clone it to a local repository as described above. Your local repository can be [configured](https://docs.github.com/en/get-started/quickstart/fork-a-repo#configuring-git-to-sync-your-fork-with-the-upstream-repository) to [sync](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/syncing-a-fork) with the original (upstream) repository so that you local repository contains changes the original author made after fork. If you make significant changes to the repository that the original author may be interested in you can submit a [pull request](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request-from-a-fork) which notifies the original author about the changes you have made and gives them the opportunity to include your code in their repository. Github has great documentation of this process.
+[Fork](https://docs.github.com/en/get-started/quickstart/fork-a-repo#forking-a-repository) is a GitHub operation which creates a copy of another users remote repository under your GitHub ID. After the fork is created you can clone it to a local repository as described above. Your local repository can be [configured](https://docs.github.com/en/get-started/quickstart/fork-a-repo#configuring-git-to-sync-your-fork-with-the-upstream-repository) to [sync](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/syncing-a-fork) with the original (upstream) repository so that your local repository can track changes the original author made after fork. If you make significant changes to the repository that the original author may be interested in you can submit a [pull request](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request-from-a-fork) which notifies the original author about the changes you have made and gives them the opportunity to include your code in the repository. Github has great documentation of this process.
 
-As an example I revoked my wife's (Carly) collaborator status on the git_practice repository associated with my GitHub account. Carly then forked the git_practice repository in my account. Afterwards, the forked version of the git_practice repository on her account looked something like this:
+As an example I revoked my wife's collaborator status on the git_practice repository associated with my GitHub account. Carly then forked the git_practice repository in my account. Afterwards, the forked version of the git_practice repository in her account looked something like this:
 
 ![The forked git_practice repository in Carly Reimer's GitHub account](forked_repository.png)
 
-Using the same commands describe above Carly cloned the forked repository, made changes, added the changed file, committed the changes, and pushed the result back to her forked repository on Github. Pull requests are so named because Carly is asking me to pull her forked repository back into my version. Pull requests are initiated by the person making the request from the original repository. The pull request looked like this from my account:
+Using the same commands describe above Carly cloned the forked repository, made changes, added the changed file, committed the changes, and pushed the result back to her forked repository on Github. Pull requests are so named because Carly is asking me to pull her forked repository back into my original repository. The initiate a pull request the owner of the forked repository (Carly) navigates to the original repository and presses the *Pull request* button. The pull request looked like this when veiwed from my account:
 
 ![The pull request summary screen.](pull_request_AR.PNG)
 
-Navigating the the *Files changed* allows the repository owner to review line by line changes associated with the request. In this case I deemed the suggestions reasonable and accepted them without comment but there are capabilities to submit comments and request changes before the changes are accepted.
+Navigating the the *Files changed* button allows the repository owner to review line by line changes associated with the pull request. In this case, I deemed the suggestions reasonable and accepted them without comment but there are capabilities to comments and modify the changes before they are accepted.
 
 ![The pull request review/approval screen](pull_request_AR_approve.PNG)
 
@@ -514,4 +514,20 @@ After the request is approved the original owner can merge the pull request from
 
 ![Merging a pull request](pull_request_AR_merge.PNG)
 
-After merging the pull request the Carly's local repository, the forked repository, the original remote repository are synced while Adam's local repository is behind. This situation could be fixed with `git pull`.
+After merging the pull request; Carly's local repository, the forked repository, and the original remote repository are synced while Adam's local repository is behind. This situation could be fixed with `git pull`.
+
+```{default}
+amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (main)
+$ git pull
+remote: Enumerating objects: 12, done.
+remote: Counting objects: 100% (12/12), done.
+remote: Compressing objects: 100% (7/7), done.
+remote: Total 10 (delta 3), reused 9 (delta 3), pack-reused 0
+Unpacking objects: 100% (10/10), 2.60 KiB | 1024 bytes/s, done.
+From https://github.com/adamreimer/git_practice
+   f732cdb..22dcfea  main       -> origin/main
+Updating f732cdb..22dcfea
+Fast-forward
+ fib_seq.R | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
+```
