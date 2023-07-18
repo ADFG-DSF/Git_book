@@ -246,9 +246,9 @@ ggplot(dat, aes(x = location, y = snapshot, label = label, fill = fill, color = 
   theme_bw()
 ```
 
-The git workflow described so far forms the basis on reproducible research using Git. We will calculate the next several values in the Fibonacci sequence to practice this workflow. The same sqence described above is repeated:
+The git workflow described so far forms the basis on reproducible research using Git. We will calculate the next several values in the Fibonacci sequence to practice this workflow. The same seqence described above is repeated:
 
-1.  A change is made to `fib_seq.R` (in this case a new line `fib_seq[3] <- fib_seq[1] + fib_seq[2]` is added) and saved to the working directory. Te working directory now represents a more recent snapshot of time that the local repository.
+1.  A change is made to `fib_seq.R` (in this case a new line `fib_seq[3] <- fib_seq[1] + fib_seq[2]` is added) and saved to the working directory. The working directory now represents a more recent snapshot of time that the local repository.
 
 2.  The changed file is staged.
 
@@ -407,7 +407,7 @@ ggplot(dat, aes(x = location, y = snapshot, label = label, fill = fill, color = 
 
 Saves and a commits serve different purposes. As we all know, save can and should be used frequently... many times an hour and/or any time you are stepping away from your work. This use is agnostic to whether the analyst is or is not using a git workflow.
 
-In contrast, commits are made for two reasons. First, a commit should be made whenever the analysis is at a point which you may want to revisit. Examples include; adding new data, adding a new feature to the analysis, or any time the code was run and the results were distributed. Any one of these tasks may have resulted in a new 'version' in the traditional workflow but they don't have to be major updates. A second reason to commit is when the changes are substantive enough that the line-by-line change may be difficult to track if you did not commit until the new data/feature are complete. These commits snapshot significant steps in a new feature's development or prior to experimenting with a new feature.
+In contrast, commits are made for two reasons. First, a commit should be made whenever the analysis is at a point which you may want to revisit. Examples include: adding new data, adding a new feature to the analysis, or any time the code was run and the results were distributed. Any one of these tasks may have resulted in a new 'version' in the traditional workflow but they don't have to be major updates. A second reason to commit is when the changes are substantive enough that the line-by-line change may be difficult to track if you did not commit until the new data/feature are complete. These commits snapshot significant steps in a new feature's development or prior to experimenting with a new feature.
 
 The most important thing to note regarding commits is that, unlike save, there is no temporal component. While saves are designed to minimize the risk of lost work and should be frequent *in time*, commits are designed to record importance stages of the analysis and should be frequent *with respect to progress*. A difficult feature may take days to code but represent a single commit, provided the actual changes to the code are modest. Efficiency in commit frequency will pay off when the repository is being revisited at a later date and each commit is a snapshot of the analysis that is important or informative to the reviewer.
 
