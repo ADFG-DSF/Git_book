@@ -6,7 +6,7 @@ Congratulations! If you are reading this you have done your homework and earned 
 
 ### git init
 
-If you are starting a brand new analysis creating a git repository at the same time you create your R studio project is easy: *New Project\>New Directory\>New Project\>(provide name, location and check 'create git repository')*. This sequence runs git init in the background while the RStudio project is created
+If you are starting a brand new analysis, creating a git repository at the same time you create your R studio project is easy: *New Project\>New Directory\>New Project\>(provide name, location and check 'create git repository')*. This sequence runs git init in the background while the RStudio project is created.
 
 ### Commands accessible through the Git tab
 
@@ -22,7 +22,7 @@ If you are starting a brand new analysis creating a git repository at the same t
 
 -   `git log` - the *History* button will lead to another screen where the GUI allows users to `commit`, `diff` and `log` the repository.
 
--   `git revert` - the *More* button will allow the user to `revert` a commit. IT also allows the user to add files to the `.gitignore` file by clicking the radio button next to the files you wish to ignore.
+-   `git revert` - the *More* button will allow the user to `revert` a commit. It also allows the user to add files to the `.gitignore` file by clicking the radio button next to the files you wish to ignore.
 
 -   `git checkout -b` and `git remote` - the flowchart shaped button will allow you to create a new branch and add a remote to the repository.
 
@@ -52,7 +52,7 @@ To my knowledge you cannot use RStudio to:
 
 -   `git checkout` to recall a single file from a previous commit.
 
-    -   comment - I've done this allot. It is sometimes possible to cut/paste a peice for revised code from the GUI history but it is usually formatted poorly which can be a pain if the section you need is large.
+    -   comment - I've done this a lot. It is sometimes possible to cut/paste a piece of revised code from the GUI history but it is usually formatted poorly which can be a pain if the section you need is large.
 
 -   `git checkout` to recall a prior commit to your working directory.
 
