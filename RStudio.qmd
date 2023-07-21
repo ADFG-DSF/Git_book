@@ -1,4 +1,4 @@
-## The RStudio Graphical User Interface
+## The RStudio Graphical User Interface  {#sec-rstudio}
 
 Congratulations! If you are reading this you have done your homework and earned the right to confidently use a graphical user interface to simplify the most common Git tasks. Using a GUI can save a lot of keystrokes for most commands. The most accessible GUI is found in RStudio itself. A Git tab will show up in the Environment/History/Connections/Tutorial window (generally the upper left hand quadrant) provided your directory is a Git repository.
 
@@ -12,15 +12,15 @@ If you are starting a brand new analysis, creating a git repository at the same 
 
 -   `git add` - add/Stage files by clicking the radio button next to each file in the RStudio Git pane.
 
--   `git diff`- the *Diff* button will lead to another screen where the GUI allows users to `commit`, `diff` and `log` the repository.
+-   `git diff`- the *Diff* button will lead to another screen where the GUI allows users to `diff` and `commit` the repository.
 
--   `git commit` - the *Commit* button will lead to another screen where the GUI allows users to `commit`, `diff` and `log` the repository.
+-   `git commit` - the *Commit* button will lead to another screen where the GUI allows users to `commit` and `diff` the repository.
 
 -   `git pull` - the *Pull* button allows the user to pull commits from the remote repository to the local repository.
 
 -   `git push` - the *Push* button allows the user to push commits from the local repository to the remote repository.
 
--   `git log` - the *History* button will lead to another screen where the GUI allows users to `commit`, `diff` and `log` the repository.
+-   `git log` - the *History* button will lead to another screen where the GUI allows users to `log` the repository.
 
 -   `git revert` - the *More* button will allow the user to `revert` a commit. It also allows the user to add files to the `.gitignore` file by clicking the radio button next to the files you wish to ignore.
 
@@ -32,36 +32,31 @@ If you are starting a brand new analysis, creating a git repository at the same 
 
 ![The RStudio Git tab](Rstudio_Git.PNG)
 
-### Commands accessible through the Diff/Commit/History window
+### Commands accessible through the Diff window
 
--   `git diff` - the *Changes* tab will show line by line changes associated with the files in the working directory relative to the most recent commit. Old lines are shown in red while new line are shown in green.
+-   `git diff` - the *Changes* tab will show line by line changes associated with the files in the working directory relative to the most recent commit. Old lines are shown in red while new line are shown in green. In the example shown below x- and y-axis labels are added to the plot function.
 
--   `git commit` - the *Changes* tab includes a commit message window and a *Commit* button allowing the user to commit all of the staged changes. The commit title goes on the first line of the message window, followed by a blank line. The third line and onward contain the commit description.
+-   `git commit` - the *Changes* tab also includes a commit message window and a *Commit* button allowing the user to commit all of the staged changes. The commit title goes on the first line of the message window, followed by a blank line. The third line and onward contain the commit description.
 
--   `git log` - the *History* tab will show the list of prior commits and the line by line changes associated with each file included in each commit.
+![The Diff/Commit window](Rstudio_commit.PNG)
 
-![The Diff/Commit/History window](Rstudio_commit.PNG)
+### Commands accessible through the History window
+
+-   `git log` - the *History* tab will show the list of prior commits and the line by line changes associated with each file included in each commit. In the example below manual Fibonacci sequence calculations were replaced with a for loop and a typo was corrected in the word "ratio".
+-   `git checkout` - RStudio does not have a direct analog to using `git checkout` to recall a single file but the *View file \@SHA-short* button will open a window which includes the code that was staged and committed during that SHA . It is possible to retrieve code from a previous commit in this manner using cut, paste and save point and click commands.
+
+![The History window](Rstudio_history.PNG)
 
 ### Commands not accessible using the RStudio GUI
 
-To my knowledge you cannot use RStudio to:
+To my knowledge there are certain commands that are not included in RStudio GUI.
 
--   `git merge` two branches.
+-   `git merge` two branches. Since branching and merging is a big part of using git for model development this is a major omission. The GitKraken GUI handles merges nicely.
 
-    -   comment - This feels like a big deal if you intend to use Git optimally.
+-   The Rstudio GUI display the Git log in a much cleaner format than the terminal with the big exception that the commit description is not visible. Since the commit description is the more informative part of the commit message this can be a substantial loss for some commits. A workaround would is to run the command `git show SHA-short -s –format=%B` where SHA-short is the short SHA tag for the commit description you wish to see. More powerful GUI's (for example, GitKraken) can show the entire commit description.
 
--   `git checkout` to recall a single file from a previous commit.
-
-    -   comment - I've done this a lot. It is sometimes possible to cut/paste a piece of revised code from the GUI history but it is usually formatted poorly which can be a pain if the section you need is large.
+-   `git checkout` to recall a single file from a previous commit. Using the terminal is more deliberate and proably better if you want to recall all of a large file although the cut/paste workaround described above is generally sufficent if you just want t few lines of code from a previous commit.
 
 -   `git checkout` to recall a prior commit to your working directory.
 
-    -   comment - Not needed often. I've generally been more interested in a single file.
-
 -   `git reset` to delete a local commit.
-
-    -   comment - I have done this rarely.
-
--   Impress your friends by making your computer do things without using your mouse.
-
-    -   comment - My friends think I'm a dork and this only exacerbates things in that regard.

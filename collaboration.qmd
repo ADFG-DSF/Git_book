@@ -1,4 +1,4 @@
-## Collaboration Using Git
+## Collaboration Using Git  {#sec-collab}
 
 Git has some amazing reproducible research capabilities that can become really powerful in large complicated analyses. That said, utilizing Git comes with an overhead that may not be justified for small projects unless you consider collaboration with future analysts including yourself. To demonstrate Git's collaborative potential I created a remote repository on GitHub called git_practice.
 
@@ -11,10 +11,14 @@ To link your local repository to a remote repository use `git remote`. In the te
 ```{default}
 amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice ({main})
 $ git remote add origin https://github.com/adamreimer/git_practice.git
+```
 
+```{default}
 amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice ({main})
 $ git branch -M main
+```
 
+```{default}
 amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (main)
 $ git push -u origin main
 Enumerating objects: 11, done.
@@ -27,9 +31,6 @@ remote: Resolving deltas: 100% (2/2), done.
 To https://github.com/adamreimer/git_practice.git
  * [new branch]      main -> main
 branch 'main' set up to track 'origin/main'.
-
-amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (main)
-$
 ```
 
 After pushing to github your repository now looks like @fig-push.
@@ -129,15 +130,21 @@ Changes not staged for commit:
         modified:   fib_seq.R
 
 no changes added to commit (use "git add" and/or "git commit -a")
+```
 
+```{default}
 amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (main)
 $ git add fib_seq.R
+```
 
+```{default}
 amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (main)
 $ git commit -m "Fifth entry in the Fibonacci sequence" -m "A long and descriptive description"
 [main 5139049] Fifth entry in the Fibonacci sequence
  1 file changed, 2 insertions(+), 1 deletion(-)
+```
 
+```{default}
 amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (main)
 $ git status
 On branch main
@@ -145,9 +152,6 @@ Your branch is ahead of 'origin/main' by 1 commit.
   (use "git push" to publish your local commits)
 
 nothing to commit, working tree clean
-
-amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (main)
-$
 ```
 
 ```{r}
@@ -202,16 +206,15 @@ Total 3 (delta 1), reused 0 (delta 0), pack-reused 0
 remote: Resolving deltas: 100% (1/1), completed with 1 local object.
 To https://github.com/adamreimer/git_practice.git
    0c92881..5139049  main -> main
+```
 
+```{default}
 amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (main)
 $ git status
 On branch main
 Your branch is up to date with 'origin/main'.
 
 nothing to commit, working tree clean
-
-amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (main)
-$
 ```
 
 ```{r}
@@ -261,7 +264,9 @@ Imagine a situation where you would like to work on your analysis from a home co
 ```{default}
 amreimer@DFGSXQDSF223076 MINGW64 ~/Documents
 $ cd C:/
+```
 
+```{default}
 amreimer@DFGSXQDSF223076 MINGW64 /c
 $ git clone https://github.com/adamreimer/git_practice.git
 Cloning into 'git_practice'...
@@ -271,23 +276,26 @@ remote: Compressing objects: 100% (10/10), done.
 remote: Total 14 (delta 3), reused 14 (delta 3), pack-reused 0
 Receiving objects: 100% (14/14), done.
 Resolving deltas: 100% (3/3), done.
+```
 
+```{default}
 amreimer@DFGSXQDSF223076 MINGW64 /c
 $ cd C:/git_practice
+```
 
+```{default}
 amreimer@DFGSXQDSF223076 MINGW64 /c/git_practice (main)
 $ git_status
 bash: git_status: command not found
+```
 
+```{default}
 amreimer@DFGSXQDSF223076 MINGW64 /c/git_practice (main)
 $ git status
 On branch main
 Your branch is up to date with 'origin/main'.
 
 nothing to commit, working tree clean
-
-amreimer@DFGSXQDSF223076 MINGW64 /c/git_practice (main)
-$
 ```
 
 After `git clone`-ing my remote repository to my home machine I have two local repositories associated with the same remote (see @fig-home).
@@ -346,15 +354,21 @@ Changes not staged for commit:
         modified:   fib_seq.R
 
 no changes added to commit (use "git add" and/or "git commit -a")
+```
 
+```{default}
 amreimer@DFGSXQDSF223076 MINGW64 /c/git_practice (main)
 $ git add fib_seq.R
+```
 
+```{default}
 amreimer@DFGSXQDSF223076 MINGW64 /c/git_practice (main)
 $ git commit -m "Sixth number in the Fibonacci seqence" -m "This commit is slightly different as it was made from a different computer in my house. It still represents a single author working on their own repository but demonstrated the flexibility accorded by storing your analysis on the cloud. Working on this analysis from a new machine was seamless provided the new machine had the appropriate software."
 [main 9db5478] Sixth number in the Fibonacci seqence
  1 file changed, 2 insertions(+), 1 deletion(-)
+```
 
+```{default}
 amreimer@DFGSXQDSF223076 MINGW64 /c/git_practice (main)
 $ git status
 On branch main
@@ -362,7 +376,9 @@ Your branch is ahead of 'origin/main' by 1 commit.
   (use "git push" to publish your local commits)
 
 nothing to commit, working tree clean
+```
 
+```{default}
 amreimer@DFGSXQDSF223076 MINGW64 /c/git_practice (main)
 $ git push
 Enumerating objects: 5, done.
@@ -374,9 +390,6 @@ Total 3 (delta 1), reused 0 (delta 0), pack-reused 0
 remote: Resolving deltas: 100% (1/1), completed with 1 local object.
 To https://github.com/adamreimer/git_practice.git
    5139049..9db5478  main -> main
-
-amreimer@DFGSXQDSF223076 MINGW64 /c/git_practice (main)
-$
 ```
 
 ```{r}
@@ -430,7 +443,9 @@ On branch main
 Your branch is up to date with 'origin/main'.
 
 nothing to commit, working tree clean
+```
 
+```{default}
 amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (main)
 $ git remote update
 remote: Enumerating objects: 5, done.
@@ -440,7 +455,9 @@ remote: Total 3 (delta 1), reused 3 (delta 1), pack-reused 0
 Unpacking objects: 100% (3/3), 566 bytes | 0 bytes/s, done.
 From https://github.com/adamreimer/git_practice
    5139049..9db5478  main       -> origin/main
+```
 
+```{default}
 amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (main)
 $ git status
 On branch main
@@ -448,23 +465,24 @@ Your branch is behind 'origin/main' by 1 commit, and can be fast-forwarded.
   (use "git pull" to update your local branch)
 
 nothing to commit, working tree clean
+```
 
+```{default}
 amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (main)
 $ git pull
 Updating 5139049..9db5478
 Fast-forward
  fib_seq.R | 3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
+```
 
+```{default}
 amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (main)
 $ git status
 On branch main
 Your branch is up to date with 'origin/main'.
 
 nothing to commit, working tree clean
-
-amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (main)
-$
 ```
 
 ### Interacting with a Peer's Remote Repository

@@ -1,4 +1,4 @@
-# Introduction
+# Introduction  {#sec-intro}
 
 There is a a lot of git stuff out there and most of it is not intended for scientists (one of the best science-focused git tutorials for R is [HappygitwithR](https://happygitwithr.com/)). In this document our goal is to amalgamate the most common Git commands and strategies into a workflow that is helpful for ADF&G fisheries analysis.
 
@@ -8,7 +8,25 @@ Git offers a way to track changes in your analysis without requiring the analyst
 
 The collection of all the commits, messages, tags and identifiers associated with a projects is called a **repository**. When a repository is created on your computer or private/company network it is **local**. An analyst can **push** a local repository to a **remote** repository (stored on the cloud). Alternatively, the analyst can **pull** a remote repository to their computer or private/company network to either create or update a local repository. Because multiple local repositories can push and pull to the same remote repository Git allows collaboration between analysts while maintaining the documentation and unique identifiers associated with each commit. Github is the most popular hosting service facilitating these collaborative features of Git.
 
-## How do I interact with Git?
+## Why should we use Git?
+
+Git is quickly becoming a standard reproducible research best practices. The Division of Sport Fisheries and it's employees mutually benefit by developing skills with this tool. For the individual, use of Git helps:
+
+-   Easily share code with your colleagues.
+
+-   Keep a record of file modifications and versions with a line-by-line record without retaining multiple files.
+
+-   Allows for a cloud based platform which you can access from your desktop and laptop. This method is generally faster and more stable than vpn.
+
+-   Model development and the tracking of the model development process is made easier.
+
+For ADF&G, use of Git provides:
+
+-   A shared organizational structure for ADF&G analyses flattens the learning curve when reviewing/inheriting a peer's work.
+
+-   A shared space where current and future ADF&G employees can locate past and present analyses.
+
+## How to interact with Git?
 
 One challenge with widespread adoption of Git at ADF&G is that there is no accepted standard for how to interact with Git. The options are a GUI (graphical user interface) or a command line interface (terminal). Herein, we will focus on how to use Git while interacting through the terminal. We make this choice for 3 reasons. First, because the terminal is a command line interface it is easy to demonstrate the exact steps that were taken to achieve each outcome. This presentation is more concrete and robust to future changes than a parade of screenshots. A second issue is that there are a lot of GUIs out there. I will include an appendix which shows how to do the most common Git functions in RStudio. While not a particularly good Git GUI, the RStudio interface is sufficient for most tasks and readily available for most readers of this book. If you have a GUI you highly recommend we welcome your input. Please fork the repository associated with this book, add an appendix with instructions for your preferred GUI and submit a pull request... instructions on how to do so are included in the chapter on collaboration. A final reason to use command line in the context of this book is that the terminal commands are commonly described in Stack Overflow if you Google how to accomplish a task in Git. Rest assured, I don't use the terminal to interact with Git the majority of the time[^intro-1] and I don't recommend you do either. But I do think you will end up there eventually, that the terminal has pedagogical advantages, and that if you can use the terminal the GUI's are easier to understand.
 
@@ -18,11 +36,12 @@ In order to use the terminal effectively it helps to make one change to the Rstu
 
 ## Conventions used in this book
 
-Throughout this document you will find code blocks which show the command line prompt, the command given, and the result received for each action demonstrated. Code blocks are identifiable by a grey bar along the left hand margin. In the terminal, each command line prompt (\$) is preceded by the username, shell type, and directory location. In the terminal session below we can see that the username was amreimer\@DFGSXQDSF206801, the shell type was MING64 and the directory location was S:/RTS/Reimer/Research_Best_Practices/git_practice.
+Throughout this document you will find code blocks which show the command line prompt, the command given, and the result received for each action demonstrated. Code blocks are identifiable by a blue bar along the left hand margin and a grey background. In the terminal, each command line prompt (\$) is preceded by a line which shows the username, shell type, and directory location. In the terminal session below we can see that the username was amreimer\@DFGSXQDSF206801, the shell type was MING64 and the directory location was S:/RTS/Reimer/Research_Best_Practices/git_practice. User commands are keypunched after the command line prompt. In the terminal session below I entered the command `git status`. The line after the command line prompt returns the output received from the command. In this case, Git tells me that the directory S:/RTS/Reimer/Research_Best_Practices/git_practice is not a Git repository. In practice we will often run several terminal commands in a row although in this text each prompt and return will be presented as a separate code block to make it easier to disern each command and output.
 
 ```{default}
-amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice
-$
+amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice
+$ git status
+fatal: not a git repository (or any of the parent directories): .git
 ```
 
 When point and click sequences are referenced in this text button names will be shown in *italic*, button names in series will be separated by and the greater than symbol (\>) and any actions required will be described using (*italics* *enclosed in parenthesis*). For an example see the last paragraph of the preceding section.

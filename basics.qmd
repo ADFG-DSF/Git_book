@@ -1,4 +1,4 @@
-## The Basic Git Workflow
+## The Basic Git Workflow {#sec-basic}
 
 Basic Git use includes how to create a repository, track changes in the files within your repository, view your repository history, and view line by line changes in modified files. The title for each section in this chapter will be a basic Git command with the text, code blocks, and figures in each section describing the use and result for each command.
 
@@ -10,11 +10,15 @@ If you have an empty folder that you would like make a git repository `git init`
 amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice
 $ git status
 fatal: not a git repository (or any of the parent directories): .git
+```
 
+```{default}
 amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice
 $ git init
 Initialized empty Git repository in //dfg.alaska.local/DSF/Anchorage/RTS/Reimer/Research_Best_Practices/git_practice/.git/
+```
 
+```{default}
 amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice ({main})
 $ git status
 On branch {main}
@@ -27,12 +31,9 @@ Untracked files:
         git_practice.Rproj
 
 nothing added to commit but untracked files present (use "git add" to track)
-
-amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice ({main})
-$
 ```
 
-The `git init` command creates a git repository in your project directory. At this point, the repository is nearly empty but the git workflow has been enabled which will allow us to commit to the repository in the future. The rounded rectangle in @fig-init indicates the contents of your working directory at this point in time. At the moment they are represented by an empty rectangle which indicates that the files in your working directory are in a Git work space. We will build this figure as we complete tasks within the Git work space.
+The `git init` command creates a git repository in your project directory. To help conceptualize the use of Git we will be developing a series of figures to demonstrate how files are introduced into the workflow and move through the Git work space once there. At this point, a few files are in the working directory and while a repository has been created we have yet to commit anything to the repository. The rounded rectangle in @fig-init indicates the contents of your working directory at this point in time. At the moment they are represented by an empty rectangle which indicates that the files in your working directory have yet to be staged. We will build this figure as we complete tasks within the Git work space.
 
 ```{r}
 #| echo: false
@@ -89,20 +90,30 @@ Untracked files:
         git_practice.Rproj
 
 nothing added to commit but untracked files present (use "git add" to track)
+```
 
+```{default}
 amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice ({main})
 $ git add .gitignore
+```
 
+```{default}
 amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice ({main})
 $ git add fib_seq.R
+```
 
+```{default}
 amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice ({main})
 $ git_add git_practice.Rproj
 bash: git_add: command not found
+```
 
+```{default}
 amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice ({main})
 $ git add git_practice.Rproj
+```
 
+```{default}
 amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice ({main})
 $ git status
 On branch {main}
@@ -114,10 +125,6 @@ Changes to be committed:
         new file:   .gitignore
         new file:   fib_seq.R
         new file:   git_practice.Rproj
-
-
-amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice ({main})
-$
 ```
 
 Use of `git add` stages files you would like to track in your git repository. The rectangle in @fig-add is now filled which indicates that files within your working directory are staged and ready to be committed.
@@ -177,8 +184,9 @@ Changes to be committed:
         new file:   .gitignore
         new file:   fib_seq.R
         new file:   git_practice.Rproj
+```
 
-
+```{default}
 amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice ({main})
 $ git commit -m "Initialize Fibonacci sequence" -m "Sequential additions to the Fibonacci sequence will provide a simple way to demonstrate several cycles of the git workflow including add/commit, push/pull, collaborate, fork, branch, merge, merge conflicts, exc. I even got my wife a GitHub account for this. Wish us luck!"
 [{main} e17181f] Initialize Fibonacci sequence
@@ -187,12 +195,16 @@ $ git commit -m "Initialize Fibonacci sequence" -m "Sequential additions to the 
  create mode 100644 .gitignore
  create mode 100644 fib_seq.R
  create mode 100644 git_practice.Rproj
+```
 
+```{default}
 amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice ({main})
 $ git status
 On branch {main}
 nothing to commit, working tree clean
+```
 
+```{default}
 amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice ({main})
 $ git log
 commit e17181fa781b2e30096e1c7d31443aac18d527e5 (HEAD -> {main})
@@ -202,14 +214,11 @@ Date:   Sun Jul 2 12:59:06 2023 -0800
     Initialize Fibonacci sequence
 
     Sequential additions to the Fibonacci sequence will provide a simple way to demonstrate several cycles of the git workflow including add/commit, push/pull, collaborate, fork, branch, merge, merge conflicts, exc. I even got my wife a GitHub account for this. Wish us luck!
-
-amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice ({main})
-$
 ```
 
 The `git log` command provides a summary of the commit. Two important parts are the commit ID and the commit message. The commit ID is a code which can be used to reference the commit in the future. Git assigned a long ID to each commit (`e17181fa781b2e30096e1c7d31443aac18d527e5` for this commit) but its common to using only the first 7 characters of the commit ID (`e17181f)` to refer to the commit.
 
-Commit messages are required. Notice the commit message is broken into 2 parts. The first part is called the title or summary while the second part is called the description. A good practice is for the title to be brief (less that 50 characters) so that it displays well in most formats. There is no length limit for the description and this is the place to provide some explanation beyond what you can capture in the title. I've purposely been verbose with the commit above to demonstrate a long description.
+Commit messages are required. Notice the commit message is broken into 2 parts. The first part is called the title or summary while the second part is called the description. A good practice is for the title to be brief (less that 50 characters) so that it displays well in most formats. There is no length limit for the description and this is the place to provide some explanation beyond what you can capture in the title. I've purposely been verbose with the commit above to demonstrate a long description. Please avoid non-informative commit messages and avoid the tendancy to fatigue and include less and less informative messages as the analysis proceeds.
 
 ```{r}
 #| echo: false 
@@ -409,11 +418,13 @@ Saves and a commits serve different purposes. As we all know, save can and shoul
 
 In contrast, commits are made for two reasons. First, a commit should be made whenever the analysis is at a point which you may want to revisit. Examples include: adding new data, adding a new feature to the analysis, or any time the code was run and the results were distributed. Any one of these tasks may have resulted in a new 'version' in the traditional workflow but they don't have to be major updates. A second reason to commit is when the changes are substantive enough that the line-by-line change may be difficult to track if you did not commit until the new data/features are complete. These commits snapshot significant steps in a new feature's development or prior to experimenting with a new feature.
 
-The most important thing to note regarding commits is that, unlike save, there is no temporal component. While saves are designed to minimize the risk of lost work and should be frequent *in time*, commits are designed to record importance stages of the analysis and should be frequent *with respect to progress*. A difficult feature may take days to code but represent a single commit, provided the actual changes to the code are modest. Efficiency in commit frequency will pay off when the repository is being revisited at a later date and each commit is a snapshot of the analysis that is important or informative to the reviewer.
+The most important thing to note regarding commits is that, unlike save, there is no temporal component. While saves are designed to minimize the risk of lost work and should be frequent *in time*, commits are designed to record importance stages of the analysis and should be frequent *with respect to progress*. A difficult feature may take days to code but represent a single commit, provided the actual changes to the code are modest. Efficiency in commit frequency will pay off when the repository is being revisited at a later date and each commit is a snapshot of the analysis that is important or informative to the reviewer. Note that the commits demonstrated in this text are purposely pedantic but a good rule of thumb is that if you can't describe why you are committing your files it may be an unnecessary commit.
 
 ### git log
 
-To view our commit history in the terminal use `git log`. Note that the commit ID, author, date, commit title and commit description are all shown in the log.
+To view our commit history in the terminal use `git log`. Note that the commit ID, author, date, commit title and commit description are all shown in the log. Note on large projects calling `git log` can result in a substantial amount which can be difficult to exit (type `q` at any time and you will exit)[^basics-1].
+
+[^basics-1]: Later we will learn some tricks to compress the output of `git log` within the terminal although generally GUIs displays repository history better than the terminal and are much more commonly used.
 
 ```{default}
 amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice ({main})
@@ -442,9 +453,6 @@ Date:   Sun Jul 2 12:59:06 2023 -0800
 
     Sequential additions to the Fibonacci sequence will provide a simple way to demonstrate several cycles of the git workflow including add/commit, push/pull, collaborate, fork, branch, merge, merge conflicts, exc. I even got my wife a GitHub account
 for this. Wish us luck!
-
-amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice ({main})
-$
 ```
 
 ### git diff
@@ -456,7 +464,9 @@ amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_pract
 $ git status
 On branch {main}
 nothing to commit, working tree clean
+```
 
+```{default}
 amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice ({main})
 $ git diff 3bb6c9
 diff --git a/fib_seq.R b/fib_seq.R
@@ -472,9 +482,6 @@ index 9c118d5..4ce1d70 100644
 +fib_seq[3] <- fib_seq[1] + fib_seq[2]
 +fib_seq[4] <- fib_seq[2] + fib_seq[3]
 \ No newline at end of file
-
-amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice ({main})
-$
 ```
 
 Git GUI's are superior to the terminal when looking at line-by line differences but for completeness we will discuss how to read the output. The section `--- a/fib_seq.R` to `+++ b/fib_seq.R` identifies the files that were modified where `--- a/` and `+++ b` refer to the previous and the current versions of the file respectively. The line `@@ -2,4 +2,5 @@` tells us that the output is showing the original file starting on the second line and displaying the the next 4 lines (three unmarked lines and the line with a negative symbol) while the new version of the file is also shown starting from the second line but displaying the next 5 lines (the three unmarked lines and the two lines with an addition symbol). This makes sense because a single line was added to the new version.

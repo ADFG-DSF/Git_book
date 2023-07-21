@@ -1,0 +1,70 @@
+## Before you go!  {#sec-laststeps}
+
+```{r}
+#| echo: false
+# only hear to trick quarto into using the knitr engine.
+# I cant figure out how to specify that in settings for a book.
+# Could rename this file to .Rmd (*and rename the refernece in _quarto.yml but then footnots are disable for some strange reason.)
+```
+
+I get it, everyone is tired and I have beat this subject to death. Still, we should tidy up before we close the git_practice repository for an extended amount of time. The repository may or may not have any enduring value but it helped me get through this book. As such the the repository might be about to go public. That being the case the Git Flow workflow suggests we: merge `develop` back into `main`, tag the published version, and push the published version to the remote. Lets do that to close out.
+
+```{default}
+amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (develop)
+$ git checkout main
+Switched to branch 'main'
+Your branch is up to date with 'origin/main'.
+```
+
+```{default}
+amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (main)
+$ git merge --no-ff develop
+Merge made by the 'ort' strategy.
+ fib_seq.R | 14 ++++++--------
+ test.R    |  2 ++
+ 2 files changed, 8 insertions(+), 8 deletions(-)
+ create mode 100644 test.R
+```
+
+```{default}
+amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (main)
+$ git tag -a "v1.1" -m "This tag is synchronized with the first draft of the git book."
+```
+
+```{default}
+amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (main)
+$ git tag
+v1.1
+```
+
+```{default}
+amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (main)
+$ git show v1.1
+tag v1.1
+Tagger: Adam Reimer <adam.reimer@alaska.gov>
+Date:   Tue Jul 11 15:14:24 2023 -0800
+
+This tag is synchronized with the first draft of the git book.
+
+commit ef33f10150d6248b61558f63f98bd1d5acb3d771 (HEAD -> main, tag: v1.1)
+Merge: 22dcfea 6466f85
+Author: Adam Reimer <adam.reimer@alaska.gov>
+Date:   Tue Jul 11 15:08:02 2023 -0800
+
+    Merge branch 'develop'
+```
+
+```{default}
+amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (main)
+$ git push -u origin main
+Enumerating objects: 21, done.
+Counting objects: 100% (21/21), done.
+Delta compression using up to 16 threads
+Compressing objects: 100% (19/19), done.
+Writing objects: 100% (19/19), 2.98 KiB | 55.00 KiB/s, done.
+Total 19 (delta 6), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (6/6), done.
+To https://github.com/adamreimer/git_practice.git
+   22dcfea..ef33f10  main -> main
+branch 'main' set up to track 'origin/main'.
+```
