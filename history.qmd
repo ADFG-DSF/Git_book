@@ -1,4 +1,4 @@
-## Interacting with your Git history  {#sec-history}
+## Interacting with your Git history {#sec-history}
 
 ```{r}
 #| echo: false
@@ -9,7 +9,7 @@
 
 ### Restoring a previous version of a file
 
-You can also use `git checkout` to recall a single file from a previous commit. In the terminal sequence below I use `cat` and `git show` to show that the file in my work directory and the file in the most recent commit to the `develop` branch are the same file. Notice a call to `git status` reports the same thing without showing the files explicitly.
+You can also use `git checkout` to recall a single file from a previous commit. In the terminal sequence below I use `cat` to show that the file in my work directory.
 
 ```{default}
 amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (develop)
@@ -27,6 +27,8 @@ plot(1:50, fib_seq[2:51]/fib_seq[1:50],
 {golden_ratio <- fib_seq[51]/fib_seq[50]}
 ```
 
+We can compare that to the file in the most recent commit in the `develop` branch using `git show`. They are the same file.
+
 ```{default}
 amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (develop)
 $ git show develop:fib_seq.R
@@ -43,6 +45,8 @@ plot(1:50, fib_seq[2:51]/fib_seq[1:50],
 {golden_ratio <- fib_seq[51]/fib_seq[50]}
 ```
 
+Notice a call to `git status` reports the same thing without showing the files explicitly.
+
 ```{default}
 amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (develop)
 $ git status
@@ -50,13 +54,15 @@ On branch develop
 nothing to commit, working tree clean
 ```
 
-To retrieve a specific file from a prior commit you have to provide `git checkout` with identifying information for the commit and the file name. You can specify the appropriate commit with a absolute or relative reference. For an absolute reference provide the SHA #. For a relative reference the shorthand is HEAD\~# where \# is the number of commits prior to the latest commit. In the terminal sequence below I used checkout to retrieve a copy of `fib_seq.R` from 1 commit earlier (recall this commit had the less informative x and y axis labels). Notice the earlier version of `fib_seq.R` was present in my working directory (as shown in the output for `cat`) but was not included in the latest commit to my repository (as shown in the output to `git show`). If I wanted the earlier version of `fib_seq.R` to be associated with the most recent commit to my repository I would need to commit the file. In this case I did not want to change my repository so I used `git checkout` to go back the the most recent version. I often use this sequence to recall all or part of a code from a prior commit.
+To retrieve a specific file from a prior commit you have to provide `git checkout` with identifying information for the commit and the file name. You can specify the appropriate commit with a absolute or relative reference. For an absolute reference provide the SHA #. For a relative reference the shorthand is HEAD\~# where \# is the number of commits prior to the latest commit. In the terminal sequence below I used checkout to retrieve a copy of `fib_seq.R` from 1 commit earlier (recall this commit had the less informative x and y axis labels).
 
 ```{default}
 amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (develop)
 $ git checkout HEAD~1 fib_seq.R
 Updated 1 path from abb8fba
 ```
+
+Notice the earlier version of `fib_seq.R` is now present in my working directory (as shown in the output for `cat`), but was not included in the latest commit to my repository (as shown in the output to `git show`). Also note that \`git status is aware of the change.
 
 ```{default}
 amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (develop)
@@ -99,11 +105,15 @@ Changes to be committed:
         modified:   fib_seq.R
 ```
 
+If I wanted the earlier version of `fib_seq.R` to be associated with the most recent commit to my repository I would need to commit the file. In this case I did not want to change my repository so I used `git checkout` to go back the the most recent version (Using the relative reference HEAD to specify the latest commit). I often use this sequence to recall all or part of a code from a prior commit.
+
 ```{default}
 amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (develop)
 $ git checkout HEAD fib_seq.R
 Updated 1 path from bd65128
 ```
+
+This all worked, all call to `cat` shows that the file in my working directory has returned to the version with more informative file labels.
 
 ```{default}
 amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (develop)
@@ -156,13 +166,15 @@ $ git commit -m "Test.R file added. Used to test that git checkout recalls an en
  create mode 100644 test.R
 ```
 
-To retrieve a prior commit you should create a new branch to house the past commit until you decide what to do with it. While not strictly necessary, creating a new branch is stable and protects your `develop` branch. In the terminal session below I use `git checkout` to create a new branch called `old_state` and fill it with the snapshot of the `develop` branch from 2 commits earlier. I am expecting old state to be missing `test.R` and have the less descriptive axis locations in the version of `fib_seq.R`. Two calls to `cat` confirm that my working directory does not contain `test.R` and has the older version of `fib_seq.R`
+To retrieve a prior commit you should create a new branch to house the past commit until you decide what to do with it. While not strictly necessary, creating a new branch is stable and protects your `develop` branch. In the terminal session below I use `git checkout` to create a new branch called `old_state` and fill it with the snapshot of the `develop` branch from 2 commits earlier. I am expecting old state to be missing `test.R` and have the less descriptive axis locations in the version of `fib_seq.R`.
 
 ```{default}
 amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (develop)
 $ git checkout -b old_state HEAD~2
 Switched to a new branch 'old_state'
 ```
+
+Two calls to `cat` confirm that my working directory does not contain `test.R` and has the older version of `fib_seq.R`
 
 ```{default}
 amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (old_state)
@@ -193,7 +205,7 @@ On branch old_state
 nothing to commit, working tree clean
 ```
 
-The next action depends on if you want the keep working on the prior commit. If you do you can modify files and stage/commit the result as appropriate prior to merging `old_state` back into `develop`. Since you purposely started the `old_state` feature branch from a prior version of `develop` the odds of a merge conflict are high. It does mean it's a terrible idea but you should be doing this with intention. In the terminal session below I decided the prior commit was not an improvement on my original commit so I moved back to the `develop` branch and deleted the `old_state` branch. Two calls to `cat` prove that the original files were returned.
+The next action depends on if you want the keep working on the prior commit. If you do you can modify files and stage/commit the result as appropriate prior to merging `old_state` back into `develop`. Since we purposely started the `old_state` feature branch from a prior version of `develop` the odds of a merge conflict are high. It does mean it's a terrible idea but you should be doing this with intention. In the terminal session below I decided the prior commit was not an improvement on my original commit so I moved back to the `develop` branch and deleted the `old_state` branch. Two calls to `cat` proved that the original files were returned.
 
 ```{default}
 amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (old_state)
@@ -236,7 +248,7 @@ There are two ways to reverse a commit. The version you should choose depends on
 
 #### Deleting a local commit
 
-When the bad commit is local you can us `git reset` to delete the commit. The commit will disappear from your history. To demonstrate this command I modified the `fib_seq.R` by adding an inconsequential comment at the bottom of the file and used the `cat` command to show the file. After adding and committing the file a call to `git log` shows that the commit was recorded.
+When the bad commit is local you can us `git reset` to delete the commit. The commit will disappear from your history. To demonstrate this command I modified the `fib_seq.R` by adding an inconsequential comment at the bottom of the file and used the `cat` command to show the file.
 
 ```{default}
 amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (develop)
@@ -255,6 +267,8 @@ plot(1:50, fib_seq[2:51]/fib_seq[1:50],
 
 #Useless comment to demonstrate how to delete a commit
 ```
+
+After adding and committing the file a call to `git log` shows that the commit was recorded.
 
 ```{default}
 amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (develop)
@@ -290,13 +304,15 @@ f732cdb Seventh Fibonacci number
 e17181f Initialize Fibonacci sequence
 ```
 
-In the terminal session below I use `git reset` to reset my local repository to 1 commit prior to the most recent commit. Notice that the comment I added to the most recent commit is no longer a part of the `fib_seq.R` file and that the commit `ae2fe59d44eec001b949c3677f94f78e0c30a216` has been removed for the repository. The important thing to note is `git reset` changes the repository history. If you are working locally this is OK but if you have already pushed the bad commit to a remote then deleting a part of your history will cause problems for collaborators who pulled the original history.
+In the terminal session below I use `git reset` to reset my local repository to 1 commit prior to the most recent commit.
 
 ```{default}
 amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (develop)
 $ git reset HEAD~1 --hard
 HEAD is now at 4ef90af Test.R file added. Used to test that git checkout recalls an entire commit
 ```
+
+Notice that the comment I added to the most recent commit is no longer a part of the `fib_seq.R` file.
 
 ```{default}
 amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (develop)
@@ -313,6 +329,8 @@ plot(1:50, fib_seq[2:51]/fib_seq[1:50],
      ylab = "Ratio Between Succesive Fibonacci Numbers")
 {golden_ratio <- fib_seq[51]/fib_seq[50]}
 ```
+
+If we call `git log` again we will see that commit `ae2fe59` has been removed for the repository. The important thing to note is `git reset` changes the repository history. If you are working locally this is OK but if you have already pushed the bad commit to a remote then deleting a part of your history will cause problems for collaborators who pulled the original history.
 
 ```{default}
 amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (develop)
@@ -393,7 +411,7 @@ f732cdb Seventh Fibonacci number
 e17181f Initialize Fibonacci sequence
 ```
 
-Using `git revert` I specify the short SHA id from the prior commit. The call to `git log` shows that a new commit was added with a message specifying the commit reverted the commit titled "bad commit, plan to revert".
+Using `git revert` I specify the short SHA id from the prior commit.
 
 ```{default}
 amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (develop)
@@ -401,6 +419,8 @@ $ git revert a0c849e
 [develop 6466f85] Revert commit titled: "bad commit, plan to revert"
  1 file changed, 2 deletions(-)
 ```
+
+The call to `git log` shows that a new commit was added with a message specifying the commit reverted the commit titled "bad commit, plan to revert".
 
 ```{default}
 amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (develop)

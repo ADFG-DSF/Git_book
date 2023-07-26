@@ -1,4 +1,4 @@
-## Collaboration Using Git  {#sec-collab}
+## Collaboration Using Git {#sec-collab}
 
 Git has some amazing reproducible research capabilities that can become really powerful in large complicated analyses. That said, utilizing Git comes with an overhead that may not be justified for small projects unless you consider collaboration with future analysts including yourself. To demonstrate Git's collaborative potential I created a remote repository on GitHub called git_practice.
 
@@ -6,17 +6,14 @@ Git has some amazing reproducible research capabilities that can become really p
 
 #### git push
 
-To link your local repository to a remote repository use `git remote`. In the terminal session below I added a remote repository named "origin" and provided a url where the repository is located. The second command created a new branch in the remote named `main`. The third command "pushed" my local repository to my remote repository. Files associated with this repository are now stored in a location where they can be accessed by others for viewing, download, or collaborative work.
+To link your local repository to a remote repository use `git remote`. In the terminal session below I added a remote repository named "origin" and provided a URL where the repository is located.
 
 ```{default}
 amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice ({main})
 $ git remote add origin https://github.com/adamreimer/git_practice.git
 ```
 
-```{default}
-amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice ({main})
-$ git branch -M main
-```
+Then `git push` is used to "push" my local repository to my remote repository. Files associated with this repository are now stored in a location where they can be accessed by others for viewing, download, or used for collaborative work.
 
 ```{default}
 amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (main)
@@ -116,7 +113,7 @@ ggplot(dat, aes(x = location, y = snapshot, label = label, fill = fill, color = 
   theme_bw()
 ```
 
-In the terminal session below I stage the file `fib_seq.R` and commit the file. Notice the first time we submitted a `git status` command we were told the local and remote repositories were synced but that there were unstaged changes. After the modified file was added and committed the second call to `git status` tells us our remote repository is one commit behind our local repository. The git work space at this moment is illustrated by @fig-commitwremote.
+In the terminal session below I stage the file `fib_seq.R` and commit the file. Notice that after a `git status` command we were told the local and remote repositories were synced but that there were unstaged changes.
 
 ```{default}
 amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (main)
@@ -132,10 +129,14 @@ Changes not staged for commit:
 no changes added to commit (use "git add" and/or "git commit -a")
 ```
 
+After the modified file was added,
+
 ```{default}
 amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (main)
 $ git add fib_seq.R
 ```
+
+and committed,
 
 ```{default}
 amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (main)
@@ -143,6 +144,8 @@ $ git commit -m "Fifth entry in the Fibonacci sequence" -m "A long and descripti
 [main 5139049] Fifth entry in the Fibonacci sequence
  1 file changed, 2 insertions(+), 1 deletion(-)
 ```
+
+the second call to `git status` tells us our remote repository is one commit behind our local repository.
 
 ```{default}
 amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (main)
@@ -153,6 +156,8 @@ Your branch is ahead of 'origin/main' by 1 commit.
 
 nothing to commit, working tree clean
 ```
+
+The git work space at this moment is illustrated by @fig-commitwremote.
 
 ```{r}
 #| echo: false 
@@ -192,7 +197,7 @@ ggplot(dat, aes(x = location, y = snapshot, label = label, fill = fill, color = 
   theme_bw()
 ```
 
-In the terminal session below I use `git push` to update the remote repository. Notice `git status` verifies the repositories are now synced. The git work space at this moment is illustrated by @fig-pushwremote.
+In the terminal session below I use `git push` to update the remote repository.
 
 ```{default}
 amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (main)
@@ -208,6 +213,8 @@ To https://github.com/adamreimer/git_practice.git
    0c92881..5139049  main -> main
 ```
 
+Notice `git status` verifies the repositories are now synced.
+
 ```{default}
 amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (main)
 $ git status
@@ -216,6 +223,8 @@ Your branch is up to date with 'origin/main'.
 
 nothing to commit, working tree clean
 ```
+
+The git work space at this moment is illustrated by @fig-pushwremote.
 
 ```{r}
 #| echo: false 
@@ -257,7 +266,7 @@ ggplot(dat, aes(x = location, y = snapshot, label = label, fill = fill, color = 
 
 #### git clone
 
-Imagine a situation where you would like to work on your analysis from a home computer[^collaboration-1]. If your analysis is stored as a git repository it is easy to obtain a copy from a different computer. In the terminal sequence below we navigate to my home computer's C drive, clone the remote repository to the C drive, navigate to the new local repository, and check the repository status. Notice that I made a typo on the `git status` command the first time and nothing terrible happened.
+Imagine a situation where you would like to work on your analysis from a home computer[^collaboration-1]. If your analysis is stored as a remote git repository it is easy to obtain a copy. In the terminal sequence I will obtain a copy of my repository in a new location (Note in the previous file paths I have been working on a network S drive). The first step is to switch switched to my computer's C drive.
 
 [^collaboration-1]: I hope your analysis is on the network and you could use vpn to solve this problem.
 
@@ -265,6 +274,8 @@ Imagine a situation where you would like to work on your analysis from a home co
 amreimer@DFGSXQDSF223076 MINGW64 ~/Documents
 $ cd C:/
 ```
+
+The command `git clone` copies (clones) the remote repository to my C drive.
 
 ```{default}
 amreimer@DFGSXQDSF223076 MINGW64 /c
@@ -278,10 +289,14 @@ Receiving objects: 100% (14/14), done.
 Resolving deltas: 100% (3/3), done.
 ```
 
+After which I can navigate to the new local repository,
+
 ```{default}
 amreimer@DFGSXQDSF223076 MINGW64 /c
 $ cd C:/git_practice
 ```
+
+and check the repository status. Notice that I made a typo on the `git status` command the first time and nothing terrible happened.
 
 ```{default}
 amreimer@DFGSXQDSF223076 MINGW64 /c/git_practice (main)
@@ -298,7 +313,7 @@ Your branch is up to date with 'origin/main'.
 nothing to commit, working tree clean
 ```
 
-After `git clone`-ing my remote repository to my home machine I have two local repositories associated with the same remote (see @fig-home).
+After `git clone`-ing my remote repository to my C drive I have two local repositories associated with the same remote (see @fig-home).
 
 ```{r}
 #| echo: false 
@@ -340,7 +355,7 @@ ggplot(dat, aes(x = location, y = snapshot, label = label, fill = fill, color = 
   theme_bw()
 ```
 
-If I change the file `fib_seq.R` in the working directory of my home computer by adding a new line (`fib_seq[6] <- fib_seq[4] + fib_seq[5]`), stage and commit those changes in the local repository on my home computer, and push my home computer's local repository to the remote repository the local repository on my S drive to be behind one commit. The terminal session below demonstrated these commands (all of which we have seen before) and the current state of the Git work space is shown in @fig-homeahead.
+If I change the file `fib_seq.R` in the working directory of my C drive by adding a new line (`fib_seq[6] <- fib_seq[4] + fib_seq[5]`), stage and commit those changes, and push local repository on my C drive to the remote repository the local repository on my S drive to be behind one commit. The terminal session below demonstrates these commands (all of which we have seen before) and the current state of the Git work space is shown in @fig-homeahead.
 
 ```{default}
 amreimer@DFGSXQDSF223076 MINGW64 /c/git_practice (main)
@@ -434,7 +449,7 @@ ggplot(dat, aes(x = location, y = snapshot, label = label, fill = fill, color = 
 
 #### git pull
 
-As @fig-homeahead demonstrate the local repository on my S drive is now one commit behind the remote (and the local repository on my C drive). In the terminal session below we try `git status` but are told the local and remote repositories are synced, which we know to be false. Git has lost track of the remote since the repository on the S drive was blind to the last commit. Instead we use `git update` to update the remote connection, after which git status works as before. Finally, `git pull` brings the local repository on the S drive into sync with the remote. At this point the local and remote repositories have the structure of @fig-home but will include an additional commit (`9db5478`) not shown in @fig-home.
+As @fig-homeahead demonstrates the local repository on my S drive is now one commit behind the remote (and the local repository on my C drive). In the terminal session below we try `git status` but are told the local and remote repositories are synced, which we know to be false.
 
 ```{default}
 amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (main)
@@ -444,6 +459,8 @@ Your branch is up to date with 'origin/main'.
 
 nothing to commit, working tree clean
 ```
+
+Git has lost track of the remote since the repository on the S drive was blind to the last commit. Instead we use `git update` to update the remote connection, after which git status works as before.
 
 ```{default}
 amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (main)
@@ -466,6 +483,8 @@ Your branch is behind 'origin/main' by 1 commit, and can be fast-forwarded.
 
 nothing to commit, working tree clean
 ```
+
+Finally, `git pull` brings the local repository on the S drive into sync with the remote (and the local repository on my C drive). At this point the local and remote repositories have the structure of @fig-home but will include an additional commit (`9db5478`) not shown in @fig-home.
 
 ```{default}
 amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (main)
@@ -497,7 +516,7 @@ Imagine a situation where a peer has written some code which you would like to m
 
 #### git clone, git push, git pull - To Collaborate (closely)
 
-If you and a peer are working closely on an analysis it may be appropriate for the owner to add their peer as a collaborator to the project. This is a point-and-click task from your github repository page, *Settings\>Collaborators\>Add people\>(keypunch the username*). The collaborator can push and pull changes to the remote as if they were the owner. This arrangement is only appropriate for peers who you trust to commit changes of which you both approve. In practice, this likely means there will be personal communication to coordinate each person's efforts. To demonstrate this process I added my wife (Carly) as a collaborator to the git_practice repository. Carly then cloned the repository, modified the `fib_seq.R` file by adding a new line (`fib_seq[7] <- fib_seq[5] + fib_seq[6]`), staged the file, committed the changes, and pushed her local repository back to the git_practice remote. Afterwards I pulled those changes back to the local repository on my S drive. The terminal sessions and figures associated with these actions would closely mirror those shown for `git clone`, `git push`, and `git pull` above although the local repositories have different owners in this case. To demonstrate commits were made by both collaborators I ran a specially formatted call[^collaboration-3] to `git log` which shows that the latest commit to this repository did come form a new author.
+If you and a peer are working closely on an analysis it may be appropriate for the owner to add their peer as a collaborator to the project. This is a point-and-click task from your github repository page, *Settings\>Collaborators\>Add people\>(keypunch the username*). The collaborator can push and pull changes to the remote as if they were the owner. This arrangement is only appropriate for peers who you trust to commit changes of which you both approve. In practice, this likely means there will be personal communication to coordinate each person's efforts. To demonstrate this process I added my wife (Carly) as a collaborator to the git_practice repository. Carly then cloned the repository, modified the `fib_seq.R` file by adding a new line (`fib_seq[7] <- fib_seq[5] + fib_seq[6]`), staged the file, committed the changes, and pushed her local repository back to the git_practice remote. Afterwards I pulled those changes back to the local repository on my S drive. The terminal session and figures associated with these actions would closely mirror those shown for `git clone`, `git push`, and `git pull` above although the local repositories have different owners in this case. To demonstrate commits were made by both collaborators I ran a specially formatted call[^collaboration-3] to `git log` which shows that the latest commit to this repository did come form a new author.
 
 [^collaboration-3]: Thanks [Jesper Rønn-Jensen](https://stackoverflow.com/questions/1441010/the-shortest-possible-output-from-git-log-containing-author-and-date)! Note: %h specifies the short commit ID, %x09 specifies a tab, %an specifies the author, %ad specifies the commit date, and %s specifies the commit title.
 

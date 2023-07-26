@@ -4,7 +4,7 @@ Basic Git use includes how to create a repository, track changes in the files wi
 
 ### git init
 
-If you have an empty folder that you would like make a git repository `git init` is the appropriate command. In the example below I have an empty folder named "git_practice" on S drive under S:/RTS/Reimer/Research_best_practices. The terminal session below shows 3 commands and the output received after each command: 1) verify the directory is not a git repository with `git status`, 2) make it a git repository with `git init`, 3) verify the directory is now a git repository with `git status`.
+If you have an empty folder that you would like make a git repository `git init` is the appropriate command. In the example below I have an empty folder named "git_practice" on S drive under S:/RTS/Reimer/Research_best_practices. The terminal session below shows 3 commands and the output received after each command. The first command, `git status` is a general diagnostic of the Git repository. This command is commonly used when working in the terminal.
 
 ```{default}
 amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice
@@ -12,11 +12,15 @@ $ git status
 fatal: not a git repository (or any of the parent directories): .git
 ```
 
+The second command uses `git init` to make the working directory into a Git repository.
+
 ```{default}
 amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice
 $ git init
 Initialized empty Git repository in //dfg.alaska.local/DSF/Anchorage/RTS/Reimer/Research_Best_Practices/git_practice/.git/
 ```
+
+The third command used `git status` to verify the working directory is now a git repository.
 
 ```{default}
 amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice ({main})
@@ -75,7 +79,7 @@ ggplot(dat, aes(x = location, y = snapshot, label = label, color = sha)) + #
 
 ### git add
 
-In the last git status report shown above 2 files (`.gitignore` and `git_practice.Rproj)` were noted that could be added to the repository. Before we do that let's create third file named fib_seq.R which contains a brief header and a single line of code `fib_seq <- c(0, 1)`. The Fibonacci sequence is the sequence created when each value in the sequence is defined as the sum of the 2 previous values in the sequence and the vector `c(0, 1)` initializes the sequence. We will add to this sequence to practice the use of Git. The terminal session below shows 5 commands: 1) view which files need to be added with `git status`, 2) add each file one at a time with `git add`, 3) verify all files have been added with `git status`. Notice that I made a typo while attempting to add the `git_practice.Rproj` file. I survived this catastrophe with a warning, which is typical of mistakes in the terminal.
+In the last git status report shown above 2 files (`.gitignore` and `git_practice.Rproj)` were noted that could be added to the repository. Before we do that let's create third file named fib_seq.R which contains a brief header and a single line of code `fib_seq <- c(0, 1)`. The Fibonacci sequence is the sequence created when each value in the sequence is defined as the sum of the 2 previous values in the sequence and the vector `c(0, 1)` initializes the sequence. We will add to this sequence to practice the use of Git. The terminal session below shows 5 commands necessary to add or stage the files in our working directory. You stage a file when you would like Git to keep track of changes in that file through time or when that file is an important piece of the analysis that would be required for a peer to recreate your work. As usual, `git status` is a good place to start and allows us to verify which files can be added/staged.
 
 ```{default}
 $ git status
@@ -91,6 +95,8 @@ Untracked files:
 
 nothing added to commit but untracked files present (use "git add" to track)
 ```
+
+We can then use `git add` to stage each file one at a time. Notice that I made a typo while attempting to add the `git_practice.Rproj` file. I survived this catastrophe with a warning, which is typical of mistakes in the terminal.
 
 ```{default}
 amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice ({main})
@@ -112,6 +118,8 @@ bash: git_add: command not found
 amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice ({main})
 $ git add git_practice.Rproj
 ```
+
+A second call to `git status` allows us to verify all files are staged.
 
 ```{default}
 amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice ({main})
@@ -170,7 +178,7 @@ It can be cumbersome to have a long list of files which Git recognizes as presen
 
 ### git commit
 
-In the `git status` response above 3 files were staged. Let's commit those files in the terminal. In the terminal session below we verify all of the files we want to commit were staged using `git status`, recorded (committed) all of the staged files into the repository using `git commit`, verified the commit worked using `git status` and examined the repository log using `git log`.
+In the `git status` response above 3 files were staged. Let's commit those files in the terminal. When you make a commit you are asking Git to keep a copy of your staged files at that particular point in time. In the terminal session below we use `git status` to verify all of the files we want to commit are staged.
 
 ```{default}
 amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice ({main})
@@ -186,6 +194,8 @@ Changes to be committed:
         new file:   git_practice.Rproj
 ```
 
+The command `git commit` is then run, with the option `-m` included to specify the commit message. Notice the `-m` option is specified twice. The first time `-m` is specified Git knows the text string following is the commit title. The second time `-m` is specified Git knows the text string following is the commit description. Commit titles are required while commit descriptions are highly encouraged. A good practice is for the title to be brief (less that 50 characters) so that it displays well in most formats. There is no length limit for the description and this is the place to provide some explanation beyond what you can capture in the title. I've purposely been verbose with the commit above to demonstrate a long description. Please avoid non-informative commit messages and avoid the tendency to fatigue and include less and less informative messages as the analysis proceeds.
+
 ```{default}
 amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice ({main})
 $ git commit -m "Initialize Fibonacci sequence" -m "Sequential additions to the Fibonacci sequence will provide a simple way to demonstrate several cycles of the git workflow including add/commit, push/pull, collaborate, fork, branch, merge, merge conflicts, exc. I even got my wife a GitHub account for this. Wish us luck!"
@@ -197,12 +207,16 @@ $ git commit -m "Initialize Fibonacci sequence" -m "Sequential additions to the 
  create mode 100644 git_practice.Rproj
 ```
 
+The `git status` output after the commit shows that all of the files in the working directory are included in the repository in their current state.
+
 ```{default}
 amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice ({main})
 $ git status
 On branch {main}
 nothing to commit, working tree clean
 ```
+
+The `git log` command provides a summary of the commit. Two important parts are the commit ID and the commit message. The commit ID is a code which can be used to reference the commit in the future. Git assigned a long ID to each commit (`e17181fa781b2e30096e1c7d31443aac18d527e5` for this commit) but its common to using only the first 7 characters of the commit ID (`e17181f)` to refer to the commit.
 
 ```{default}
 amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice ({main})
@@ -216,22 +230,20 @@ Date:   Sun Jul 2 12:59:06 2023 -0800
     Sequential additions to the Fibonacci sequence will provide a simple way to demonstrate several cycles of the git workflow including add/commit, push/pull, collaborate, fork, branch, merge, merge conflicts, exc. I even got my wife a GitHub account for this. Wish us luck!
 ```
 
-The `git log` command provides a summary of the commit. Two important parts are the commit ID and the commit message. The commit ID is a code which can be used to reference the commit in the future. Git assigned a long ID to each commit (`e17181fa781b2e30096e1c7d31443aac18d527e5` for this commit) but its common to using only the first 7 characters of the commit ID (`e17181f)` to refer to the commit.
-
-Commit messages are required. Notice the commit message is broken into 2 parts. The first part is called the title or summary while the second part is called the description. A good practice is for the title to be brief (less that 50 characters) so that it displays well in most formats. There is no length limit for the description and this is the place to provide some explanation beyond what you can capture in the title. I've purposely been verbose with the commit above to demonstrate a long description. Please avoid non-informative commit messages and avoid the tendancy to fatigue and include less and less informative messages as the analysis proceeds.
+Use of `git commit` includes the files you would like to track in your git repository. The working directory in @fig-commit now shows an empty rectangle (as the files are no longer staged) but also includes a entry in the local repository identified with a short ID.
 
 ```{r}
 #| echo: false 
 #| message: false 
 #| warning: false 
-#| label: fig-push
+#| label: fig-commit
 #| fig-cap: The Git workspace after you have committed your staged files to your local repository.
 #| fig-height: 2 
 dat <- 
   data.frame(location = c(1, 2),
              snapshot = c(1, 1),
              sha = c("e17181f", "e17181f")) %>%
-  mutate(fill = ifelse(location %in% c(1, 5), sha, ""),
+  mutate(fill = "", #ifelse(location %in% c(1, 5), sha, ""),
          label = ifelse(location %in% c(1, 5), "          ", sha))
   
 #color/fill scale
@@ -350,7 +362,7 @@ dat <-
   data.frame(location = c(1, 2, 2),
              snapshot = c(2, 1, 2)) %>%
   mutate(sha = sha[snapshot],
-         fill = ifelse(location %in% c(1, 5), sha, ""),
+         fill = "", #ifelse(location %in% c(1, 5), sha, ""),
          label = ifelse(location %in% c(1, 5), "          ", sha))
   
 #color/fill scale
@@ -386,7 +398,7 @@ dat <-
   data.frame(location = c(1, 2, 2, 2),
              snapshot = c(3, 1, 2, 3)) %>%
   mutate(sha = sha[snapshot],
-         fill = ifelse(location %in% c(1, 5), sha, ""),
+         fill = "", #ifelse(location %in% c(1, 5), sha, ""),
          label = ifelse(location %in% c(1, 5), "          ", sha))
   
 #color/fill scale
@@ -422,7 +434,7 @@ The most important thing to note regarding commits is that, unlike save, there i
 
 ### git log
 
-To view our commit history in the terminal use `git log`. Note that the commit ID, author, date, commit title and commit description are all shown in the log. Note on large projects calling `git log` can result in a substantial amount which can be difficult to exit (type `q` at any time and you will exit)[^basics-1].
+To view our commit history in the terminal use `git log`. Note that the commit ID, author, date, commit title and commit description are all shown in the log. Note on large projects calling `git log` can result in a substantial amount out output which can be difficult to exit (type `q` at any time and you will exit)[^basics-1].
 
 [^basics-1]: Later we will learn some tricks to compress the output of `git log` within the terminal although generally GUIs displays repository history better than the terminal and are much more commonly used.
 
@@ -457,7 +469,7 @@ for this. Wish us luck!
 
 ### git diff
 
-To see the difference between two commits use `git diff`. With no additional arguments `git diff` will show the changes in the working directory relative to the last commit. Our working directory has no changes as illustrated by `git status`. Instead we can add a short commit ID to the command to see changed between the current working directory and the commit `3bb6c9`.
+To see the difference between two commits use `git diff`. With no additional arguments `git diff` will show the changes in the working directory relative to the last commit. Our working directory has no changes as illustrated by `git status`.
 
 ```{default}
 amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice ({main})
@@ -465,6 +477,8 @@ $ git status
 On branch {main}
 nothing to commit, working tree clean
 ```
+
+If we add a commit ID to the `git diff` command the output will show how the tracked files have changed relative to the point in time when commit `3bb6c9` was made.
 
 ```{default}
 amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice ({main})

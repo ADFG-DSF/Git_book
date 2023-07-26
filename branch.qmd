@@ -1,8 +1,8 @@
-## Branching and Model Development  {#sec-branch}
+## Branching and Model Development {#sec-branch}
 
 ```{r}
 #| echo: false
-# only hear to trick quarto into using the knitr engine.
+# only here to trick quarto into using the knitr engine.
 # I cant figure out how to specify that in settings for a book.
 # Could rename this file to .Rmd (*and rename the refernece in _quarto.yml but then footnots are disable for some strange reason.)
 ```
@@ -25,13 +25,15 @@ The `develop` branch is the working branch and will have frequent commits relati
 
 Feature branches are created frequently as new features are envisioned and developed. A best practice is to create a new feature branch, with a descriptive name, every time you create a new feature. When the feature is completed it is merged back into develop, left as a record without a merge, or deleted. In my work, feature branches are mostly merged back into develop, and this occurs whenever I create a feature which improves the analysis. Feature branches are left unmerged when I want to retain a record of having tried something (and the result) but do not think it improves the overall analysis. Feature branches are deleted without merging when something just did not work out and is also not worth retaining as a record. Notice that liberal use of feature branches keep the `main` and `develop` branches clean and can isolate those two primary branches of a lot of the sloppiness that is a byproduct of actively engaging in the scientific process.
 
-Let's practice Git Flow. In the terminal session which follows we create a new branch called `cleanup` with `git checkout`, modify the file `fib_seq.R` by deleting several lines, show the changes using `git diff`, add those changes, and commit those changes.
+Let's practice Git Flow. In the terminal session which follows we create a new branch called `cleanup` with `git checkout`. On the new branch we modify modify the file `fib_seq.R` by deleting several lines of manual Fibonacci sequence calculations and replacing them with a for loop.
 
 ```{default}
 amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (develop)
 $ git checkout -b cleanup develop
 Switched to a new branch 'cleanup'
 ```
+
+Calling `git status` shows that the `cleanup` branch now contains upstaged changes.
 
 ```{default}
 amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (cleanup)
@@ -44,6 +46,8 @@ Changes not staged for commit:
 
 no changes added to commit (use "git add" and/or "git commit -a")
 ```
+
+We can view those changes using `git diff`.
 
 ```{default}
 amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (cleanup)
@@ -69,6 +73,8 @@ index 984a0a5..97be5b3 100644
 +{golden_ratio <- fib_seq[51]/fib_seq[50]}
 ```
 
+And then add and commit the change.
+
 ```{default}
 amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (cleanup)
 $ git add fib_seq.R
@@ -83,13 +89,15 @@ $ git commit -m "remove maanual Fibonacci calculations" -m "manual calculations 
 
 ### git merge
 
-The changes above are reasonable and the new feature tried on the `cleanup` branch is useful. In the terminal session below we use `git checkout` to switch back to the `develop` branch, `git merge` to merge the `cleanup` branch with the `develop` branch, and `git branch` to delete the `cleanup` branch now that its change has been incorporated into `develop`.
+The changes above are reasonable and the new feature tried on the `cleanup` branch is useful. In the terminal session below we use `git checkout` to switch back to the `develop` branch,
 
 ```{default}
 amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (cleanup)
 $ git checkout develop
 Switched to branch 'develop'
 ```
+
+`git merge` to merge the `cleanup` branch with the `develop` branch,
 
 ```{default}
 amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (develop)
@@ -98,6 +106,8 @@ Merge made by the 'ort' strategy.
  fib_seq.R | 9 ++-------
  1 file changed, 2 insertions(+), 7 deletions(-)
 ```
+
+and `git branch` to delete the `cleanup` branch now that its change has been incorporated into `develop`.
 
 ```{default}
 amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (develop)
@@ -139,7 +149,7 @@ $ git commit -m "Added axis labels to golden ratio plot." -m "Not a lot to say b
  1 file changed, 4 insertions(+), 1 deletion(-)
 ```
 
-A merge into the `develop` branch at this stage would be both appropriate and successful. The new feature was added to the feature branch `label_plot` was a improvement, and the `develop` branch is unchanged. Instead we will intentionally change the develop branch (violating the spirit of Git Flow) to demonstrate a merge conflict. In the terminal session that follows we: checkout the `develop` branch and while working on that branch modified the file `fib_seq.R` by adding less informative figure labels, and stage/commit those changes. We then use `git show` to look at the copy of `fib_seq.R` from both the `develop` and `label_plot` branches. Notice that the axis labels from the `label_plot` branch are more informative. Because the values given to the `xlab` and `ylab` arguments were modified in both branches we can expect a merge conflict and, as expected, a merge conflict results from attempting to merge these branches.
+A merge into the `develop` branch at this stage would be both appropriate and successful. The new feature was added to the feature branch `label_plot` was a improvement, and the `develop` branch is unchanged. Instead we will intentionally change the develop branch (violating the spirit of Git Flow) to demonstrate a merge conflict. In the terminal session that follows we: checkout the `develop` branch and while working on that branch modified the file `fib_seq.R` by adding less informative figure labels, and stage/commit those changes.
 
 ```{default}
 amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (label_plot)
@@ -170,6 +180,8 @@ $ git commit -m "Added labels to the golden ratio figure" -m "These labels are i
 [develop d0d260e] Added labels to the golden ratio figure
  1 file changed, 4 insertions(+), 1 deletion(-)
 ```
+
+We then use `git show` to look at the copy of `fib_seq.R` from both the `develop` and `label_plot` branches. Notice that the axis labels from the `label_plot` branch are more informative. Because the values given to the `xlab` and `ylab` arguments were modified in both branches we can expect a merge conflict.
 
 ```{default}
 amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (develop)
@@ -203,6 +215,8 @@ plot(1:50, fib_seq[2:51]/fib_seq[1:50],
 {golden_ratio <- fib_seq[51]/fib_seq[50]}
 ```
 
+As expected, a merge conflict results from attempting to merge these branches.
+
 ```{default}
 amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (develop)
 $ git merge --no-ff label_plot
@@ -211,7 +225,7 @@ CONFLICT (content): Merge conflict in fib_seq.R
 Automatic merge failed; fix conflicts and then commit the result.
 ```
 
-When there is a merge conflict Git modifies the file being merged to help the user decide how to proceed. Git adds `<<<<<<< HEAD` above the merge conflict. The text `======` separates the merge conflict into code derived from each branch. Code between `<<<<<< HEAD` and `======` indicates code which was present in the branch being merged into (`develop` in this case) while code between `======` and `>>>>>> label_plot` indicates code which was present in the branch being merged (`label_plot` in this case). I've shown what that `fib_seq.R` file in my working directory looks like using the terminal command `cat,` but that is only for demonstrative purposes. Normally, I would just open the file in RStudio, and it would look exactly the same. To proceed the user has to decide which code to keep, save the modified file, and stage/commit the changes. For this example I deleted everything between `<<<<<< HEAD` and `======` inclusive as well as the line `>>>>>> label_plot`. These deletions made the file `fib_seq.R` we merged match the version in the `label_plot` branch.
+When there is a merge conflict Git modifies the file being merged to help the user decide how to proceed. Git adds `<<<<<<< HEAD` above the merge conflict. The text `======` separates the merge conflict into code derived from each branch. Code between `<<<<<< HEAD` and `======` indicates code which was present in the branch being merged into (`develop` in this case) while code between `======` and `>>>>>> label_plot` indicates code which was present in the branch being merged (`label_plot` in this case). I've shown what that `fib_seq.R` file in my working directory looks like using the terminal command `cat,` but that is only for demonstrative purposes. Normally, I would just open the file in RStudio, and it would look exactly the same. To proceed the user has to decide which code to keep, save the modified file, and stage/commit the changes. For this example I deleted everything between `<<<<<< HEAD` and `======` inclusive as well as the line `>>>>>> label_plot`. These deletions modified the file `fib_seq.R` to represent the version we wish to retain.
 
 ```{default}
 amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (develop|MERGING)
@@ -234,6 +248,8 @@ plot(1:50, fib_seq[2:51]/fib_seq[1:50],
 >>>>>> label_plot
 {golden_ratio <- fib_seq[51]/fib_seq[50]}
 ```
+
+Notice that `git status` knows we need to fix this merge conflict and tells us how to do it.
 
 ```{default}
 amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (develop|MERGING)

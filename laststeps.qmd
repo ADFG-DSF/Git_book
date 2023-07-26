@@ -1,13 +1,13 @@
-## Before you go!  {#sec-laststeps}
+## Before you go! {#sec-laststeps}
 
 ```{r}
 #| echo: false
-# only hear to trick quarto into using the knitr engine.
+# only here to trick quarto into using the knitr engine.
 # I cant figure out how to specify that in settings for a book.
 # Could rename this file to .Rmd (*and rename the refernece in _quarto.yml but then footnots are disable for some strange reason.)
 ```
 
-I get it, everyone is tired and I have beat this subject to death. Still, we should tidy up before we close the git_practice repository for an extended amount of time. The repository may or may not have any enduring value but it helped me get through this book. As such the the repository might be about to go public. That being the case the Git Flow workflow suggests we: merge `develop` back into `main`, tag the published version, and push the published version to the remote. Lets do that to close out.
+Like any analysis, we should tidy up before we close the git_practice repository for an extended amount of time. The repository may or may not have any enduring value but it helped me get through this book! As such the repository is about to go public. That being the case the Git Flow workflow suggests we: merge `develop` back into `main` prior to pushing our code to a remote.
 
 ```{default}
 amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (develop)
@@ -26,16 +26,22 @@ Merge made by the 'ort' strategy.
  create mode 100644 test.R
 ```
 
+The current state of the repository may be of interest since it marks the end of the development we documented in this book. A convenient way to mark a particular commit as special is with `git tag`. In the terminal session below I add a tag the most recent commit and add a short message detailing why this commit is special.
+
 ```{default}
 amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (main)
 $ git tag -a "v1.1" -m "This tag is synchronized with the first draft of the git book."
 ```
+
+After you have created a tag it is useful to know how to reference them. A plain call to `git tag` will show the tags in the repository.
 
 ```{default}
 amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (main)
 $ git tag
 v1.1
 ```
+
+You can also use `git show` to reference the tag and obtain additional information about the tag and the commit it is associated with.
 
 ```{default}
 amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (main)
@@ -54,17 +60,51 @@ Date:   Tue Jul 11 15:08:02 2023 -0800
     Merge branch 'develop'
 ```
 
+### Choosing the Appropriate Remote
+
+Thus far I had been interacting with my private remote, as shown below (notice "adamreimer" in the URL). This is the preferred workflow for a repository of this type, which had no value to other ADF&G staff while it was being created.
+
+```{default}
+amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (develop)
+$ git remote -v
+origin  https://github.com/adamreimer/git_practice.git (fetch)
+origin  https://github.com/adamreimer/git_practice.git (push)
+```
+
+Repositories with immediate staff interest or repositories that develop staff interest (i.e repositories associated with operational plans, any population assessment or any data analysis task which is shared internally) need to be pushed to the [Division of Sport Fisheries GitHub site](https://github.com/ADFG-DSF). There are two ways to do this, both of which will be discussed below.
+
+#### Push directly to the new site
+
+The easiest way get your repository on the ADFG-DSF account would be push it there directly. The first step is to create a new repository named "git_practice" on the ADFG-DSF GitHub[^laststeps-1]*.* After that "git_practice" repository is created you can change the URL associated with your `origin` remote (notice "ADFG-DSF" in the URL),
+
+[^laststeps-1]: From the main page ADFG_DSF GitHub page: *New \> (enter "git_practice" for the repository name), (choose public or private) -\> create repository.*
+
+```{default}
+amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (main)
+$ git remote set-url origin https://github.com/ADFG-DSF/git_practice.git
+```
+
+and push to it.
+
 ```{default}
 amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (main)
 $ git push -u origin main
-Enumerating objects: 21, done.
-Counting objects: 100% (21/21), done.
+Enumerating objects: 49, done.
+Counting objects: 100% (49/49), done.
 Delta compression using up to 16 threads
-Compressing objects: 100% (19/19), done.
-Writing objects: 100% (19/19), 2.98 KiB | 55.00 KiB/s, done.
-Total 19 (delta 6), reused 0 (delta 0), pack-reused 0
-remote: Resolving deltas: 100% (6/6), done.
-To https://github.com/adamreimer/git_practice.git
-   22dcfea..ef33f10  main -> main
+Compressing objects: 100% (48/48), done.
+Writing objects: 100% (49/49), 8.21 KiB | 75.00 KiB/s, done.
+Total 49 (delta 14), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (14/14), done.
+To https://github.com/ADFG-DSF/git_practice.git
+ * [new branch]      main -> main
 branch 'main' set up to track 'origin/main'.
 ```
+
+After the push the remote repository is synced with your local directory you should create a README by opening the repository on GItHub and pushing the green button *add README*. This method will work for any existing repository[^laststeps-2].
+
+[^laststeps-2]: Note if the repository does not have an existing remote the command `git remote set-url origin https://github.com/ADFG-DSF/git_practice.git` would be replaced with `git remote add origin https://github.com/ADFG-DSF/git_practice.git`
+
+#### Transfer a Repository
+
+While the method above will work for any repository be aware that GitHub specific features (Issues and Pull request records) will be lost when pushed to the new remote. To illustrate that difference I transferred the "git_practice" repository from my personal account to the ADFG-DSF account: (*open the repository on github)*, Settings \> (*scroll to the very bottom*) \> *Transfer \>* (*rename to git_practice_transfer*). We can see the difference by comparing the repository that was [pushed](https://github.com/ADFG-DSF/git_practice) to the ADFG-DSF account to the repository that was [transferred](https://github.com/ADFG-DSF/git_practice_transfer) to the ADFG-DSF account. In the transferred repository there are closed pull requests listed under *pull requests* while on the pushed repository those records are missing. Notice that if the repository was had peer involvement sufficient to utilize pull requests or was in a state of development that necessitated issue tracking it should have been pushed to the ADFG-DSF account earlier in it's history.
