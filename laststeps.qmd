@@ -7,7 +7,7 @@
 # Could rename this file to .Rmd (*and rename the refernece in _quarto.yml but then footnots are disable for some strange reason.)
 ```
 
-Like any analysis, we should tidy up before we close the git_practice repository for an extended amount of time. The repository may or may not have any enduring value but it helped me get through this book! As such the repository is about to go public. That being the case the Git Flow workflow suggests we: merge `develop` back into `main` prior to pushing our code to a remote.
+Like any analysis, we should tidy up before we close the git_practice repository for an extended amount of time. That being the case the Git Flow workflow suggests we: merge `develop` back into `main` prior to pushing our code to a remote.
 
 ```{default}
 amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (develop)
@@ -71,7 +71,7 @@ origin  https://github.com/adamreimer/git_practice.git (fetch)
 origin  https://github.com/adamreimer/git_practice.git (push)
 ```
 
-Repositories with immediate staff interest or repositories that develop staff interest (i.e repositories associated with operational plans, any population assessment or any data analysis task which is shared internally) need to be pushed to the [Division of Sport Fisheries GitHub site](https://github.com/ADFG-DSF). There are two ways to do this, both of which will be discussed below.
+Repositories with immediate staff interest or repositories that develop staff interest (i.e repositories associated with operational plans, any population assessment or any data analysis task which is shared internally) need to be pushed to the [Division of Sport Fisheries GitHub site](https://github.com/ADFG-DSF). Making the git_practice repository public may help interested readers who are looking for more insight into the workflow demonstrated within this book. As such the repository is about to go public. There are two ways to do this, both of which will be discussed below.
 
 #### Push directly to the new site
 
@@ -107,4 +107,4 @@ After the push the remote repository is synced with your local directory you sho
 
 #### Transfer a Repository
 
-While the method above will work for any repository be aware that GitHub specific features (Issues and Pull request records) will be lost when pushed to the new remote. To illustrate that difference I transferred the "git_practice" repository from my personal account to the ADFG-DSF account: (*open the repository on github)*, Settings \> (*scroll to the very bottom*) \> *Transfer \>* (*rename to git_practice_transfer*). We can see the difference by comparing the repository that was [pushed](https://github.com/ADFG-DSF/git_practice) to the ADFG-DSF account to the repository that was [transferred](https://github.com/ADFG-DSF/git_practice_transfer) to the ADFG-DSF account. In the transferred repository there are closed pull requests listed under *pull requests* while on the pushed repository those records are missing. Notice that if the repository was had peer involvement sufficient to utilize pull requests or was in a state of development that necessitated issue tracking it should have been pushed to the ADFG-DSF account earlier in it's history.
+While the method above will work for any repository be aware that GitHub specific features (Issues and Pull request records) will be lost when pushed to the new remote. To illustrate that difference I transferred the "git_practice" repository from my personal account to the ADFG-DSF account: (*open the repository on github)*, Settings \> (*scroll to the very bottom*) \> *Transfer \>* (*rename to git_practice_transfer*). We can see the difference by comparing the repository that was [pushed](https://github.com/ADFG-DSF/git_practice) to the ADFG-DSF account to the repository that was [transferred](https://github.com/ADFG-DSF/git_practice_transfer) to the ADFG-DSF account. In the transferred repository there are closed pull requests listed under *pull requests \>* *2 closed* while on the pushed repository those records are missing. Notice that if the repository had peer involvement sufficient to utilize pull requests or was in a state of development that necessitated issue tracking it should have been pushed to the ADFG-DSF account earlier in it's history.

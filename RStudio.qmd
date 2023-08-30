@@ -1,4 +1,4 @@
-## The RStudio Graphical User Interface  {#sec-rstudio}
+## The RStudio Graphical User Interface {#sec-rstudio}
 
 Congratulations! If you are reading this you have done your homework and earned the right to confidently use a graphical user interface to simplify the most common Git tasks. Using a GUI can save a lot of keystrokes for most commands. The most accessible GUI is found in RStudio itself. A Git tab will show up in the Environment/History/Connections/Tutorial window (generally the upper left hand quadrant) provided your directory is a Git repository.
 
@@ -10,7 +10,7 @@ If you are starting a brand new analysis, creating a git repository at the same 
 
 ### Commands accessible through the Git tab
 
--   `git add` - add/Stage files by clicking the radio button next to each file in the RStudio Git pane.
+-   `git add` - add/stage files by clicking the radio button next to each file in the RStudio Git pane.
 
 -   `git diff`- the *Diff* button will lead to another screen where the GUI allows users to `diff` and `commit` the repository.
 
@@ -20,7 +20,7 @@ If you are starting a brand new analysis, creating a git repository at the same 
 
 -   `git push` - the *Push* button allows the user to push commits from the local repository to the remote repository.
 
--   `git log` - the *History* button will lead to another screen where the GUI allows users to `log` the repository.
+-   `git log` - the *History* button will lead to another screen where the GUI allows users to see a `log` of the repository which is much more intuitive, user friendly, and color coded than the version accessible through the terminal.
 
 -   `git revert` - the *More* button will allow the user to `revert` a commit. It also allows the user to add files to the `.gitignore` file by clicking the radio button next to the files you wish to ignore.
 
@@ -28,13 +28,13 @@ If you are starting a brand new analysis, creating a git repository at the same 
 
 -   `git checkout <new_branch>` - the drop down list next to the word "main" will allow you to switch between branches.
 
--   Note the RStudio GUI is frequently slow to react to changes. The circular arrow refreshes the GUI. Often it will look like nothing is happening when you are clicking the radio buttons to add/stage files but clicking the refresh button will reveal the buttons were checked.
+-   Note the RStudio GUI is frequently slow to react to changes. The circular arrow refreshes the GUI. Often it will look like nothing is happening when you are clicking the radio buttons to add/stage files but clicking the refresh button will reveal the buttons that were checked.
 
 ![The RStudio Git tab](Rstudio_Git.PNG)
 
 ### Commands accessible through the Diff window
 
--   `git diff` - the *Changes* tab will show line by line changes associated with the files in the working directory relative to the most recent commit. Old lines are shown in red while new line are shown in green. In the example shown below x- and y-axis labels are added to the plot function.
+-   `git diff` - the *Changes* tab will show line-by-line changes associated with the files in the working directory relative to the most recent commit. Old lines are shown in red while new line are shown in green. In the example shown below x- and y-axis labels are added to the plot function.
 
 -   `git commit` - the *Changes* tab also includes a commit message window and a *Commit* button allowing the user to commit all of the staged changes. The commit title goes on the first line of the message window, followed by a blank line. The third line and onward contain the commit description.
 
@@ -51,7 +51,7 @@ If you are starting a brand new analysis, creating a git repository at the same 
 
 To my knowledge there are certain commands that are not included in RStudio GUI.
 
--   `git merge` two branches. Since branching and merging is a big part of using git for model development this is a major omission. The GitKraken GUI handles merges nicely.
+-   `git merge` Since branching and merging is a big part of using git for model development this is a major omission. The GitKraken GUI handles merges nicely.
 
 -   The Rstudio GUI display the Git log in a much cleaner format than the terminal with the big exception that the commit description is not visible. Since the commit description is the more informative part of the commit message this can be a substantial loss for some commits. A workaround would is to run the command `git show SHA-short -s –format=%B` where SHA-short is the short SHA tag for the commit description you wish to see. More powerful GUI's (for example, GitKraken) can show the entire commit description.
 

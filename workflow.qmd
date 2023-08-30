@@ -40,6 +40,6 @@ As discussed in the preface, every analysis does not need all of the tools discu
 
 -   Keep your network drive current with whatever changes you make on the remote, your laptop, via pull requests, exc..
 
--   For complicated analyses it may be appropriate to push both the `main` and `develop` branches to the organizational account. While `main` allows for staff to know where the analysis sat at it's most recent reporting stage develop allows staff to track progress since the last report.
+-   For complicated analyses it may be appropriate to push both the `main` and `develop` branches to the organizational account. While `main` allows for staff to know where the analysis sat at it's most recent reporting stage `develop` allows staff to track progress since the last report.
 
 [^workflow-1]: Concerns about incomplete work can be addressed by keeping the repository private and explaining the state of the analysis in the commit messages and the README file.
