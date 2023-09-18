@@ -1,6 +1,6 @@
 ## Division of Sport Fisheries Workflow {#sec-workflow}
 
-As discussed in the preface, every analysis does not need all of the tools discussed herein. That said all analyses need to be discoverable to current and future staff. Github is a tool to make that happen. In this appendix we will step through the basic requirements to make your analyses easily discoverable on GitHub.
+As discussed in the preface, every analysis does not need all of the tools discussed herein. That said all analyses need to be discoverable to current and future staff. GitHub is a tool to make that happen. In this appendix, we will step through the basic requirements to make your analyses are easily discoverable on GitHub.
 
 -   At a minimum, stage/commit/push the analysis at the point where an operational plan or report is produced or the analysis has been shared with other staff members.
 
