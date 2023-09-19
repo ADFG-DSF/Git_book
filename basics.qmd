@@ -4,7 +4,7 @@ Basic Git use includes how to create a repository, track changes in the files wi
 
 ### git init
 
-If you have an empty folder that you would like make a git repository `git init` is the appropriate command. In the example below I have an empty folder named "git_practice" on S drive under S:/RTS/Reimer/Research_best_practices. The terminal session below shows 3 commands and the output received after each command. The first command, `git status` is a general diagnostic of the Git repository. This command is commonly used when working in the terminal.
+If you have an empty folder that you would like make a git repository `git init` is the appropriate command. In the example below, I have an empty folder named "git_practice" on the S drive under S:/RTS/Reimer/Research_best_practices. The terminal session below shows 3 commands and the output received after each command. The first command, `git status` is a general diagnostic of the Git repository. This command is commonly used when working in the terminal.
 
 ```{default}
 amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice
@@ -37,7 +37,7 @@ Untracked files:
 nothing added to commit but untracked files present (use "git add" to track)
 ```
 
-The `git init` command creates a git repository in your project directory. To help conceptualize the use of Git we will be developing a series of figures to demonstrate how files are introduced into the workflow and move through the Git work space once there. At this point, a few files are in the working directory and while a repository has been created we have yet to commit anything to the repository. The rounded rectangle in @fig-init indicates the contents of your working directory at this point in time. At the moment they are represented by an empty rectangle which indicates that the files in your working directory have yet to be staged. We will build this figure as we complete tasks within the Git work space.
+The `git init` command creates a git repository in your project directory. To help conceptualize the use of Git we will be developing a series of figures to demonstrate how files are introduced into the workflow and move through the Git work space once there. At this point, a few files are in the working directory and while a repository has been created, we have yet to commit anything to the repository. The rounded rectangle in @fig-init indicates the contents of your working directory at this point in time. At the moment they are represented by an empty rectangle which indicates that the files in your working directory have yet to be staged. We will build this figure as we complete tasks within the Git work space.
 
 ```{r}
 #| echo: false
@@ -79,7 +79,7 @@ ggplot(dat, aes(x = location, y = snapshot, label = label, color = sha)) + #
 
 ### git add
 
-In the last git status report shown above 2 files (`.gitignore` and `git_practice.Rproj)` were noted that could be added to the repository. Before we do that let's create third file named fib_seq.R which contains a brief header and a single line of code `fib_seq <- c(0, 1)`. The Fibonacci sequence is the sequence created when each value in the sequence is defined as the sum of the 2 previous values in the sequence and the vector `c(0, 1)` initializes the sequence. We will add to this sequence to practice the use of Git. The terminal session below shows 5 commands necessary to add or stage the files in our working directory. You stage a file when you would like Git to keep track of changes in that file through time or when that file is an important piece of the analysis that would be required for a peer to recreate your work. As usual, `git status` is a good place to start and allows us to verify which files can be added/staged.
+In the last git status report shown above, it was notes that 2 files (`.gitignore` and `git_practice.Rproj)` could be added to the repository. Before we do that, let's create a third file named fib_seq.R which contains a brief header and a single line of code `fib_seq <- c(0, 1)`. The Fibonacci sequence is the sequence created when each value in the sequence is defined as the sum of the 2 previous values in the sequence and the vector `c(0, 1)` initializes the sequence. We will add to this sequence to practice the use of Git. The terminal session below shows 5 commands necessary to add or stage the files in our working directory. You stage a file when you would like Git to keep track of changes in that file through time or when that file is an important piece of the analysis that would be required for a peer to recreate your work. As usual, `git status` is a good place to start and allows us to verify which files can be added/staged.
 
 ```{default}
 $ git status
@@ -172,7 +172,7 @@ ggplot(dat, aes(x = location, y = snapshot, label = label, fill = fill, color = 
   theme_bw()
 ```
 
-Notice Git tells you how to unstage a file if you added one inadvertently. On occasion there are files in your working directory which you do not want Git to track. Examples might be .pdf files for literature you referenced while conducting the analysis, word documents you produced for operational planning and reporting, or extremely large outputs. It's fine to exclude these sort of files but before you do so consider... "Would a future researcher need access to this file to recreate my work?". If they would you should track them in the repository.
+Notice Git tells you how to unstage a file if you added one inadvertently. On occasion there are files in your working directory which you do not want Git to track. Examples might be .pdf files for literature you referenced while conducting the analysis, word documents you produced for operational planning and reporting, or extremely large outputs. It's fine to exclude these sort of files, but before you do so consider... "Would a future researcher need access to this file to recreate my work?". If they would, you should track them in the repository.
 
 It can be cumbersome to have a long list of files which Git recognizes as present in your working directory but you are not actively tracking. The solution is to open the file .gitignore and include the names of the files you do not want to track. You can use wildcards if you prefer not to track all files of a certain type and/or specify folders if you don't want to track anything in certain sub-directories. For example, `*.xlsx` would ignore all .xlsx files in your working directory while `posts/` would ignore all of the files in the folder posts within your working directory.
 
@@ -194,7 +194,7 @@ Changes to be committed:
         new file:   git_practice.Rproj
 ```
 
-The command `git commit` is then run, with the option `-m` included to specify the commit message. Notice the `-m` option is specified twice. The first time `-m` is specified Git knows the text string following is the commit title. The second time `-m` is specified Git knows the text string following is the commit description. Commit titles are required while commit descriptions are highly encouraged. A good practice is for the title to be brief (less that 50 characters) so that it displays well in most formats. There is no length limit for the description and this is the place to provide some explanation beyond what you can capture in the title. I've purposely been verbose with the commit above to demonstrate a long description. Please avoid non-informative commit messages and avoid the tendency to fatigue and include less and less informative messages as the analysis proceeds.
+The command `git commit` is then run, with the option `-m` included to specify the commit message. Notice the `-m` option is specified twice. The first time `-m` is specified Git knows the text string following is the commit title. The second time `-m` is specified Git knows the text string following is the commit description. Commit titles are required while commit descriptions are highly encouraged. A good practice is for the title to be brief (less that 50 characters) so that it displays well in most formats. There is no length limit for the description and this is the place to provide some explanation beyond what you can capture in the title. I've purposely been verbose with the commit above to demonstrate a long description. Please avoid non-informative commit messages and avoid the tendency to fatigue and include less and less informative messages as the analysis proceeds. The goal of a commit message is to allow the user to return to a previous commit, for example, if the analysis no longer runs and the user is trying to identify the error in the code.
 
 ```{default}
 amreimer@DFGSXQDSF223076 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice ({main})
@@ -267,9 +267,9 @@ ggplot(dat, aes(x = location, y = snapshot, label = label, fill = fill, color = 
   theme_bw()
 ```
 
-The git workflow described so far forms the basis on reproducible research using Git. We will calculate the next several values in the Fibonacci sequence to practice this workflow. The same sequence described above is repeated:
+The git workflow described so far forms the basis for reproducible research using Git. We will calculate the next several values in the Fibonacci sequence to practice this workflow. The same sequence described above is repeated:
 
-1.  A change is made to `fib_seq.R` (in this case a new line `fib_seq[3] <- fib_seq[1] + fib_seq[2]` is added) and saved to the working directory. The working directory now represents a more recent snapshot of time that the local repository.
+1.  A change is made to `fib_seq.R` (in this case a new line `fib_seq[3] <- fib_seq[1] + fib_seq[2]` is added) and saved to the working directory. The working directory now represents a more recent snapshot of time than the local repository.
 
 2.  The changed file is staged.
 
@@ -430,11 +430,11 @@ Saves and a commits serve different purposes. As we all know, save can and shoul
 
 In contrast, commits are made for two reasons. First, a commit should be made whenever the analysis is at a point which you may want to revisit. Examples include: adding new data, adding a new feature to the analysis, or any time the code was run and the results were distributed. Any one of these tasks may have resulted in a new 'version' in the traditional workflow but they don't have to be major updates. A second reason to commit is when the changes are substantive enough that the line-by-line change may be difficult to track if you did not commit until the new data/features are complete. These commits snapshot significant steps in a new feature's development or prior to experimenting with a new feature.
 
-The most important thing to note regarding commits is that, unlike save, there is no temporal component. While saves are designed to minimize the risk of lost work and should be frequent *in time*, commits are designed to record importance stages of the analysis and should be frequent *with respect to progress*. A difficult feature may take days to code but represent a single commit, provided the actual changes to the code are modest. Efficiency in commit frequency will pay off when the repository is being revisited at a later date and each commit is a snapshot of the analysis that is important or informative to the reviewer. Note that the commits demonstrated in this text are purposely pedantic but a good rule of thumb is that if you can't describe why you are committing your files it may be an unnecessary commit.
+The most important thing to note regarding commits is that, unlike save, there is no temporal component. While saves are designed to minimize the risk of lost work and should be frequent *in time*, commits are designed to record importance stages of the analysis and should be frequent *with respect to progress*. A difficult feature may take days to code but represent a single commit, provided the actual changes to the code are modest. Efficiency in commit frequency will pay off when the repository is being revisited at a later date and each commit is a snapshot of the analysis that is important or informative to the reviewer. Note that the commits demonstrated in this text are purposely pedantic but a good rule of thumb is that if you can't describe why you are committing your files it may be an unnecessary commit. Although, note that if you are collaborating with a colleague, it is best to commit all changes to the repository before handing off the project to the collaborator. This will avoid any unnecessary merge conflicts.
 
 ### git log
 
-To view our commit history in the terminal use `git log`. Note that the commit ID, author, date, commit title and commit description are all shown in the log. Note on large projects calling `git log` can result in a substantial amount out output which can be difficult to exit (type `q` at any time and you will exit)[^basics-1].
+To view our commit history in the terminal use `git log`. Note that the commit ID, author, date, commit title, and commit description are all shown in the log. Note on large projects, calling `git log` can result in a substantial amount of output which can be difficult to exit (type `q` at any time and you will exit)[^basics-1].
 
 [^basics-1]: Later we will learn some tricks to compress the output of `git log` within the terminal although generally GUIs displays repository history better than the terminal and are much more commonly used.
 
@@ -498,4 +498,4 @@ index 9c118d5..4ce1d70 100644
 \ No newline at end of file
 ```
 
-Git GUI's are superior to the terminal when looking at line-by line differences but for completeness we will discuss how to read the output. The section `--- a/fib_seq.R` to `+++ b/fib_seq.R` identifies the files that were modified where `--- a/` and `+++ b` refer to the previous and the current versions of the file respectively. The line `@@ -2,4 +2,5 @@` tells us that the output is showing the original file starting on the second line and displaying the the next 4 lines (three unmarked lines and the line with a negative symbol) while the new version of the file is also shown starting from the second line but displaying the next 5 lines (the three unmarked lines and the two lines with an addition symbol). This makes sense because a single line was added to the new version.
+Git's GUIs are superior to the terminal when looking at line-by line differences but for completeness, we will discuss how to read the output. The section `--- a/fib_seq.R` to `+++ b/fib_seq.R` identifies the files that were modified where `--- a/` and `+++ b` refer to the previous and the current versions of the file respectively. The line `@@ -2,4 +2,5 @@` tells us that the output is showing the original file starting on the second line and displaying the next 4 lines (three unmarked lines and the line with a negative symbol) while the new version of the file is also shown starting from the second line but displaying the next 5 lines (the three unmarked lines and the two lines with an addition symbol). This makes sense because a single line was added to the new version.

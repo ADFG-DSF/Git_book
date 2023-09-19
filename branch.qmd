@@ -11,7 +11,7 @@ The intermediate Git workflow introduces a new concept: branches. Efficient use 
 
 ### Branches and Branch strategy
 
-In Git a branch is a pointer to a specific commit or set of commits which allow you to separate model development tasks into smaller subunits. I learned branching from [this guy](https://nvie.com/posts/a-successful-git-branching-model/) and in what follows I simplify his workflow into something that works well for complicated fisheries analyses. Let's start by creating a new branch named `develop` using the command `git checkout`. The argument `-b` tells Git to checkout a new branch while the arguments `develop` and `main` tell Git the name of the new branch and that the new branch should branch from the `main` branch.
+In Git, a branch is a pointer to a specific commit or set of commits which allow you to separate model development tasks into smaller subunits. I learned branching from [this guy](https://nvie.com/posts/a-successful-git-branching-model/) and in what follows I simplify his workflow into something that works well for complicated fisheries analyses. Let's start by creating a new branch named `develop` using the command `git checkout`. The argument `-b` tells Git to checkout a new branch while the arguments `develop` and `main` tell Git the name of the new branch and that the new branch should branch from the `main` branch.
 
 ```{default}
 amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (main)
@@ -19,13 +19,13 @@ $ git checkout -b develop main
 Switched to a new branch 'develop'
 ```
 
-The core concept in the Git Flow branching strategy is to always have two active branches; `main` and `develop`. The `main` branch is stable in that you make limited commits to it and those commits are associated with internal or external reporting including FDS reports, BOF memos, or conference presentations. Because the `main` branch will largely be static interested collaborators can quickly identify the analysis at the time periods where the analysis was reported.
+The core concept in the Git Flow branching strategy is to always have two active branches; `main` and `develop`. The `main` branch is stable in that you make limited commits to it and those commits are associated with internal or external reporting including FDS reports, BOF memos, or conference presentations. Because the `main` branch will largely be static, interested collaborators can quickly identify the analysis at the time periods where the analysis was reported.
 
 The `develop` branch is the working branch and will have frequent commits relative to analysis progress. The `develop` branch merges into `main` at reporting periods and is the one branched from whenever a new feature is being developed.
 
-Feature branches are created frequently as new features are envisioned and developed. A best practice is to create a new feature branch, with a descriptive name, every time you create a new feature. When the feature is completed it is merged back into develop, left as a record without a merge, or deleted. In my work, feature branches are mostly merged back into develop, and this occurs whenever I create a feature which improves the analysis. Feature branches are left unmerged when I want to retain a record of having tried something (and the result) but do not think it improves the overall analysis. Feature branches are deleted without merging when something just did not work out and is also not worth retaining as a record. Notice that liberal use of feature branches keep the `main` and `develop` branches clean and can isolate those two primary branches of a lot of the sloppiness that is a byproduct of actively engaging in the scientific process.
+Feature branches are created frequently as new features are envisioned and developed. A best practice is to create a new feature branch, with a descriptive name, every time you create a new feature. When the feature is completed, it is merged back into develop, left as a record without a merge, or deleted. In my work, feature branches are mostly merged back into develop, and this occurs whenever I create a feature which improves the analysis. Feature branches are left unmerged when I want to retain a record of having tried something (and the result), but do not think it improves the overall analysis. Feature branches are deleted without merging when something just did not work out and is also not worth retaining as a record. Notice that liberal use of feature branches keep the `main` and `develop` branches clean and can isolate those two primary branches of a lot of the sloppiness that is a byproduct of actively engaging in the scientific process.
 
-Let's practice Git Flow. In the terminal session which follows we create a new branch called `cleanup` with `git checkout`. On the new branch we modify modify the file `fib_seq.R` by deleting several lines of manual Fibonacci sequence calculations and replacing them with a for loop.
+Let's practice Git Flow. In the terminal session which follows, we create a new branch called `cleanup` with `git checkout`. On the new branch we modify modify the file `fib_seq.R` by deleting several lines of manual Fibonacci sequence calculations and replacing them with a for loop.
 
 ```{default}
 amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (develop)
@@ -117,7 +117,7 @@ Deleted branch cleanup (was 8b28369).
 
 #### Merge conflicts
 
-Merge conflicts can occur any time we are merging two branches. In what follows we will intentionally create a merge conflict and fix it. In the terminal session below I create a new branch named `label_plot`, and while working on that branch modify the file `fib_seq.R` by adding informative figure labels and then stage/commit those changes.
+Merge conflicts can occur any time we are merging two branches. In what follows, we will intentionally create a merge conflict and fix it. In the terminal session below I create a new branch named `label_plot`, and while working on that branch, I modify the file `fib_seq.R` by adding informative figure labels and then stage/commit those changes.
 
 ```{default}
 amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (develop)
@@ -149,7 +149,7 @@ $ git commit -m "Added axis labels to golden ratio plot." -m "Not a lot to say b
  1 file changed, 4 insertions(+), 1 deletion(-)
 ```
 
-A merge into the `develop` branch at this stage would be both appropriate and successful. The new feature was added to the feature branch `label_plot` was a improvement, and the `develop` branch is unchanged. Instead we will intentionally change the develop branch (violating the spirit of Git Flow) to demonstrate a merge conflict. In the terminal session that follows we: checkout the `develop` branch and while working on that branch modified the file `fib_seq.R` by adding less informative figure labels, and stage/commit those changes.
+A merge into the `develop` branch at this stage would be both appropriate and successful. The new feature added to the feature branch `label_plot` was an improvement, and the `develop` branch is unchanged. Instead we will intentionally change the develop branch (violating the spirit of Git Flow) to demonstrate a merge conflict. In the terminal session that follows we: checkout the `develop` branch, and while working on that branch, modified the file `fib_seq.R` by adding less informative figure labels, and stage/commit those changes.
 
 ```{default}
 amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (label_plot)
@@ -181,7 +181,7 @@ $ git commit -m "Added labels to the golden ratio figure" -m "These labels are i
  1 file changed, 4 insertions(+), 1 deletion(-)
 ```
 
-We then use `git show` to look at the copy of `fib_seq.R` from both the `develop` and `label_plot` branches. Notice that the axis labels from the `label_plot` branch are more informative. Because the values given to the `xlab` and `ylab` arguments were modified in both branches we can expect a merge conflict.
+We then use `git show` to look at the copy of `fib_seq.R` from both the `develop` and `label_plot` branches. Notice that the axis labels from the `label_plot` branch are more informative. Because the values given to the `xlab` and `ylab` arguments were modified in both branches, we can expect a merge conflict.
 
 ```{default}
 amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (develop)
@@ -225,7 +225,7 @@ CONFLICT (content): Merge conflict in fib_seq.R
 Automatic merge failed; fix conflicts and then commit the result.
 ```
 
-When there is a merge conflict Git modifies the file being merged to help the user decide how to proceed. Git adds `<<<<<<< HEAD` above the merge conflict. The text `======` separates the merge conflict into code derived from each branch. Code between `<<<<<< HEAD` and `======` indicates code which was present in the branch being merged into (`develop` in this case) while code between `======` and `>>>>>> label_plot` indicates code which was present in the branch being merged (`label_plot` in this case). I've shown what that `fib_seq.R` file in my working directory looks like using the terminal command `cat,` but that is only for demonstrative purposes. Normally, I would just open the file in RStudio, and it would look exactly the same. To proceed the user has to decide which code to keep, save the modified file, and stage/commit the changes. For this example I deleted everything between `<<<<<< HEAD` and `======` inclusive as well as the line `>>>>>> label_plot`. These deletions modified the file `fib_seq.R` to represent the version we wish to retain.
+When there is a merge conflict, Git modifies the file being merged to help the user decide how to proceed. Git adds `<<<<<<< HEAD` above the merge conflict. The text `======` separates the merge conflict into code derived from each branch. Code between `<<<<<< HEAD` and `======` indicates code which was present in the branch being merged into (`develop` in this case) while code between `======` and `>>>>>> label_plot` indicates code which was present in the branch being merged (`label_plot` in this case). I've shown what that `fib_seq.R` file in my working directory looks like using the terminal command `cat,` but that is only for demonstrative purposes. Normally, I would just open the file in RStudio, and it would look exactly the same. To proceed the user has to decide which code to keep, save the modified file, and stage/commit the changes. For this example, I deleted everything between `<<<<<< HEAD` and `======` inclusive as well as the line `>>>>>> label_plot`. These deletions modified the file `fib_seq.R` to represent the version we wish to retain.
 
 ```{default}
 amreimer@DFGSXQDSF206801 MINGW64 /s/RTS/Reimer/Research_Best_Practices/git_practice (develop|MERGING)

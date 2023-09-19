@@ -1,6 +1,6 @@
 ## Division of Sport Fisheries Workflow {#sec-workflow}
 
-As discussed in the preface, every analysis does not need all of the tools discussed herein. That said all analyses need to be discoverable to current and future staff. Github is a tool to make that happen. In this appendix we will step through the basic requirements to make your analyses easily discoverable on GitHub.
+As discussed in the preface, every analysis does not need all of the tools discussed herein. That said all analyses need to be discoverable to current and future staff. GitHub is a tool to make that happen. In this appendix, we will step through the basic requirements to make your analyses are easily discoverable on GitHub.
 
 -   At a minimum, stage/commit/push the analysis at the point where an operational plan or report is produced or the analysis has been shared with other staff members.
 
@@ -8,19 +8,23 @@ As discussed in the preface, every analysis does not need all of the tools discu
 
 -   Create a new repository under the ADF&G/DSF organizational account ([Alaska Department of Fish and Game, Division of Sport Fisheries (github.com)](https://github.com/ADFG-DSF)).
 
-    -   *Repositories\>New repository* to create a new repository
+    -   *Repositories\>New repository* (green button) to create a new repository
 
-        -   Add a good description. Repository names are opaque. Use the description field to let people know what is stored here.
+        ![](new_repo_RStudio.PNG)
 
-        -   You can leave your repository as private (the default) or make it public. The terms "public" or "private" refer to users outside of our organization. All of the repositories will be visible to ADF&G staff.
+        -   Add a good description. Repository names are opaque. Use the description field to let people know what is stored here. You can leave your repository as private (the default) or make it public. The terms "public" or "private" refer to users outside of our organization. All of the repositories will be visible to ADF&G staff.
 
-        -   click the *add a README file* button. The readme file should describe the analysis in sufficient detail that people will be able to navigate your repository with confidence. In general, we have operational plans and reports to describe methods. The README file should be more applied and include a description of the motivation behind the analysis and a general idea of your repository's file/folder structure. The README file **must** also include a path to the network location where your local repository is stored so that interested staff can access the files included in .gitignore.
+            ![](create_a_new_repo.PNG)
 
-        -   click *Create repository*.
+        -   Click the *add a README file* button. The readme file should describe the analysis in sufficient detail that people will be able to navigate your repository with confidence. In general, we have operational plans and reports to describe methods. The README file should be more applied and include a description of the motivation behind the analysis and a general idea of your repository's file/folder structure. The README file **must** also include a path to the network location where your local repository is stored so that interested staff can access the files included in .gitignore. Otherwise, if the data is confidential, the README file can contain the contact person for the data file and a brief description of the variables (and formats) that should be included in the data file. Often an example data file is helpful if the data is confidential.
 
-    -   All analysis conducted for ADF&G DSF should be pushed this account. To do so you will need a personal Github account. You can push to your personal account at your discretion but you mush push to the ADF&G account. Pushing to both your personal account and to our organizational account requires you to create two remotes, push to both, and track changes across two remotes. It is likely this will lead to errors and omissions. For this reason a best practice would be to push to the ADF&G account only[^workflow-1].
+        -   Click the green button *Create repository*.
 
--   Navigate to the new repository and click the *settings icon* (a gear symbol) in the About section.
+    -   All analysis conducted for ADF&G DSF should be pushed this account. To do so you will need a personal Github account. You can push to your personal account at your discretion but you mush push to the ADF&G account. Pushing to both your personal account and to our organizational account requires you to create two remotes, push to both, and track changes across two remotes. It is likely this will lead to errors and omissions. For this reason, a best practice would be to push to the ADF&G account only[^workflow-1].
+
+-   Open RStudio, and under the top right pull down menu, choose *New Project\>Version Control\>Git\>(*click paste under *Repository URL,* add a project name under *Project directory name,* and click on the location in the *'create a project as a subdirectory of').* Then, click the 'Create Project' button in the lower right hand corner. You will be prompted to add your passphrase from the GitHub site. This will create a local project in the specified directory on your computer. As you add files to the location on your local drive within the project, the files will show up in your RStudio console.
+
+-   Alternatively, navigate to the new repository and click the *settings icon* (a gear symbol) in the About section.
 
     -   Add some topics that describe your repository. This will help people find your repository in the future. You can add any topic you want but you must include the following:
 
@@ -40,6 +44,6 @@ As discussed in the preface, every analysis does not need all of the tools discu
 
 -   Keep your network drive current with whatever changes you make on the remote, your laptop, via pull requests, etc..
 
--   For complicated analyses it may be appropriate to push both the `main` and `develop` branches to the organizational account. While `main` allows for staff to know where the analysis is at it's most recent reporting stage, `develop` allows staff to track progress since the last report.
+-   For complicated analyses, it may be appropriate to push both the `main` and `develop` branches to the organizational account. While `main` allows for staff to know where the analysis is at it's most recent reporting stage, `develop` allows staff to track progress since the last report.
 
 [^workflow-1]: Concerns about incomplete work can be addressed by keeping the repository private and explaining the state of the analysis in the commit messages and the README file.

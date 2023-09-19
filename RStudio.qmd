@@ -51,11 +51,11 @@ If you are starting a brand new analysis, creating a git repository at the same 
 
 To my knowledge there are certain commands that are not included in RStudio GUI.
 
--   `git merge` Since branching and merging is a big part of using git for model development this is a major omission. The GitKraken GUI handles merges nicely.
+-   `git merge` Since branching and merging is a big part of using git for model development, this is a major omission. The GitKraken GUI handles merges nicely.
 
--   The Rstudio GUI display the Git log in a much cleaner format than the terminal with the big exception that the commit description is not visible. Since the commit description is the more informative part of the commit message this can be a substantial loss for some commits. A workaround would is to run the command `git show SHA-short -s –format=%B` where SHA-short is the short SHA tag for the commit description you wish to see. More powerful GUI's (for example, GitKraken) can show the entire commit description.
+-   The Rstudio GUI display the Git log in a much cleaner format than the terminal with the big exception that the commit description is not visible. Since the commit description is the more informative part of the commit message, this can be a substantial loss for some commits. A workaround is to run the command `git show SHA-short -s –format=%B` where SHA-short is the short SHA tag for the commit description you wish to see. More powerful GUI's (for example, GitKraken) can show the entire commit description.
 
--   `git checkout` to recall a single file from a previous commit. Using the terminal is more deliberate and proably better if you want to recall all of a large file although the cut/paste workaround described above is generally sufficent if you just want t few lines of code from a previous commit.
+-   `git checkout` to recall a single file from a previous commit. Using the terminal is more deliberate and probably better if you want to recall all of a large file although the cut/paste workaround described above is generally sufficient if you just want t few lines of code from a previous commit.
 
 -   `git checkout` to recall a prior commit to your working directory.
 
