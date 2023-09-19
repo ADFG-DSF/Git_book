@@ -6,19 +6,7 @@ Congratulations! If you are reading this you have done your homework and earned 
 
 ### git init
 
-If you are starting a brand new analysis, creating a git repository at the same time you create your R studio project is easy: *New Project\>New Directory\>New Project\>(provide name, location and check 'create git repository')*. This sequence runs git init in the background while the RStudio project is created. It is also possible to create a new project directly on the GitHub site. For example, if you are a member of the commfish GitHub site, you can go to https://github.com/orgs/commfish/repositories and click on the green New repository button on the top right.
-
-![](new_repo_RStudio.png)
-
-Next, fill in a 'Repository name', a description, and click on the add a README file. You must also choose if this is a private or public repository.
-
-![](create_a_new_repo.PNG)
-
-Then, click the green 'Create repository' button at the bottom right of the screen. Next, click on the green code button, and choose SSH.
-
-![](SSH_example.png)
-
-Then, open RStudio, and under the top right pull down menu, choose *New Project\>Version Control\>Git\>(*click paste under *Repository URL,* add a project name under *Project directory name,* and click on the location in the *'create a project as a subdirectory of').* Then, click the 'Create Project' button in the lower right hand corner. You will be prompted to add your passphrase from the GitHub site. This will create a local project in the specified directory on your computer. As you add files to the location on your local drive within the project, the files will show up in your RStudio console. You can then follow the directions below to add the files (code, figures, text, etc.) to the remote repository you created on the Commfish GitHub site.
+If you are starting a brand new analysis, creating a git repository at the same time you create your R studio project is easy: *New Project\>New Directory\>New Project\>(provide name, location and check 'create git repository')*. This sequence runs git init in the background while the RStudio project is created.
 
 ### Commands accessible through the Git tab
 
